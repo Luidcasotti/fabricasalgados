@@ -1,0 +1,4 @@
+{
+  "recommendations": ["atennebris.gmsync", "openai.chatgpt"],
+  "unwantedRecommendations": ["bscotch.bscotch-stitch-vscode"]
+}

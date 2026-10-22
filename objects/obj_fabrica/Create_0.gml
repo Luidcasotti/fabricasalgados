@@ -1,0 +1,10 @@
+global.jogo.fase = FaseJogo.FABRICA;
+entrada_pronta = false;
+cenario = cenario_criar();
+tela_cenario = -1;
+layout = fabrica_layout();
+painel = "";
+produto_selecionado = global.jogo.catalogo.produtos[0].id;
+mensagem = "Bem-vindo! Abra o Comercial para receber uma encomenda.";
+mensagem_ok = true;
+mensagem_tempo = room_speed * 8;

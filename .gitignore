@@ -1,0 +1,6 @@
+# Estado local da IDE; manter .yy, .yyp, .gml e .resource_order versionados.
+*.local
+*.local.bak
+*.yydebug
+/debug.log
+/.backups/

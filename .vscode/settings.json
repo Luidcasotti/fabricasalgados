@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "*.gml": "gml",
+    "*.yy": "yyp",
+    "*.yyp": "yyp"
+  },
+  "[gml]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  },
+  "[yyp]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  }
+}

@@ -1,0 +1,13 @@
+var _v=global.visual;
+ui_fundo(); ui_titulo("PREPARE A OPERAÇÃO");
+ui_cartao(210,142,860,484,_v.claro);
+ui_centro(640,184,"PLANEJAMENTO INICIAL",3,_v.tinta);
+ui_centro(640,248,"DINHEIRO: "+financas_formatar(global.jogo.financas.saldo_centavos),2,_v.verde);
+ui_centro(640,298,"CAPACIDADE DIÁRIA",2,_v.suave);
+ui_botao(botao_menos,"-",_v.tinta);
+ui_botao(botao_mais,"+",_v.tinta);
+ui_centro(640,350,string(global.jogo.parametros.capacidade_diaria)+" UNIDADES",3,_v.tinta);
+ui_centro(640,438,"COMECE COM COXINHA, PASTEL E BOLINHA DE QUEIJO.",2,_v.suave);
+ui_centro(640,478,"ESTOQUE INICIAL DISPONÍVEL. LOTES DE 5 UNIDADES.",2,_v.suave);
+ui_botao(botao_voltar,"VOLTAR",_v.tinta);
+ui_botao(botao_abrir,"ABRIR FÁBRICA",_v.laranja);

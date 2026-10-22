@@ -1,0 +1,17 @@
+var _v=global.visual;
+ui_fundo();ui_titulo("ACOMPANHE SUAS DECISÕES");
+ui_cartao(208,134,864,504,_v.claro);
+ui_centro(640,172,"RESULTADOS • DIA "+string(resumo.dia),3,_v.tinta);
+ui_texto(248,236,"DINHEIRO DISPONÍVEL",2,_v.suave);
+ui_texto(764,236,financas_formatar(resumo.saldo_centavos),2,_v.verde);
+ui_texto(248,290,"ENCOMENDAS ENTREGUES",2,_v.suave);
+ui_texto(764,290,string(resumo.pedidos_atendidos),2,_v.tinta);
+ui_texto(248,344,"UNIDADES PRODUZIDAS",2,_v.suave);
+ui_texto(764,344,string(resumo.unidades_produzidas),2,_v.tinta);
+ui_texto(248,398,"PRODUTOS NO ESTOQUE",2,_v.suave);
+ui_texto(764,398,string(resumo.unidades_em_estoque),2,_v.tinta);
+ui_texto(248,452,"VARIAÇÃO DO CAIXA",2,_v.suave);
+ui_texto(764,452,financas_formatar(resumo.variacao_caixa_centavos),2,_v.tinta);
+ui_centro(640,512,"CAIXA MOSTRA ENTRADAS E SAÍDAS; NÃO É LUCRO CONTÁBIL.",1,_v.suave);
+ui_botao(botao_voltar,"VOLTAR À FÁBRICA",_v.laranja);
+ui_botao(botao_menu,"MENU",_v.tinta);
