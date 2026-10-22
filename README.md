@@ -1,35 +1,52 @@
-# Fábrica de Salgados
+# Fábrica de Salgados — V0.1
 
-Jogo educacional de gestão de estoque, produção, encomendas e caixa.
-Implementado em **GameMaker / GML Code**, com fábrica isométrica desenhada em GML.
-Todos os números, preços, prazos e receitas são **fictícios para aprendizagem**.
+Jogo educacional para explorar estoque, produção, pedidos, prazos e dinheiro.
+**GameMaker / GML Code**, sem dependências externas obrigatórias e sem assets pagos.
+Todos os números e receitas são **fictícios para aprendizagem**.
 
-## Executar
+![Fábrica isométrica](docs/imagens/v01-fabrica.png)
 
-1. Abra `BLANK GAMEFabricaDeSalgados.yyp` no GameMaker.
-2. Use o alvo Windows/VM e pressione **F5**.
-3. Selecione **Novo jogo / Parâmetros**, ajuste os valores e inicie a simulação.
-4. Aceite ofertas no **Comercial**, compre insumos no **Estoque** e planeje
-   quantidades na **Produção**. Clique em **Avançar dia** para executar o ciclo.
+## Abrir e jogar
 
-O arquivo mantém o nome original do projeto. Verificado na IDE 2026.0.0.16,
-runtime 2026.0.0.23. Não há dependências externas obrigatórias, assets pagos
-ou ponte TCP. Execute `ABRIR_NO_VSCODE.cmd` para editar com GMSync e Stitch
-desabilitado na sessão por incompatibilidade com o formato instalado.
+1. Abra **`BLANK GAMEFabricaDeSalgados.yyp`**, na raiz, pelo GameMaker.
+2. Selecione Windows/VM e pressione **F5**.
+3. Entre em **Novo jogo / Parâmetros**, configure a atividade e inicie.
+4. Aceite pedidos, compre insumos e planeje quantidades nos três setores.
+5. Use **Avançar dia**. Ao completar a duração, analise o dashboard e o diário.
+
+Verificado com IDE **2026.0.0.16** e runtime **2026.0.0.23**. O nome original do
+arquivo foi preservado. Dia 1 é preparação; a duração configura quantos dias
+de operação serão processados. Pausar e rever resultados não avançam o tempo.
+
+![Dashboard de uma partida de teste](docs/imagens/v01-dashboard.png)
 
 ## Documentação
 
-- [Como jogar e editar](docs/README.md)
-- [Regras da simulação e ordem diária](docs/REGRAS_SIMULACAO.md)
-- [Arquitetura e responsabilidades](docs/ARQUITETURA.md)
-- [Verificações e cenários reproduzíveis](docs/VALIDACAO.md)
-- [Substituir gráficos provisórios](docs/VISUAIS.md)
-- [Etapas e próximos passos](docs/ETAPAS.md)
+- [Manual do aluno](docs/MANUAL_DO_ALUNO.md)
+- [Manual do professor e novos casos pedagógicos](docs/MANUAL_DO_PROFESSOR.md)
+- [Relatório final V0.1](docs/RELATORIO_V01.md)
+- [Regras e fórmulas](docs/REGRAS_SIMULACAO.md)
+- [Arquitetura](docs/ARQUITETURA.md)
+- [Testes reproduzíveis](docs/VALIDACAO.md)
+- [Melhorias futuras e limites](docs/MELHORIAS_FUTURAS.md)
+- [Substituir os visuais provisórios](docs/VISUAIS.md)
 
-Os testes são escritos em GML. Ferramentas Python opcionais em `tools/`
-validam os metadados e executam os testes em uma cópia pelo runtime instalado;
-Python não é utilizado pela lógica do jogo.
+## Desenvolvimento e testes
 
-O protótipo não salva a sessão em disco. **Continuar** mantém a sessão apenas
-enquanto o programa está aberto. **Novo jogo** restaura os parâmetros padrão;
-as opções editadas são aplicadas ao clicar em **Iniciar simulação**.
+Execute `ABRIR_NO_VSCODE.cmd` para editar. GMSync oferece a leitura dos recursos;
+Stitch fica desabilitado nessa sessão por incompatibilidade com o formato instalado.
+Os testes são GML. Python é usado somente para automação opcional de desenvolvimento:
+
+```powershell
+python tools/verificar_projeto.py
+python tools/verificar_simulacao.py
+python tools/verificar_simulacao.py --partida
+```
+
+Foram aprovadas **172 verificações**: 148 de regras/controladores e 24 em uma
+partida automatizada pelas salas reais do GameMaker, com término e reinício.
+Consulte os limites da validação em docs/VALIDACAO.md.
+
+O protótipo **não salva partidas em disco**. Continuar usa apenas a sessão
+aberta. Reiniciar passa pelos parâmetros antes de criar uma nova sessão.
+Não existe Game Over definitivo por resultado negativo.

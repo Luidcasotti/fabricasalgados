@@ -149,7 +149,7 @@ function testes_simulacao_executar() {
     producao_agendar(_j,"coxinha",5);simulacao_avancar_dia(_j);
     _exigir(_j.pedidos[0].status=="entregue" && !_j.pedidos[0].pontual && _j.pedidos[0].atraso_dias==2,"entrega tardia registrada");
     _exigir(indicadores_calcular(_j).entregas_atrasadas==1 && simulacao_auditar(_j).ok,"indicadores e conservacao atrasos");
-    _cfg=parametros_padrao();_cfg.pedido_quantidade_min=5;_cfg.pedido_quantidade_max=5;_j=jogo_criar(_cfg);
+    _cfg=parametros_padrao();_cfg.duracao_dias=30;_cfg.pedido_quantidade_min=5;_cfg.pedido_quantidade_max=5;_j=jogo_criar(_cfg);
     pedido_decidir(_j,2,true);pedido_decidir(_j,1,true);producao_agendar(_j,"coxinha",5);producao_agendar(_j,"pastel",5);
     var _fila=pedidos_fila(_j);_exigir(_fila[0].id==2,"fila ordenada pelo aceite");
     simulacao_avancar_dia(_j);var _refs=[];
@@ -229,12 +229,12 @@ function testes_interface_simulacao_executar() {
         }
         var _param=instance_create_depth(0,0,-1000,obj_parametros);
         with(_param) {
-            parametros_clique(1196,260);
+            parametros_clique(1196,325);
             _exigir(configuracao.capacidade_diaria==110,"editar capacidade pelos botoes");
-            parametros_clique(1000,196);keyboard_string="200000";parametros_clique(840,470);
+            parametros_clique(1000,261);keyboard_string="200000";parametros_clique(840,470);
             _exigir(campo_editando==-1 && configuracao.caixa_inicial_centavos==200000,"editar dinheiro em centavos");
             parametros_clique(300,644);
-            _exigir(pagina==1 && array_length(campos)==50,"paginacao dos cinquenta parametros");
+            _exigir(pagina==1 && array_length(campos)==51,"paginacao dos parametros incluindo duracao");
             _exigir(global.jogo.financas.saldo_centavos==101675,"editar configuracao nao altera sessao existente");
             instance_destroy();
         }

@@ -25,3 +25,9 @@ Definir público-alvo, rubrica de aprendizagem e duração da atividade.
 Avaliar save/load, fechamento de exercício e orientações de análise ao aluno.
 Preservar regras verificáveis antes de adicionar simulação de pessoas/máquinas.
 Substituição da arte provisória: [VISUAIS.md](VISUAIS.md).
+
+## V0.1 pedagógica
+
+Período configurável, restauração de padrões, pausa, diário, balões de reflexão
+e dashboard final com fórmulas e dados reais. Resultados negativos integram a
+atividade; não causam Game Over. Manuais e 172 verificações documentados.

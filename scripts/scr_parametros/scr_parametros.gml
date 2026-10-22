@@ -36,6 +36,7 @@ function parametro_campo(_nome,_tipo,_chave,_indice,_receita,_min,_max,_passo=1,
 }
 function parametros_campos(_p) {
     var _lista=[
+        parametro_campo("DURAÇÃO / DIAS DE OPERAÇÃO","geral","duracao_dias",0,0,1,60),
         parametro_campo("GERAL / CAIXA INICIAL","geral","caixa_inicial_centavos",0,0,0,10000000,10000,true),
         parametro_campo("GERAL / CAPACIDADE DIÁRIA","geral","capacidade_diaria",0,0,1,10000,10),
         parametro_campo("PEDIDOS / QUANTIDADE MÍNIMA","geral","pedido_quantidade_min",0,0,1,1000),
@@ -77,7 +78,7 @@ function parametro_escrever(_p,_campo,_valor) {
 }
 function parametros_layout() {
     var _l={anterior:ui_area(24,618,180,56),proxima:ui_area(218,618,180,56),
-        voltar:ui_area(722,618,190,56),iniciar:ui_area(930,618,326,56),
+        restaurar:ui_area(414,618,290,56),voltar:ui_area(722,618,190,56),iniciar:ui_area(930,618,326,56),
         confirmar:ui_area(680,446,330,56),cancelar:ui_area(270,446,330,56),linhas:[]};
     for(var _i=0;_i<6;_i++) array_push(_l.linhas,{menos:ui_area(820,172+_i*65,52,48),
         valor:ui_area(886,172+_i*65,270,48),mais:ui_area(1170,172+_i*65,52,48)});
@@ -91,6 +92,10 @@ function parametros_clique(_mx,_my) {
     }
     if(ui_contem(layout.anterior,_mx,_my)) pagina=max(0,pagina-1);
     else if(ui_contem(layout.proxima,_mx,_my)) pagina=min(ceil(array_length(campos)/6)-1,pagina+1);
+    else if(ui_contem(layout.restaurar,_mx,_my)) {
+        configuracao=parametros_padrao();campos=parametros_campos(configuracao);pagina=0;
+        mensagem="Padrões restaurados na configuração. A partida atual só muda ao iniciar.";
+    }
     else if(ui_contem(layout.voltar,_mx,_my)) jogo_ir_para(FaseJogo.MENU);
     else if(ui_contem(layout.iniciar,_mx,_my)) {
         var _val=parametros_validar(configuracao);mensagem=_val.mensagem;
@@ -128,6 +133,7 @@ function parametros_desenhar() {
     ui_texto(24,586,"PÁGINA "+string(pagina+1)+" / "+string(ceil(array_length(campos)/6)),2,_v.suave);
     ui_botao(layout.anterior,"ANTERIOR",_v.tinta,pagina>0);
     ui_botao(layout.proxima,"PRÓXIMA",_v.tinta,pagina<ceil(array_length(campos)/6)-1);
+    ui_botao(layout.restaurar,"RESTAURAR PADRÕES",_v.verde);
     ui_botao(layout.voltar,"MENU",_v.tinta);ui_botao(layout.iniciar,"INICIAR SIMULAÇÃO",_v.laranja);
     ui_texto(24,698,mensagem,1,_v.tinta);
     if(campo_editando>=0) {
@@ -139,5 +145,6 @@ function parametros_desenhar() {
         ui_centro(640,344,"LIMITE: "+string(_c.minimo)+" A "+string(_c.maximo)+(_c.moeda?" CENTAVOS":""),2,_v.tinta);
         ui_centro(640,390,string_copy(keyboard_string,1,9)+"_",3,_v.azul);
         ui_botao(layout.cancelar,"CANCELAR",_v.tinta);ui_botao(layout.confirmar,"CONFIRMAR",_v.verde);
+        ui_texto(260,516,mensagem,1,_v.laranja);
     }
 }

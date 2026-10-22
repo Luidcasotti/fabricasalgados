@@ -1,5 +1,3 @@
-global.jogo.fase = FaseJogo.RESULTADOS;
-entrada_pronta = false;
-resumo = indicadores_calcular(global.jogo);
-botao_voltar = ui_area(232,560,380,60);
-botao_menu = ui_area(668,560,380,60);
+global.jogo.fase=FaseJogo.RESULTADOS;entrada_pronta=false;
+resumo=dashboard_calcular(global.jogo);reflexoes=dashboard_reflexoes(global.jogo,resumo);
+eventos=dashboard_eventos(global.jogo);layout=dashboard_layout();aba_dashboard=0;pagina_dashboard=0;

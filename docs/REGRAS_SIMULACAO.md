@@ -6,11 +6,11 @@ de mercado, receitas culinárias, orientação empresarial ou medidas reais.
 
 ## Parâmetros iniciais editáveis
 
-Em Novo jogo / Parâmetros, são editáveis caixa inicial, capacidade diária,
+Em Novo jogo / Parâmetros, são editáveis duração em dias de operação, caixa inicial, capacidade diária,
 quantidade mínima/máxima das ofertas, prazo de entrega, validade de aceite,
 estoque inicial/mínimo, custo unitário e prazo de cada ingrediente, além de
 preço de venda, custo variável, capacidade por unidade e cada quantidade de
-ingrediente das receitas. São 50 campos no catálogo inicial, em nove páginas.
+ingrediente das receitas. São 51 campos no catálogo inicial, em nove páginas.
 Os limites numéricos são validados antes de iniciar a sessão.
 
 | Insumo | Inicial | Mínimo | Custo unitário | Reposição |
@@ -147,3 +147,24 @@ Não há save/load, perecimento, entregas parciais, contratação ou IA de empre
 A produção tem execução diária, sem animação de duração intradiária. Os gráficos
 isométricos e funcionários são preservados como representações visuais.
 Não há juros, crédito, multa por atraso ou pedido sumindo por vencimento.
+
+## Período finito, pausa e aprendizagem na V0.1
+
+A duração padrão é cinco dias de operação (editável de 1 a 60). Dia 1 é
+preparação; cada avanço processa o dia seguinte e soma um a dias_processados.
+Após o último, não se geram novas ofertas, novas ações são bloqueadas e o
+dashboard abre. Pedidos, compras em trânsito, planos e estoques são preservados.
+Pausar bloqueia decisões econômicas e dias sem bloquear consultas. Resultado
+negativo não provoca encerramento antecipado.
+
+O diário registra data da simulação, ação e consequência. Casos pedagógicos
+são consultas extensíveis, sem penalidades econômicas. Todas as reflexões
+disparadas ficam registradas; a maior prioridade aparece no balão.
+
+Pontualidade = entregas no prazo / entregas realizadas × 100. Utilização =
+capacidade usada nos dias registrados / (dias processados × capacidade diária) × 100.
+Sem denominador, exibir não aplicável. Zero de produção com dias disponíveis
+gera 0%, pois há dados suficientes. Aceitos incluem os já entregues;
+recebidos são ofertas únicas. Nunca tratar pedido aberto atrasado como entregue.
+
+Manuais: MANUAL_DO_ALUNO.md e MANUAL_DO_PROFESSOR.md.

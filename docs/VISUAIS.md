@@ -2,7 +2,7 @@
 
 Todos os gráficos desta etapa foram desenhados originalmente em GML.
 Não há sprites baixados, fontes externas, assets pagos ou licenças de terceiros
-associadas ao cenário. Os cinco novos scripts estão registrados no .yyp com .yy.
+associadas ao cenário. Os scripts de desenho estão registrados no .yyp com .yy.
 Não são necessários recursos GMSprite enquanto o desenho usa primitivas.
 
 ## Composição
@@ -74,3 +74,6 @@ Procedimento recomendado:
 
 A fonte atual é um alfabeto bitmap 5×7 definido em GML com acentos desenhados.
 Ela evita depender da fonte interna limitada e mantém a interface legível.
+
+Na V0.1, os balões em scr_pedagogia usam os mesmos botões/fonte GML.
+Capturas em docs/imagens são evidências de documentação, não assets executados pelo jogo.

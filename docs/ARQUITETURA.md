@@ -2,7 +2,7 @@
 
 Projeto original preservado: `BLANK GAMEFabricaDeSalgados.yyp`.
 GameMaker IDE 2026.0.0.16, runtime 2026.0.0.23; lógica e desenho inteiramente GML.
-São **26 recursos**: cinco salas, cinco objetos e dezesseis scripts, todos com
+São **29 recursos**: cinco salas, cinco objetos e dezenove scripts, todos com
 metadados .yy registrados no .yyp. Room1 e as opções originais permanecem intactas.
 
 ## Salas e controladores
@@ -48,6 +48,9 @@ sem executar a simulação no carregamento.
 | scr_isometria | Projeção e inversa, prismas, mobiliário e quatro pessoas por primitivas GML. |
 | scr_cenario | Dados dos setores, ordenação, desenho em superfície 640×360 ampliada 2×. |
 | scr_fabrica_interface | Layout, prioridade de cliques, seletores, painéis de ações e resumo diário. |
+| scr_pedagogia | Diário, balões e catálogo de casos por evento, sem alterar economia. |
+| scr_dashboard | Agregação real, fórmulas, reflexão e seis abas da análise final/parcial. |
+| scr_testes_v01 | Testes de período, métricas, feedback e driver opcional de partida. |
 | scr_testes_simulacao | Auditoria de conservação e testes opcionais; não executam na sessão normal. |
 
 ## Estado compartilhado e registros
@@ -109,3 +112,21 @@ Python em tools é somente automação de desenvolvimento; nenhum código Python
 JavaScript ou C# participa da lógica do jogo.
 
 Verificações reproduzíveis em [VALIDACAO.md](VALIDACAO.md).
+
+## Extensão V0.1
+
+global.jogo acrescenta duracao_dias nos parâmetros e, na sessão, dias_processados,
+encerrado, pausado, diario, feedbacks e fala_atual. Guardas de domínio impedem
+ações durante a pausa ou após o fim. A rotina diária encerra depois do número
+configurado de processamentos, sem novas ofertas no último dia. A interface
+encaminha para rm_resultados, que agora é o dashboard completo.
+
+dashboard_calcular usa registros de pedidos, lotes, estoque, movimentos e
+histórico de dias. Proporções sem denominador retornam undefined e são formatadas
+como não aplicável. Dashboard e feedback final são consultas sem efeitos.
+O catálogo pedagógico contém funções fora do estado serializado; as falas e
+o diário armazenam somente dados. Professores podem ampliar predicados/mensagens
+conforme MANUAL_DO_PROFESSOR.md. Casos não cobram nem retiram recursos.
+
+O modo --partida substitui eventos Step apenas na cópia de teste e navega pelas
+salas reais. O jogo normal nunca inicia o driver nem executa as suítes sozinho.

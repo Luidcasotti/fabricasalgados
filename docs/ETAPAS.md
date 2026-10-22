@@ -1,36 +1,22 @@
-# Etapas — 21/10/2026
+# Etapas — V0.1 — 21/10/2026
 
-## Implementado e verificado
+- [x] Projeto existente preservado em GameMaker/GML, com fábrica isométrica e três setores.
+- [x] Cinco insumos, receitas e parâmetros editáveis, validação e restauração de padrões.
+- [x] Compras com prazo, produção com reservas, fila e histórico de encomendas.
+- [x] Duração finita e encerramento automático sem apagar pendências.
+- [x] Pausa, revisão, retomada, reinício e menu.
+- [x] Dashboard com dados reais, fórmulas, não aplicável e feedback contextual.
+- [x] Balões de personagens e diário de ações/consequências por data da simulação.
+- [x] Manuais de aluno/professor, extensão de casos e melhorias futuras documentados.
+- [x] 29 recursos: referências, eventos, inicialização e navegação conferidos.
+- [x] Compilação Windows/VM e 172 verificações aprovadas, incluindo partida completa e reinício.
+- [x] Inspeção das capturas de todas as abas e dos balões.
+- [x] Projeto reaberto na IDE e árvore de 29 recursos lida pelo GMSync no VS Code.
 
-- Projeto existente preservado em GameMaker/GML, com fábrica isométrica e três setores.
-- Cinco insumos: farinha, frango, queijo, óleo e embalagens; dados iniciais editáveis.
-- Receitas, preços, custo variável e capacidade por salgado configuráveis.
-- Compras pagas no ato, trânsito e chegada por prazo; mínimo gera aviso, não compra.
-- Quantidades selecionáveis; planejamento com reservas e cancelamento antes da execução.
-- Encomendas únicas por produto/dia, aceite/recusa, fila e histórico preservados.
-- Entregas por produtos acabados, pontualidade e atrasos registrados.
-- Avanço manual: chegadas → produção → entregas → prazos/ofertas → resumo paginado.
-- Finanças separadas em receitas, compras, custos variáveis e resultado de caixa.
-- Aviso explícito de números fictícios para aprendizagem nas telas e documentação.
-- 26 recursos com referências, eventos e instâncias válidos.
-- 94 verificações passaram no runtime Windows/VM, sem falhas: [VALIDACAO.md](VALIDACAO.md).
-- Git inicializado em main, com autor Luidcasotti e endereço privado noreply escolhido.
+Backups fora do repositório: antes-simulacao-principal.zip e antes-aprendizado-v01.zip
+em C:\fabrica\.backups. Histórico Git preserva o protótipo e a simulação anterior
+em commits separados. Repositório: https://github.com/Luidcasotti/fabricasalgados.
 
-## Preservação
-
-Antes desta tarefa foi feita a cópia `C:\fabrica\.backups\antes-simulacao-principal.zip`.
-O protótipo anterior foi preservado como primeiro commit do repositório; esta
-etapa é uma evolução separada. Room1, opções, cenário isométrico e recursos
-válidos não foram recriados. Novos .yy foram gerados pelo GMSync e normalizados
-pelo ProjectTool da instalação.
-
-Repositório de destino: https://github.com/Luidcasotti/fabricasalgados.
-A sincronização final é conferida comparando o commit local ao main remoto.
-
-## Próximos passos
-
-Avaliar as regras com alunos, calibrar números didáticos e objetivos de
-aprendizagem, decidir persistência de partidas e encerramento da atividade.
-Funcionários seguem estáticos; não há IA, perecimento, contabilidade completa,
-multas, crédito ou entregas parciais. As regras atuais estão em
-[REGRAS_SIMULACAO.md](REGRAS_SIMULACAO.md).
+Próximas etapas são melhorias de escopo, não correções de bloqueadores conhecidos:
+validação com turmas, persistência/exportação, acessibilidade e novos cenários.
+Consulte RELATORIO_V01.md e MELHORIAS_FUTURAS.md.

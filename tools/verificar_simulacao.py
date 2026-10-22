@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 
 root = Path(__file__).resolve().parents[1]
 programdata = Path(os.environ.get('PROGRAMDATA', r'C:\ProgramData'))
@@ -14,6 +15,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--runtime', type=Path, default=programdata/'GameMakerStudio2-LTS2026/Cache/runtimes/runtime-2026.0.0.23')
 parser.add_argument('--usuario-runtime', type=Path, default=appdata/'GameMakerStudio2-LTS2026/unknownUser_unknownUserID')
 parser.add_argument('--destino', type=Path, default=root/'.testes'/datetime.now().strftime('%Y%m%d-%H%M%S'))
+parser.add_argument('--partida', action='store_true', help='Percorre as salas reais, termina, revê o dashboard e reinicia.')
 args = parser.parse_args()
 runtime, target = args.runtime.resolve(), args.destino.resolve()
 igor, runner = runtime/'bin/igor/windows/x64/Igor.exe', runtime/'windows/x64/Runner.exe'
@@ -28,14 +30,22 @@ for pattern in ('*.yyp', '*.resource_order'):
     for file in root.glob(pattern): shutil.copy2(file, target/file.name)
 yyp, = target.glob('*.yyp')
 with (target/'objects/obj_game/Create_0.gml').open('a', encoding='utf-8') as stream:
-    stream.write('''
+    if args.partida:
+        stream.write('\nglobal.teste_etapa=0;global.teste_ticks=0;global.teste_checks=0;\n')
+    else:
+        stream.write('''
 var _testes = testes_simulacao_executar();
 if (!_testes.ok) throw "FDS_SIMULACAO_FALHOU: " + json_stringify(_testes.falhas);
 var _interface = testes_interface_simulacao_executar();
 if (!_interface.ok) throw "FDS_INTERFACE_FALHOU: " + json_stringify(_interface.falhas);
+var _v01 = testes_v01_executar();
+if (!_v01.ok) throw "FDS_V01_FALHOU: " + json_stringify(_v01.falhas);
 show_debug_message("FDS_SIMULACAO_APROVADA");
 game_end();
 ''')
+if args.partida:
+    for obj in ('obj_menu','obj_parametros','obj_fabrica','obj_resultados'):
+        (target/f'objects/{obj}/Step_0.gml').write_text('teste_v01_navegar();\n', encoding='utf-8')
 build = target/'build'
 build.mkdir()
 command = [str(igor), f'--project={yyp}', '--runtime=VM', f'--runtimePath={runtime}',
@@ -49,13 +59,34 @@ if result.returncode:
     sys.exit(result.returncode)
 game, = build.glob('*.win')
 with (target/'execucao.log').open('w', encoding='utf-8') as log:
+    started = time.time()
     startup = subprocess.STARTUPINFO()
     startup.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     startup.wShowWindow = 0
-    result = subprocess.run([str(runner), '-game', str(game)], stdout=log,
-                            stderr=subprocess.STDOUT, timeout=30, startupinfo=startup)
+    try:
+        result = subprocess.run([str(runner), '-game', str(game)], stdout=log,
+                                stderr=subprocess.STDOUT, timeout=30, startupinfo=startup)
+    except subprocess.TimeoutExpired:
+        print(f'FALHA: execução não concluiu em 30s. Confira {target/"execucao.log"}')
+        sys.exit(1)
 output = (target/'execucao.log').read_text(encoding='utf-8', errors='replace')
 for line in output.splitlines():
     if any(marker in line for marker in ('FDS_', 'FALHA:', 'ERROR', 'not set')): print(line)
 print(f'Evidências: {target}')
-if result.returncode or 'FDS_SIMULACAO_APROVADA' not in output or 'ERROR in action' in output: sys.exit(1)
+marker = 'FDS_PARTIDA_APROVADA' if args.partida else 'FDS_SIMULACAO_APROVADA'
+if result.returncode or marker not in output or 'ERROR in action' in output: sys.exit(1)
+if args.partida:
+    folder_line = next((line for line in output.splitlines() if line.startswith('FDS_CAPTURAS_DIR: ')), '')
+    if folder_line:
+        captures = Path(folder_line.removeprefix('FDS_CAPTURAS_DIR: ').strip())
+        candidates = list(captures.glob('fds-v01-*.png'))
+        # screen_save respeita o sandbox do GameMaker, que pode diferir de working_directory.
+        localdata = Path(os.environ.get('LOCALAPPDATA', str(Path.home()/'AppData/Local')))
+        candidates.extend(localdata.glob('*/fds-v01-*.png'))
+        for file in candidates:
+            if file.stat().st_mtime >= started - 1 and file.resolve().parent != target:
+                shutil.copy2(file, target/file.name)
+    expected = [f'fds-v01-dashboard-{i}.png' for i in range(6)]
+    if not all((target/name).is_file() for name in expected):
+        print('FALHA: partida passou, mas faltam capturas das seis abas para inspeção.')
+        sys.exit(1)

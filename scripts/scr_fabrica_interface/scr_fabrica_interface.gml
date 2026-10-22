@@ -3,7 +3,7 @@ function fabrica_layout() {
         painel:ui_area(600,110,656,494),fechar:ui_area(1192,122,48,48),
         abas:[ui_area(300,622,300,56),ui_area(614,622,300,56),ui_area(928,622,328,56)],
         etiquetas:[ui_area(592,151,200,38),ui_area(356,352,176,38),ui_area(1038,290,202,38)],
-        avancar:ui_area(42,536,214,52),resumo:ui_area(42,464,214,48),
+        avancar:ui_area(42,536,214,52),resumo:ui_area(42,464,214,48),pausa:ui_area(42,420,214,36),
         subtabs:[ui_area(624,184,190,44),ui_area(824,184,190,44),ui_area(1024,184,206,44)],
         anterior:ui_area(624,244,140,44),proximo:ui_area(1090,244,140,44),
         aceitar:ui_area(624,488,288,56),recusar:ui_area(934,488,296,56),
@@ -11,15 +11,23 @@ function fabrica_layout() {
         confirmar:ui_area(624,494,606,56),
         resumo_anterior:ui_area(624,546,190,42),resumo_proximo:ui_area(1040,546,190,42)};
 }
-function fabrica_notificar(_r) {mensagem=_r.mensagem;mensagem_ok=_r.ok;mensagem_tempo=room_speed*10;}
+function fabrica_notificar(_r,_acao="AÇÃO") {
+    mensagem=_r.mensagem;mensagem_ok=_r.ok;mensagem_tempo=room_speed*10;
+    if(!_r.ok) pedagogia_tentativa(global.jogo,_acao,_r.mensagem);
+}
 function fabrica_clicar(_mx,_my) {
     var _l=layout,_j=global.jogo;
     if(ui_contem(_l.menu,_mx,_my)) {jogo_ir_para(FaseJogo.MENU);return;}
     if(ui_contem(_l.resultados,_mx,_my)) {jogo_ir_para(FaseJogo.RESULTADOS);return;}
-    if(ui_contem(_l.resumo,_mx,_my)) {painel="resumo";resumo_pagina=0;return;}
+    if(ui_contem(_l.pausa,_mx,_my)) {simulacao_pausar(_j);return;}
+    if(_j.fala_visivel && ui_contem(ui_area(528,122,44,44),_mx,_my)) {_j.fala_visivel=false;return;}
+    if(_j.fala_visivel && ui_contem(ui_area(300,110,282,494),_mx,_my)) return;
+    if(ui_contem(_l.resumo,_mx,_my)) {painel="diario";diario_aba="decisoes";diario_pagina=0;return;}
     if(ui_contem(_l.avancar,_mx,_my)) {
-        if(painel!="resumo") {
-            fabrica_notificar(simulacao_avancar_dia(_j));painel="resumo";resumo_pagina=0;
+        if(painel!="resumo" && painel!="diario") {
+            fabrica_notificar(simulacao_avancar_dia(_j),"AVANÇAR DIA");
+            if(_j.encerrado) {jogo_ir_para(FaseJogo.RESULTADOS);return;}
+            if(!_j.pausado) {painel="resumo";resumo_pagina=0;}
         }
         return;
     }
@@ -34,6 +42,13 @@ function fabrica_clicar(_mx,_my) {
                 case "resumo":
                     if(ui_contem(_l.resumo_anterior,_mx,_my)) resumo_pagina=max(0,resumo_pagina-1);
                     if(ui_contem(_l.resumo_proximo,_mx,_my)) resumo_pagina=min(ceil(array_length(_j.ultimo_resumo.eventos)/3)-1,resumo_pagina+1);
+                    break;
+                case "diario":
+                    if(ui_contem(_l.subtabs[0],_mx,_my)) {diario_aba="decisoes";diario_pagina=0;}
+                    if(ui_contem(_l.subtabs[1],_mx,_my)) {diario_aba="eventos";diario_pagina=0;}
+                    var _paginas=diario_aba=="decisoes"?max(1,array_length(_j.diario)):max(1,ceil(array_length(_j.ultimo_resumo.eventos)/3));
+                    if(ui_contem(_l.resumo_anterior,_mx,_my)) diario_pagina=max(0,diario_pagina-1);
+                    if(ui_contem(_l.resumo_proximo,_mx,_my)) diario_pagina=min(_paginas-1,diario_pagina+1);
                     break;
             }
             return;
@@ -53,8 +68,8 @@ function fabrica_clique_comercial(_mx,_my) {
     if(ui_contem(layout.proximo,_mx,_my)) pedido_indice=min(array_length(_lista)-1,pedido_indice+1);
     if(comercial_aba=="ofertas") {
         var _pedido=_lista[pedido_indice];
-        if(ui_contem(layout.aceitar,_mx,_my)) fabrica_notificar(pedido_decidir(global.jogo,_pedido.id,true));
-        if(ui_contem(layout.recusar,_mx,_my)) fabrica_notificar(pedido_decidir(global.jogo,_pedido.id,false));
+        if(ui_contem(layout.aceitar,_mx,_my)) fabrica_notificar(pedido_decidir(global.jogo,_pedido.id,true),"ACEITAR PEDIDO");
+        if(ui_contem(layout.recusar,_mx,_my)) fabrica_notificar(pedido_decidir(global.jogo,_pedido.id,false),"RECUSAR PEDIDO");
     }
 }
 function fabrica_clique_estoque(_mx,_my) {
@@ -64,7 +79,7 @@ function fabrica_clique_estoque(_mx,_my) {
     if(ui_contem(layout.menos,_mx,_my)) compra_quantidade=max(1,compra_quantidade-1);
     if(ui_contem(layout.mais,_mx,_my)) compra_quantidade=min(1000,compra_quantidade+1);
     if(ui_contem(layout.confirmar,_mx,_my)) fabrica_notificar(compra_realizar(global.jogo,
-        global.jogo.catalogo.ingredientes[ingrediente_indice].id,compra_quantidade));
+        global.jogo.catalogo.ingredientes[ingrediente_indice].id,compra_quantidade),"COMPRAR");
 }
 function fabrica_clique_producao(_mx,_my) {
     if(ui_contem(layout.subtabs[0],_mx,_my)) {producao_aba="novo";return;}
@@ -74,7 +89,7 @@ function fabrica_clique_producao(_mx,_my) {
         plano_indice=clamp(plano_indice,0,array_length(_planos)-1);
         if(ui_contem(layout.anterior,_mx,_my)) plano_indice=max(0,plano_indice-1);
         if(ui_contem(layout.proximo,_mx,_my)) plano_indice=min(array_length(_planos)-1,plano_indice+1);
-        if(ui_contem(layout.confirmar,_mx,_my)) fabrica_notificar(producao_cancelar(global.jogo,_planos[plano_indice].id));
+        if(ui_contem(layout.confirmar,_mx,_my)) fabrica_notificar(producao_cancelar(global.jogo,_planos[plano_indice].id),"CANCELAR PLANO");
         return;
     }
     var _n=array_length(global.jogo.catalogo.produtos);
@@ -83,7 +98,7 @@ function fabrica_clique_producao(_mx,_my) {
     if(ui_contem(layout.menos,_mx,_my)) producao_quantidade=max(1,producao_quantidade-1);
     if(ui_contem(layout.mais,_mx,_my)) producao_quantidade=min(1000,producao_quantidade+1);
     if(ui_contem(layout.confirmar,_mx,_my)) fabrica_notificar(producao_agendar(global.jogo,
-        global.jogo.catalogo.produtos[produto_indice].id,producao_quantidade));
+        global.jogo.catalogo.produtos[produto_indice].id,producao_quantidade),"PLANEJAR PRODUÇÃO");
 }
 function fabrica_cabecalho() {
     var _v=global.visual,_j=global.jogo;ui_titulo("SIMULAÇÃO / VALORES FICTÍCIOS");
@@ -96,14 +111,16 @@ function fabrica_guia() {
     var _v=global.visual,_j=global.jogo,_r=indicadores_calcular(_j);
     ui_cartao(24,112,250,492,_v.claro);ui_texto(42,136,"PAINEL DO GESTOR",2,_v.tinta);
     draw_set_color(_v.laranja);draw_rectangle(42,168,254,172,false);
-    ui_texto(42,198,"PLANEJE O DIA",2,_v.suave);ui_texto(42,230,string(_j.dia+1),3,_v.tinta);
+    ui_texto(42,182,"OPERAÇÃO: "+string(_j.dias_processados)+" / "+string(_j.parametros.duracao_dias)+" DIAS",1,_v.suave);
+    ui_texto(42,198,_j.pausado?"PAUSADA":"PLANEJE O DIA",2,_v.suave);ui_texto(42,230,string(_j.dia+1),3,_v.tinta);
     ui_texto(42,262,"CAIXA LIVRE: "+financas_formatar(financas_livre(_j)),1,_v.verde);
     ui_texto(42,280,"CAP. RESERVADA",2,_v.suave);
     ui_texto(42,312,string(producao_reserva_capacidade(_j))+" / "+string(_j.parametros.capacidade_diaria),2,_v.azul);
     ui_texto(42,356,"PRODUTOS PRONTOS",2,_v.suave);ui_texto(42,388,string(_r.unidades_em_estoque),2,_v.tinta);
-    ui_texto(42,428,"ATRASADOS NA FILA: "+string(_r.abertos_atrasados),1,_v.laranja);
-    ui_botao(layout.resumo,"ÚLTIMO RESUMO",_v.tinta);
-    ui_botao(layout.avancar,"AVANÇAR DIA",_v.laranja,painel!="resumo");
+    ui_texto(42,408,"ATRASADOS NA FILA: "+string(_r.abertos_atrasados),1,_v.laranja);
+    ui_botao(layout.pausa,_j.pausado?"RETOMAR":"PAUSAR",_v.azul);
+    ui_botao(layout.resumo,"DIÁRIO / RESUMO",_v.tinta);
+    ui_botao(layout.avancar,"AVANÇAR DIA",_v.laranja,painel!="resumo" && painel!="diario" && !_j.pausado);
 }
 function fabrica_seletor(_texto) {
     ui_botao(layout.anterior,"ANTERIOR",global.visual.tinta);
@@ -195,13 +212,14 @@ function fabrica_painel_resumo() {
 function fabrica_desenhar_painel() {
     var _v=global.visual;draw_set_alpha(.14);draw_set_color(_v.tinta);draw_rectangle(300,100,1279,610,false);draw_set_alpha(1);
     ui_cartao(600,110,656,494,_v.claro);
-    ui_texto(624,140,painel=="producao"?"PRODUÇÃO":string_upper(painel),3,_v.tinta);
+    ui_texto(624,140,painel=="producao"?"PRODUÇÃO":(painel=="diario"?"DIÁRIO":string_upper(painel)),3,_v.tinta);
     ui_botao(layout.fechar,"X",_v.tinta);
     switch(painel) {
         case "comercial":fabrica_painel_comercial();break;
         case "estoque":fabrica_painel_estoque();break;
         case "producao":fabrica_painel_producao();break;
         case "resumo":fabrica_painel_resumo();break;
+        case "diario":fabrica_painel_diario();break;
     }
 }
 function fabrica_desenhar() {
@@ -213,8 +231,25 @@ function fabrica_desenhar() {
         ui_botao(layout.abas[_i],cenario.setores[_i].nome,_cores[_i],true,painel==cenario.setores[_i].id);
     }
     ui_botao(layout.resultados,"RESULTADOS",_v.tinta);
-    if(painel!="") fabrica_desenhar_painel();fabrica_cabecalho();
+    if(painel!="") fabrica_desenhar_painel();
+    pedagogia_desenhar_fala(global.jogo);fabrica_cabecalho();
     draw_set_color(_v.tinta);draw_rectangle(24,692,1256,718,false);
     ui_texto(38,700,mensagem_tempo>0?mensagem:fabrica_aviso(global.jogo),1,
         mensagem_tempo>0 && !mensagem_ok?_v.ouro:_v.claro);
+}
+
+function fabrica_painel_diario() {
+    var _v=global.visual,_j=global.jogo;
+    ui_botao(layout.subtabs[0],"DECISÕES",_v.azul,true,diario_aba=="decisoes");
+    ui_botao(layout.subtabs[1],"ÚLTIMO DIA",_v.azul,true,diario_aba=="eventos");
+    var _paginas=diario_aba=="decisoes"?max(1,array_length(_j.diario)):max(1,ceil(array_length(_j.ultimo_resumo.eventos)/3));
+    diario_pagina=clamp(diario_pagina,0,_paginas-1);
+    if(diario_aba=="decisoes") dashboard_diario(_j,diario_pagina,624,252,606);
+    else for(var _i=0;_i<3;_i++) {
+        var _idx=diario_pagina*3+_i;if(_idx>=array_length(_j.ultimo_resumo.eventos)) break;
+        ui_paragrafo(624,252+_i*88,_j.ultimo_resumo.eventos[_idx],606,_v.tinta);
+    }
+    ui_botao(layout.resumo_anterior,"ANTERIOR",_v.tinta,diario_pagina>0);
+    ui_botao(layout.resumo_proximo,"PRÓXIMA",_v.tinta,diario_pagina<_paginas-1);
+    ui_centro(926,560,string(diario_pagina+1)+" / "+string(_paginas),2,_v.tinta);
 }
