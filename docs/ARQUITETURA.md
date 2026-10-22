@@ -1,7 +1,7 @@
 # Arquitetura — exploração da fábrica
 
 Projeto existente: `BLANK GAMEFabricaDeSalgados.yyp`, GameMaker/GML Code.
-44 recursos: **10 salas, 7 objetos, 26 scripts, 1 sprite**. Os recursos novos
+91 recursos: **10 salas, 30 objetos, 27 scripts, 24 sprites**. Os recursos novos
 foram criados pelos escritores do GMSync e normalizados/abertos pelo ProjectTool
 oficial. Não houve recriação do projeto. Room1 e opções originais foram preservadas.
 
@@ -111,3 +111,25 @@ controlam o avanço; fila de falas/respostas persiste entre salas. Produção gu
 é confirmada após 90 frames; checkpoint serializa somente dados, sem referências
 a instâncias. Leia MISSOES_E_HISTORIA.md para contratos e extensão por alunos.
 O modo livre e as rotinas de regressão continuam sem estado de missões.
+
+
+## Recursos visuais editáveis da aula
+
+23 sprites novos e 23 objetos de apresentação `obj_aula_*` foram registrados
+pelo GMSync e normalizados pelo ProjectTool oficial. O sprite do cozinheiro e
+seus oito quadros foram preservados. Há 28 instâncias visuais adicionais nas
+quatro salas físicas; a ordem dos três controladores originais foi mantida.
+
+`scr_visuais_alunos` consulta o sprite associado ao objeto e o desenha na
+projeção e profundidade do mapa original. Os objetos visuais só suprimem o Draw
+local para evitar desenho duplicado, sem Create, Step, colisões ou persistência.
+Decorações de parede são apenas apresentação. Etiquetas são desenhadas após
+os móveis para permanecer legíveis. Os retratos leem os sprites reais do
+cozinheiro e do gerente. Nenhum script de simulação foi reorganizado.
+
+As únicas adaptações de scripts existentes ficam na apresentação de
+`mundo_desenhar` e `historia_retrato`. Movimento, volumes, alvos, missões,
+estoques, produção e finanças permanecem idênticos à base. O manifesto
+`tools/recursos_visuais_alunos.json` registra posições, dimensões/origens,
+associações e hashes da lógica protegida. `tools/verificar_visuais.py` confere
+o contrato. Veja o [guia dos alunos](atividades_alunos/GUIA_DE_SPRITES.md).

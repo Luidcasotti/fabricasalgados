@@ -141,11 +141,10 @@ function mundo_desenhar(_m) {
         iso_laje(_u,_v,1,1,0,((_u+_v) mod 2==0)?make_color_rgb(190,202,182):make_color_rgb(181,194,176),true);
     iso_caixa(-.2,-.2,_m.w+.4,.2,30,make_color_rgb(143,167,155));
     iso_caixa(-.2,0,.2,_m.h,30,make_color_rgb(129,152,148));
+    visuais_alunos_ambiente(_m.setor);
     for(var _i=0;_i<array_length(_m.alvos);_i++) {
         var _a=_m.alvos[_i],_p=mundo_projetar(_a.u,_a.v);
         if(_a.tipo=="porta") {iso_laje(_a.u-.8,_a.v-.8,1.6,1.6,.5,global.visual.ouro,true);}
-        ui_centro(_p.x,_p.y-47,_a.nome,1,global.visual.claro);
-        if(_a.tipo=="porta")ui_centro(_p.x,_p.y-35,"PORTA / E",1,global.visual.ouro);
     }
     var _lista=[];
     for(var _i=0;_i<array_length(_m.moveis);_i++) {
@@ -159,8 +158,15 @@ function mundo_desenhar(_m) {
         if(_o.tipo=="jogador") {
             var _a=_o.dados;draw_set_color(make_color_rgb(119,137,119));draw_ellipse(_a.x-6,_a.y-2,_a.x+6,_a.y+2,false);
             draw_sprite(spr_cozinheiro_temp,_a.face*2+(floor(_a.animacao/9) mod 2),round(_a.x),round(_a.y));
-        } else if(_o.dados.tipo=="npc")iso_pessoa(_o.dados.u,_o.dados.v,_o.dados.papel);
+        } else if(visuais_alunos_movel(_o.dados,_m.setor))continue;
+        else if(_o.dados.tipo=="npc")iso_pessoa(_o.dados.u,_o.dados.v,_o.dados.papel);
         else iso_movel(_o.dados);
+    }
+    // Placas e nomes ficam legiveis sobre o mobiliario, sem alterar os alvos E.
+    for(var _i=0;_i<array_length(_m.alvos);_i++) {
+        var _a=_m.alvos[_i],_p=mundo_projetar(_a.u,_a.v);
+        if(!visuais_alunos_rotulo(_a))ui_centro(_p.x,_p.y-47,_a.nome,1,global.visual.claro);
+        if(_a.tipo=="porta")ui_centro(_p.x,_p.y-35,"PORTA / E",1,global.visual.ouro);
     }
     global.iso_mundo=false;draw_set_color(c_white);
 }

@@ -239,6 +239,7 @@ function historia_desenhar(_c) {
 
 /// Retratos provisórios próprios em GML: recepção visível mesmo com a conversa aberta.
 function historia_retrato(_x,_y,_chef) {
+    if(visuais_alunos_retrato(_x,_y,_chef))return;
     var _v=global.visual;
     draw_set_color(_v.tinta);draw_rectangle(_x-14,_y-20,_x-3,_y,false);draw_rectangle(_x+3,_y-20,_x+14,_y,false);
     draw_set_color(_chef?_v.claro:_v.azul);draw_rectangle(_x-20,_y-58,_x+20,_y-20,false);

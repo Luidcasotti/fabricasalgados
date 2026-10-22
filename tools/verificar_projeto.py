@@ -47,7 +47,8 @@ for name, relative in resources.items():
                 assert (path.parent/'layers'/frame['name']/(layer['name']+'.png')).is_file()
     if name.startswith('rm_'):
         instances = [i for layer in resource['layers'] for i in layer.get('instances', [])]
-        assert len(instances) == (3 if name in ('rm_corredor','rm_comercial','rm_producao','rm_estoque') else 2) and instances[0]['objectId']['name'] == 'obj_game'
+        core = [i for i in instances if not i['objectId']['name'].startswith('obj_aula_')]
+        assert len(core) == (3 if name in ('rm_corredor','rm_comercial','rm_producao','rm_estoque') else 2) and core[0]['objectId']['name'] == 'obj_game'
         assert [i['name'] for i in instances] == [i['name'] for i in resource['instanceCreationOrder']]
 assert read(root/resources['obj_game'])['persistent'] is True
 for obj in ('obj_exploracao','obj_cozinheiro'):

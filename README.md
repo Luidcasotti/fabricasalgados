@@ -1,4 +1,4 @@
-# Fábrica de Salgados — missões e aprendizagem
+# Fábrica de Salgados — atividade visual em sala
 
 Jogo educacional em **GameMaker / GML Code**. Caminhe pela fábrica, transporte
 ingredientes, cozinhe e entregue encomendas. Valores e receitas são **fictícios
@@ -31,8 +31,20 @@ final continuam disponíveis. Não há Game Over por resultado negativo.
 ![Receita presencial](docs/imagens/exploracao-producao.png)
 
 Ambiente: IDE **2026.0.0.16**, runtime **2026.0.0.23**, Windows/VM.
-São **44 recursos registrados**: dez salas, sete objetos, 26 scripts e um sprite
-próprio com oito quadros. Sem dependências externas obrigatórias ou assets pagos.
+São **91 recursos registrados**: dez salas, 30 objetos, 27 scripts e 24 sprites
+próprios (o cozinheiro mantém seus oito quadros). Sem dependências externas obrigatórias ou assets pagos.
+
+## Aula de 23/10/2026
+
+Há **24 sprites personalizáveis**, associados aos objetos e usados no jogo:
+Comercial (4), Produção (5), Estoque (10) e Personagens (5). A arte é simples de
+propósito. Edite as imagens pela IDE, preservando dimensões/origens; as colisões,
+interações e missões continuam no sistema existente.
+
+- [Roteiro da aula e divisão dos grupos](docs/atividades_alunos/ROTEIRO_DA_AULA.md)
+- [Guia de sprites: nomes reais, origens e associações](docs/atividades_alunos/GUIA_DE_SPRITES.md)
+- [Comercial](docs/atividades_alunos/ATIVIDADE_COMERCIAL.md), [Produção](docs/atividades_alunos/ATIVIDADE_PRODUCAO.md), [Estoque](docs/atividades_alunos/ATIVIDADE_ESTOQUE.md) e [Personagens](docs/atividades_alunos/ATIVIDADE_PERSONAGENS.md)
+- [Relatório da preparação e testes](docs/RELATORIO_AULA.md)
 
 ## Documentação e desenvolvimento
 
@@ -50,6 +62,7 @@ somente GML; Python é automação opcional de desenvolvimento.
 
 ```powershell
 python tools/verificar_projeto.py
+python tools/verificar_visuais.py
 python tools/verificar_simulacao.py
 python tools/verificar_simulacao.py --partida
 ```

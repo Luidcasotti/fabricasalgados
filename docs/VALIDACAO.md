@@ -82,3 +82,20 @@ teclado/mouse físicos, acessibilidade ou aprendizagem de estudantes reais.
 Faltam avaliação humana e outras plataformas/resoluções/YYC. Arte e retratos
 provisórios. Não há persistência em disco: checkpoint e Continuar duram somente
 enquanto o programa está aberto. Nenhum bloqueador apareceu nos percursos testados.
+
+
+## Preparação visual para a aula — 22/10/2026
+
+O [relatório da aula](RELATORIO_AULA.md) e `evidencias-aula.json` registram os
+checks atuais. ProjectTool SAVE/OPEN aceitou os 91 recursos; a compilação normal
+Windows/VM confirmou 24 sprites, 30 objetos e dez salas. A suíte de regras
+passou com 297 checks; o modo livre com 123 e a história negociada com 206
+(total 626, com verificações comuns). A missão inicial foi executada até a
+entrega; a história também concluiu o segundo pedido e o dashboard/reinício.
+
+`python tools/verificar_visuais.py` valida 24 sprites/31 quadros PNG, dimensões,
+origens, transparência, associações, 28 instâncias e hashes dos 26 módulos de
+lógica anteriores. Só funções de desenho receberam integração visual.
+Os ramos comprar/recusar conservam os testes da etapa anterior; não foram
+reexecutados nesta alteração exclusivamente visual. A avaliação humana da turma
+e a execução em outros computadores/plataformas continuam pendentes.

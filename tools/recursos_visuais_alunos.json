@@ -1,0 +1,574 @@
+{
+  "versao": 1,
+  "sprites": [
+    {
+      "sprite": "spr_com_balcao_aula",
+      "objeto": "obj_aula_com_balcao",
+      "grupo": "COMERCIAL",
+      "descricao": "Balcão de entrega",
+      "largura": 128,
+      "altura": 128,
+      "origem_x": 64,
+      "origem_y": 80,
+      "desenho": "movel:balcao",
+      "instancias": [
+        {
+          "sala": "rm_comercial",
+          "u": 16,
+          "v": 7,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "balcao",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_com_computador_aula",
+      "objeto": "obj_aula_com_computador",
+      "grupo": "COMERCIAL",
+      "descricao": "Mesa com computador de vendas",
+      "largura": 128,
+      "altura": 128,
+      "origem_x": 64,
+      "origem_y": 80,
+      "desenho": "movel:mesa",
+      "instancias": [
+        {
+          "sala": "rm_comercial",
+          "u": 9,
+          "v": 3,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "mesa",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_com_placa_aula",
+      "objeto": "obj_aula_com_placa",
+      "grupo": "COMERCIAL",
+      "descricao": "Placa COMERCIAL",
+      "largura": 128,
+      "altura": 32,
+      "origem_x": 64,
+      "origem_y": 16,
+      "desenho": "placa:COMERCIAL",
+      "instancias": [
+        {
+          "sala": "rm_comercial",
+          "u": 10,
+          "v": 0.3,
+          "z": 20
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_com_decoracao_aula",
+      "objeto": "obj_aula_com_decoracao",
+      "grupo": "COMERCIAL",
+      "descricao": "Vaso provisório",
+      "largura": 64,
+      "altura": 64,
+      "origem_x": 32,
+      "origem_y": 48,
+      "desenho": "movel:planta",
+      "instancias": [
+        {
+          "sala": "rm_comercial",
+          "u": 20,
+          "v": 0.2,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_prod_bancada_aula",
+      "objeto": "obj_aula_prod_bancada",
+      "grupo": "PRODUCAO",
+      "descricao": "Bancada de preparo e mesa de depósito",
+      "largura": 128,
+      "altura": 128,
+      "origem_x": 64,
+      "origem_y": 80,
+      "desenho": "movel:bancada",
+      "instancias": [
+        {
+          "sala": "rm_producao",
+          "u": 10,
+          "v": 5,
+          "z": 0
+        },
+        {
+          "sala": "rm_producao",
+          "u": 5,
+          "v": 4,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "bancada",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_prod_fogao_aula",
+      "objeto": "obj_aula_prod_fogao",
+      "grupo": "PRODUCAO",
+      "descricao": "Fogão industrial",
+      "largura": 128,
+      "altura": 128,
+      "origem_x": 64,
+      "origem_y": 80,
+      "desenho": "movel:fogao",
+      "instancias": [
+        {
+          "sala": "rm_producao",
+          "u": 17,
+          "v": 2,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "fogao",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_prod_utensilios_aula",
+      "objeto": "obj_aula_prod_utensilios",
+      "grupo": "PRODUCAO",
+      "descricao": "Prateleira de utensílios de parede",
+      "largura": 128,
+      "altura": 128,
+      "origem_x": 64,
+      "origem_y": 80,
+      "desenho": "utensilios",
+      "instancias": [
+        {
+          "sala": "rm_producao",
+          "u": 4,
+          "v": 0.2,
+          "z": 16
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_prod_placa_aula",
+      "objeto": "obj_aula_prod_placa",
+      "grupo": "PRODUCAO",
+      "descricao": "Placa PRODUÇÃO",
+      "largura": 128,
+      "altura": 32,
+      "origem_x": 64,
+      "origem_y": 16,
+      "desenho": "placa:PRODUÇÃO",
+      "instancias": [
+        {
+          "sala": "rm_producao",
+          "u": 10,
+          "v": 0.3,
+          "z": 20
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_prod_decoracao_aula",
+      "objeto": "obj_aula_prod_decoracao",
+      "grupo": "PRODUCAO",
+      "descricao": "Quadro HIGIENE",
+      "largura": 64,
+      "altura": 64,
+      "origem_x": 32,
+      "origem_y": 48,
+      "desenho": "quadro:HIGIENE",
+      "instancias": [
+        {
+          "sala": "rm_producao",
+          "u": 21,
+          "v": 0.2,
+          "z": 12
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_caixas_aula",
+      "objeto": "obj_aula_est_caixas",
+      "grupo": "ESTOQUE",
+      "descricao": "Caixas de ingredientes",
+      "largura": 128,
+      "altura": 128,
+      "origem_x": 64,
+      "origem_y": 80,
+      "desenho": "movel:caixas",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 20,
+          "v": 8,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "caixas",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_prateleira_aula",
+      "objeto": "obj_aula_est_prateleira",
+      "grupo": "ESTOQUE",
+      "descricao": "Prateleira de ingredientes",
+      "largura": 128,
+      "altura": 128,
+      "origem_x": 64,
+      "origem_y": 80,
+      "desenho": "movel:prateleira",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 5.0,
+          "v": 3,
+          "z": 0
+        },
+        {
+          "sala": "rm_estoque",
+          "u": 8.4,
+          "v": 3,
+          "z": 0
+        },
+        {
+          "sala": "rm_estoque",
+          "u": 11.8,
+          "v": 3,
+          "z": 0
+        },
+        {
+          "sala": "rm_estoque",
+          "u": 15.2,
+          "v": 3,
+          "z": 0
+        },
+        {
+          "sala": "rm_estoque",
+          "u": 18.6,
+          "v": 3,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "prateleira",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_computador_aula",
+      "objeto": "obj_aula_est_computador",
+      "grupo": "ESTOQUE",
+      "descricao": "Mesa com computador de compras",
+      "largura": 128,
+      "altura": 128,
+      "origem_x": 64,
+      "origem_y": 80,
+      "desenho": "movel:mesa",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 15,
+          "v": 9,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "mesa",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_placa_aula",
+      "objeto": "obj_aula_est_placa",
+      "grupo": "ESTOQUE",
+      "descricao": "Placa ESTOQUE",
+      "largura": 128,
+      "altura": 32,
+      "origem_x": 64,
+      "origem_y": 16,
+      "desenho": "placa:ESTOQUE",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 10,
+          "v": 0.3,
+          "z": 20
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_placa_farinha_aula",
+      "objeto": "obj_aula_est_placa_farinha",
+      "grupo": "ESTOQUE",
+      "descricao": "Placa FARINHA",
+      "largura": 96,
+      "altura": 24,
+      "origem_x": 48,
+      "origem_y": 12,
+      "desenho": "ingrediente:FARINHA",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 5.5,
+          "v": 6,
+          "z": 45
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_placa_frango_aula",
+      "objeto": "obj_aula_est_placa_frango",
+      "grupo": "ESTOQUE",
+      "descricao": "Placa FRANGO",
+      "largura": 96,
+      "altura": 24,
+      "origem_x": 48,
+      "origem_y": 12,
+      "desenho": "ingrediente:FRANGO",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 8.9,
+          "v": 6,
+          "z": 45
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_placa_queijo_aula",
+      "objeto": "obj_aula_est_placa_queijo",
+      "grupo": "ESTOQUE",
+      "descricao": "Placa QUEIJO",
+      "largura": 96,
+      "altura": 24,
+      "origem_x": 48,
+      "origem_y": 12,
+      "desenho": "ingrediente:QUEIJO",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 12.3,
+          "v": 6,
+          "z": 45
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_placa_oleo_aula",
+      "objeto": "obj_aula_est_placa_oleo",
+      "grupo": "ESTOQUE",
+      "descricao": "Placa ÓLEO",
+      "largura": 96,
+      "altura": 24,
+      "origem_x": 48,
+      "origem_y": 12,
+      "desenho": "ingrediente:ÓLEO",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 15.7,
+          "v": 6,
+          "z": 45
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_placa_embalagens_aula",
+      "objeto": "obj_aula_est_placa_embalagens",
+      "grupo": "ESTOQUE",
+      "descricao": "Placa EMBALAGENS",
+      "largura": 96,
+      "altura": 24,
+      "origem_x": 48,
+      "origem_y": 12,
+      "desenho": "ingrediente:EMBALAGENS",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 19.1,
+          "v": 6,
+          "z": 45
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_est_decoracao_aula",
+      "objeto": "obj_aula_est_decoracao",
+      "grupo": "ESTOQUE",
+      "descricao": "Quadro ENTRADAS",
+      "largura": 64,
+      "altura": 64,
+      "origem_x": 32,
+      "origem_y": 48,
+      "desenho": "quadro:ENTRADAS",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 22,
+          "v": 0.2,
+          "z": 12
+        }
+      ],
+      "tipo_movel": "",
+      "papel": ""
+    },
+    {
+      "sprite": "spr_atendente_aula",
+      "objeto": "obj_aula_atendente",
+      "grupo": "PERSONAGENS",
+      "descricao": "Atendente Marta",
+      "largura": 24,
+      "altura": 40,
+      "origem_x": 12,
+      "origem_y": 35,
+      "desenho": "pessoa:atendente",
+      "instancias": [
+        {
+          "sala": "rm_comercial",
+          "u": 12,
+          "v": 4,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "npc",
+      "papel": "atendente"
+    },
+    {
+      "sprite": "spr_estoquista_aula",
+      "objeto": "obj_aula_estoquista",
+      "grupo": "PERSONAGENS",
+      "descricao": "Estoquista Caio",
+      "largura": 24,
+      "altura": 40,
+      "origem_x": 12,
+      "origem_y": 35,
+      "desenho": "pessoa:estoquista",
+      "instancias": [
+        {
+          "sala": "rm_estoque",
+          "u": 18,
+          "v": 10,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "npc",
+      "papel": "estoquista"
+    },
+    {
+      "sprite": "spr_gerente_aula",
+      "objeto": "obj_aula_gerente",
+      "grupo": "PERSONAGENS",
+      "descricao": "Gerente",
+      "largura": 24,
+      "altura": 40,
+      "origem_x": 12,
+      "origem_y": 35,
+      "desenho": "pessoa:gestor",
+      "instancias": [
+        {
+          "sala": "rm_corredor",
+          "u": 5,
+          "v": 3,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "npc",
+      "papel": "gestor"
+    },
+    {
+      "sprite": "spr_cozinheira_bia_aula",
+      "objeto": "obj_aula_cozinheira_bia",
+      "grupo": "PERSONAGENS",
+      "descricao": "Cozinheira Bia",
+      "largura": 24,
+      "altura": 40,
+      "origem_x": 12,
+      "origem_y": 35,
+      "desenho": "pessoa:cozinheiro",
+      "instancias": [
+        {
+          "sala": "rm_producao",
+          "u": 15,
+          "v": 5,
+          "z": 0
+        }
+      ],
+      "tipo_movel": "npc",
+      "papel": "cozinheiro"
+    }
+  ],
+  "cozinheiro_existente": {
+    "sprite": "spr_cozinheiro_temp",
+    "objeto": "obj_cozinheiro",
+    "largura": 16,
+    "altura": 32,
+    "origem_x": 8,
+    "origem_y": 31,
+    "quadros": 8
+  },
+  "nao_alterar": [
+    "scr_estado",
+    "scr_produtos",
+    "scr_estoque",
+    "scr_compras",
+    "scr_producao",
+    "scr_pedidos",
+    "scr_tempo",
+    "scr_financas",
+    "scr_indicadores",
+    "scr_logistica",
+    "scr_missoes",
+    "scr_historia",
+    "scr_parametros",
+    "scr_pedagogia",
+    "scr_mundo",
+    "scr_exploracao_interface",
+    "scr_dashboard"
+  ],
+  "hashes_logica_protegida_lf": {
+    "scripts/scr_cenario/scr_cenario.gml": "018744b2dcdd2a7f72e18a46be9facd4e47f0005093b47534372cb46191e1bb0",
+    "scripts/scr_compras/scr_compras.gml": "8a8e85b0704a0710b4c4f596b975a1dfc8f5b065b022c0a3d1998bcf72f06f7f",
+    "scripts/scr_dashboard/scr_dashboard.gml": "0ef844496f62d20a19e853d934fd43ea1d18aa99d5ecfa4f9ec66b8eaa0d33dc",
+    "scripts/scr_estado/scr_estado.gml": "ed54ab2caf56be8074fc3515d2d98da480ea3f90a77f20b07f52a2046e161383",
+    "scripts/scr_estoque/scr_estoque.gml": "c0eebfb7f794b144a0c9d66146ab0e23457d02c0c18def87119f7e61b7f94413",
+    "scripts/scr_exploracao_interface/scr_exploracao_interface.gml": "f0072e84ce8cea7e0c249598107165c90e2fa1abdf3e0cd66855e5f7ec0956e8",
+    "scripts/scr_fabrica_interface/scr_fabrica_interface.gml": "dfac998dcc00578c94ad4f20f5c5bb8ca770e21744e72a7e291ff2ac54f348c6",
+    "scripts/scr_financas/scr_financas.gml": "56103f58e5284ac660bf4562831735785d9815c77cab5f73d4e1f417a479168c",
+    "scripts/scr_historia/scr_historia.gml": "785377e895c7b599a495d61ae0c8c1c94b93d20d2bf61df1bd29f4e1003e329a",
+    "scripts/scr_indicadores/scr_indicadores.gml": "03d4198d955a891108c0107b9cb41d4b02dcd07b9949c19b7ff3f14aefa61ce5",
+    "scripts/scr_interface/scr_interface.gml": "aed675f2ced5593f1a90aecbeba7f0a086bb1e6a8fe68978ab70c731114f2cea",
+    "scripts/scr_isometria/scr_isometria.gml": "38b1498411b131329c3a7714e0d8ecc1b961b7ad2b71ad4c9ad0765d95aded90",
+    "scripts/scr_logistica/scr_logistica.gml": "2c4b895054ae753561311f6faed53cf914b304bffcab5b6a3197d24bce60d983",
+    "scripts/scr_missoes/scr_missoes.gml": "318ffd3654d77bbf9ad09456c8dbabed0a40df7619d1e14b1170f5acd2d29f02",
+    "scripts/scr_mundo/scr_mundo.gml": "9693e3d152e42299bd8a28871354cbcf0d05dae1524313ac7ba56fa5bf94af21",
+    "scripts/scr_operacoes/scr_operacoes.gml": "853a03f16041d6dcf5a75381e093f5206716da09e1ef16f8d3fe9dfff31b2a9a",
+    "scripts/scr_parametros/scr_parametros.gml": "f94f63668a25be4a47941102c4eec9e90a679768ba0cf8996afe8552b88f4c68",
+    "scripts/scr_pedagogia/scr_pedagogia.gml": "77e3d675a133b83dbc2a8fed759f45b8c660c85c41cfd2e4623fdb1c52e09730",
+    "scripts/scr_pedidos/scr_pedidos.gml": "cda23036f33c49071c928e4f25ff6fcf59605ba2225ba8c1c6c37ab604e50e6a",
+    "scripts/scr_producao/scr_producao.gml": "89c8747cec491eb45b81f790e52dead527c555d94fb35cc9ef0b5778a4107f54",
+    "scripts/scr_produtos/scr_produtos.gml": "62b5279c84fa100fa88f19df53435124980a6e2353e096803d7ec5b3ec143566",
+    "scripts/scr_tempo/scr_tempo.gml": "a70b2fe681f27ec05825c70be10466ad079bb72418ebe3b1dd70a9f24c6d1ce1",
+    "scripts/scr_testes_exploracao/scr_testes_exploracao.gml": "1b1978146f752d6ac945a56f031e389b907557f7d037aeb1bef9fab824e66fa7",
+    "scripts/scr_testes_missoes/scr_testes_missoes.gml": "255ad0e09434db53ccca7598fdb22fb4602af55f6f89d283126a5e0e16293fb6",
+    "scripts/scr_testes_simulacao/scr_testes_simulacao.gml": "fbc12ecd21df9bf6ac3a178aea631257f46907bf5685e803235a5fa185261185",
+    "scripts/scr_testes_v01/scr_testes_v01.gml": "faa3bd829171396f38516586fa5587d35325d7494582766412c3ff5caf49839f"
+  }
+}
