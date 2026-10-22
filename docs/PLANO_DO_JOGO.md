@@ -1,24 +1,27 @@
 # Plano do jogo — Fábrica de Salgados
 
-O jogador administra uma fábrica de salgados e aprende gestão de estoque,
-produção, atendimento de pedidos, custos e planejamento. Os produtos iniciais
-são coxinha, pastel e bolinha de queijo. Engine GameMaker e lógica GML Code.
+O aluno administra estoque, produção, encomendas e dinheiro de uma fábrica.
+Produtos iniciais: coxinha, pastel e bolinha de queijo. GameMaker e GML Code.
+Números e receitas são fictícios e editáveis antes da sessão.
 
 ## Etapa atual
 
-Primeiro protótipo visual: quatro telas por mouse, fábrica isométrica com
-Comercial, Estoque e Produção, gestor e funcionários estáticos. Os setores
-abrem painéis na mesma sala. Já é possível receber pedidos, produzir lotes
-de cinco unidades, entregar e repor ingredientes. Estado e catálogo são
-centralizados; custos, receitas e valores iniciais são exemplos didáticos.
-O dia permanece em 1 e a produção é instantânea nesta etapa.
+Fábrica isométrica com Comercial, Estoque e Produção. O aluno aceita/recusa
+pedidos, escolhe compras com prazo e planeja quantidades para o próximo dia.
+O avanço manual recebe compras, produz, entrega e atualiza prazos em ordem fixa.
+Filas, atrasos e histórico são preservados; resultado de caixa é separado de receita.
+
+## Objetivos de aprendizagem a validar
+
+1. Comparar estoque físico, reservado, livre e em trânsito.
+2. Planejar compras considerando prazo e dinheiro disponível.
+3. Distribuir capacidade entre produtos sem comprometer os mesmos recursos duas vezes.
+4. Selecionar pedidos conforme quantidade e prazo; observar pontualidade e atrasos.
+5. Distinguir receita, pagamentos, custo dos insumos e resultado de caixa.
 
 ## Próximas decisões
 
-Validar o ciclo com alunos, definir público-alvo e objetivos de aprendizagem
-mensuráveis. Decidir critérios para encerrar/avançar o dia, depois acrescentar
-tempo de produção e planejamento em etapas pequenas. Adaptar a paginação da
-interface quando o catálogo crescer. A substituição dos gráficos provisórios
-está documentada em VISUAIS.md.
-
-Os arquivos e as responsabilidades estão em `ARQUITETURA.md`.
+Definir público-alvo, rubrica de aprendizagem e duração da atividade.
+Avaliar save/load, fechamento de exercício e orientações de análise ao aluno.
+Preservar regras verificáveis antes de adicionar simulação de pessoas/máquinas.
+Substituição da arte provisória: [VISUAIS.md](VISUAIS.md).

@@ -1,133 +1,111 @@
 # Arquitetura — Fábrica de Salgados
 
-Protótipo visual em GameMaker/GML Code, verificado em 21/10/2026.
-
-## Projeto preservado
-
-Raiz: `C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados`.
-Arquivo principal: `BLANK GAMEFabricaDeSalgados.yyp` nessa raiz.
-O projeto não foi recriado nem renomeado. O projeto provisório em C:\fabrica
-não é o alvo do desenvolvimento. O workspace de C:\fabrica aponta para a raiz real.
-
-IDE 2026.0.0.16, runtime 2026.0.0.23, alvo verificado Windows/VM.
-São **22 recursos** registrados no .yyp: cinco salas, cinco objetos e doze scripts.
-Cada recurso tem seu .yy. Metadados novos foram criados pelos escritores do
-GMSync 0.1.0 e normalizados pelo ProjectTool 2024.14.165 da instalação local,
-usando os tipos da própria IDE. Toda lógica e desenho do jogo são GML.
+Projeto original preservado: `BLANK GAMEFabricaDeSalgados.yyp`.
+GameMaker IDE 2026.0.0.16, runtime 2026.0.0.23; lógica e desenho inteiramente GML.
+São **26 recursos**: cinco salas, cinco objetos e dezesseis scripts, todos com
+metadados .yy registrados no .yyp. Room1 e as opções originais permanecem intactas.
 
 ## Salas e controladores
 
-| Ordem | Sala | Objeto local | Responsabilidade |
+| Ordem | Sala | Controlador | Responsabilidade |
 | --- | --- | --- | --- |
-| 1 | rm_menu | obj_menu | Novo jogo e continuação da sessão em memória. |
-| 2 | rm_parametros | obj_parametros | Capacidade diária e entrada na fábrica. |
-| 3 | rm_fabrica | obj_fabrica | Cenário isométrico, HUD, cliques e painéis dos setores. |
-| 4 | rm_resultados | obj_resultados | Consulta de indicadores e retorno à fábrica/menu. |
-| 5 | Room1 | Original | Recurso original preservado, fora do fluxo principal. |
+| 1 | rm_menu | obj_menu | Nova configuração ou continuação em memória. |
+| 2 | rm_parametros | obj_parametros | Editor paginado de parâmetros e receitas; validação ao iniciar. |
+| 3 | rm_fabrica | obj_fabrica | Cenário, HUD, compras, encomendas, planos e avanço manual. |
+| 4 | rm_resultados | obj_resultados | Resultado de caixa e indicadores de entrega/produção. |
+| 5 | Room1 | Original | Sala original preservada, fora do fluxo principal. |
 
-Cada sala nova tem obj_game primeiro na ordem de criação, seguido de seu
-controlador local. **obj_game** é persistente, destrói duplicatas e inicializa
-global.jogo somente quando necessário. A GUI e a janela usam 1280 × 720;
-as dimensões originais dos recursos de sala foram preservadas.
+Cada sala nova cria obj_game primeiro e o controlador local depois. obj_game
+é persistente, destrói duplicatas e inicializa uma sessão somente quando ainda
+não existe. Trocar de sala não reinicia os dados. Os controladores locais não
+são persistentes. A GUI usa 1280×720 e preserva os recursos de sala originais.
 
-Arquivos: `rooms/<nome>/<nome>.yy` e `objects/<nome>/`.
-Os controladores locais usam Create_0.gml, Step_0.gml e Draw_64.gml (Draw GUI).
-obj_menu e obj_fabrica também usam **CleanUp_0.gml**, registrado como evento
-12/0, para liberar a superfície do cenário. A limpeza tolera encerramento
-antes da inicialização completa. obj_game usa somente Create_0.gml.
+Arquivos: `rooms/<nome>/<nome>.yy`, `objects/<nome>/<nome>.yy` e eventos GML.
+Create_0 inicializa, Step_0 recebe entrada e Draw_64 desenha a GUI. Menu e fábrica
+possuem CleanUp_0 (evento 12/0) para liberar superfícies. A liberação tolera
+encerramento antes do fim da inicialização. O clique de troca de sala precisa
+ser solto antes de ativar uma ação da sala seguinte.
 
-O estado local de um painel não persiste entre salas. Estoque, pedidos,
-produção e dinheiro persistem em global.jogo. O próximo clique só é aceito
-após soltar o botão que provocou uma troca de sala.
+## Scripts
 
-## Scripts e responsabilidades
+Cada script fica em `scripts/<nome>/<nome>.gml` com seu .yy; declara funções
+sem executar a simulação no carregamento.
 
-Todos ficam em `scripts/<nome>/<nome>.gml`, acompanhados do respectivo .yy.
-Carregar um script apenas declara funções; a inicialização é explícita.
-
-| Script | Responsabilidade / funções principais |
+| Script | Responsabilidade |
 | --- | --- |
-| scr_estado | Estado, parâmetros, reinício e navegação: jogo_criar, jogo_novo, jogo_ir_para, enum FaseJogo. |
-| scr_produtos | Catálogo central de produtos, ingredientes, receitas e preços; produto_obter, ingrediente_obter. |
-| scr_estoque | Saldos e ajustes inteiros validados; estoque_quantidade, estoque_ajustar. |
-| scr_pedidos | Criação de pedidos e contagem de status; pedido_adicionar, pedidos_contar_status. |
-| scr_producao | Planejamento puro de ingredientes, capacidade e custo; producao_planejar. |
-| scr_financas | Movimentação em centavos, saldo e formatação; financas_registrar, financas_formatar. |
-| scr_indicadores | Consulta pura dos indicadores; indicadores_calcular. |
-| **scr_operacoes** | Ciclo mínimo: fabrica_receber, fabrica_produzir, fabrica_entregar, fabrica_repor e avisos. |
-| **scr_interface** | Tema, fonte bitmap original com acentos, textos, botões, áreas e liberação da entrada. |
-| **scr_isometria** | Projeção/inversa, prismas, mobiliário e quatro personagens desenhados por primitivas. |
-| **scr_cenario** | Dados dos três setores e 17 elementos; ordenação, desenho e superfície 640 × 360 ampliada 2×. |
-| **scr_fabrica_interface** | Layout compartilhado pelos desenhos/cliques, HUD, painéis e despacho de ações. |
+| scr_estado | FaseJogo, parâmetros padrão, cópia independente e criação/reinício da sessão, transições de sala. |
+| scr_produtos | Catálogo central de cinco insumos e três produtos, receitas, preços, capacidade e custos fictícios. |
+| scr_estoque | Criação e consulta de saldos; ajustes inteiros limitados, sem saldo físico negativo. |
+| scr_compras | Pagamento, compras em trânsito, prazo, próxima chegada e recebimento único. |
+| scr_producao | Cálculo puro de plano, reservas de insumos/capacidade/caixa, agendamento, cancelamento e execução diária. |
+| scr_pedidos | Geração única por dia/produto, aceite/recusa, fila por aceite, entregas e atualização de atrasos. |
+| scr_tempo | simulacao_avancar_dia: chegadas → produção → entregas → prazos/ofertas → resumo. |
+| scr_financas | Livro de movimentos por referência única, entradas/saídas, receitas, compras, custos variáveis, caixa livre. |
+| scr_indicadores | Consultas puras: caixa, resultado, pontualidade, atrasos, produção e produtos prontos. |
+| scr_operacoes | Consultas de interface para ofertas/fila/histórico, planos e aviso de estoque mínimo livre. |
+| scr_parametros | Validação, descritores editáveis e interface paginada de configuração/receitas. |
+| scr_interface | Tema, fonte bitmap original com acentos, texto, botões, áreas e liberação de entrada. |
+| scr_isometria | Projeção e inversa, prismas, mobiliário e quatro pessoas por primitivas GML. |
+| scr_cenario | Dados dos setores, ordenação, desenho em superfície 640×360 ampliada 2×. |
+| scr_fabrica_interface | Layout, prioridade de cliques, seletores, painéis de ações e resumo diário. |
+| scr_testes_simulacao | Auditoria de conservação e testes opcionais; não executam na sessão normal. |
 
-O domínio recebe o jogo ou seu subsistema por argumento. As funções de interface
-da fábrica trabalham no contexto de obj_fabrica; fabrica_clicar e fabrica_notificar
-acessam seus campos locais. Não devem ser chamadas a partir de outro controlador.
-global.visual guarda somente tema/fonte e não contém estado econômico.
+## Estado compartilhado e registros
 
-## Estado inicial e dados
+`global.jogo` é a sessão. `global.visual` contém somente tema/fonte.
+As funções de domínio recebem a sessão ou o subsistema explicitamente.
+Funções de interface da fábrica e parâmetros usam o contexto de seus objetos;
+não devem ser chamadas a partir de outro controlador sem esse contexto.
 
-| Dado | Valor |
+| Campo da sessão | Conteúdo |
 | --- | --- |
-| Dia e fase | 1 e MENU |
-| Caixa | 100000 centavos = R$ 1.000,00 |
-| Capacidade | 100 unidades; ajuste inicial de 10 a 500, passo 10 |
-| Ingredientes | Massa 120, frango 60, queijo 100, óleo 200 porções |
-| Produtos prontos | Zero |
-| Pedidos, lotes e movimentos | Vazios |
-| Próximo pedido | ID 1 |
+| parametros / catalogo | Cópia validada de números iniciais e dados configuráveis; não alterada durante a sessão. |
+| dia / fase | Dia atual e tela atual. |
+| estoque | Arrays de matérias-primas e produtos, com IDs e saldos físicos. |
+| compras | Histórico completo: snapshot de custo, quantidade, pagamento, chegada e status. |
+| pedidos | Histórico único, com chave dia/produto, preço contratado, prazo, aceite, entrega e atraso. |
+| producao | Planos com snapshots/reservas, lotes executados, capacidade/unidades diárias e total acumulado. |
+| financas | Capital, saldo, totais por categoria e movimentos identificados. |
+| historico_dias / ultimo_resumo | Eventos pagináveis e resumo de cada avanço. |
+| IDs e ultimo_dia_gerado | Sequências locais e proteção contra geração repetida. |
+| avancando | Trava síncrona contra reentrada do processamento diário. |
 
-Produtos: coxinha, pastel e bolinha de queijo. Custos por porção em centavos:
-massa 60, frango 80, queijo 70, óleo 20. Preços de venda em centavos: coxinha
-600, pastel 500, bolinha de queijo 400. São dados didáticos; não são receitas
-culinárias ou preços de mercado. O estoque inicial já pertence à fábrica.
+Não se apagam compras, pedidos ou planos por conclusão/cancelamento/vencimento.
+Listas da GUI são filtros dos registros. Arrays de eventos são devolvidos
+explicitamente entre etapas para respeitar a semântica de cópia de arrays GML.
 
-## Ciclo demonstrativo e contratos
+## Contratos e invariantes
 
-- **Receber**: cria pedido de cinco unidades, alternando produtos do catálogo;
-  no máximo três pendentes. Não movimenta estoque nem dinheiro.
-- **Planejar**: producao_planejar só calcula, sem efeitos. Valida produto,
-  quantidade, receita, capacidade e ingredientes.
-- **Produzir**: valida o plano e espaço, consome os insumos, soma cinco produtos
-  prontos e registra o lote com custo em centavos. Não debita dinheiro: os
-  ingredientes são pagos na compra, evitando cobrar o mesmo custo duas vezes.
-- **Entregar**: atende o pedido pendente mais antigo se houver produtos prontos;
-  recebe o valor combinado, baixa o estoque e marca o pedido como atendido.
-- **Repor**: valida espaço e dinheiro, paga e acrescenta 20 porções de cada
-  ingrediente do catálogo. Custo inicial R$ 46,00.
-- Operações recusadas retornam ok=false e mensagem sem alterações parciais.
-  Estoque não pode ficar negativo nem ultrapassar um milhão por item.
-- Indicadores são calculados a partir da sessão. Entradas menos saídas são
-  **variação do caixa**, sem serem apresentadas como lucro contábil.
+- Quantidades físicas são inteiras, de zero a um milhão por item. Operações
+  exigem quantidade positiva, IDs conhecidos e validam todos os efeitos antes de alterar.
+- Agendamento não consome estoque; reserva insumos, capacidade do próximo dia
+  e caixa do custo variável. Compras em trânsito não são utilizáveis no plano.
+- Cancelamento libera reservas sem estornar um custo que ainda não foi pago.
+- Execução e entrega revalidam recursos, e status/referências impedem duplicação.
+- Compra congela o custo e o dia de chegada; pedido congela o preço/prazo;
+  plano congela receita, capacidade e custos calculados.
+- Dinheiro usa centavos inteiros. Resultado de caixa não é receita nem lucro contábil.
+- Auditoria confere: inicial + chegadas − consumo = estoque de insumos;
+  produção − entregas = produtos; inicial + movimentos = saldo em caixa.
 
-O dia fica em 1. Funcionários são representações visuais estáticas. Não há
-filas de trabalho, duração de produção, IA, passagem de dias, save/load,
-salários, contratação ou simulação contábil completa nesta etapa.
+Regras completas e exemplos numéricos: [REGRAS_SIMULACAO.md](REGRAS_SIMULACAO.md).
 
-## Expansão pelos alunos
+## Expansão e ferramentas
 
-Acrescente dados em produtos_catalogo_criar usando IDs únicos, ingredientes
-existentes e quantidades/custos inteiros válidos. Não duplique ingredientes
-na mesma receita. Comece uma nova sessão para reconstruir os saldos.
-As operações percorrem os dados; produtos não precisam de recursos GameMaker
-individuais. O painel atual tem três espaços de produto e quatro linhas de
-ingredientes: adapte o layout/paginação ao ampliar o catálogo.
+Acrescente produtos/ingredientes com IDs únicos no catálogo e inicialize uma nova
+sessão. As receitas referenciam ingredientes existentes sem repetição. O editor
+gera campos e páginas a partir dos dados, e os seletores da fábrica percorrem
+os arrays; não há limite fixo de três botões de produto ou quatro linhas de estoque.
+Use nomes de exibição curtos para manter a leitura dos painéis.
 
-Mantenha regras em scripts de domínio e visuais na interface. Para alterar
-mobiliário e substituir primitivas por sprites, siga [VISUAIS.md](VISUAIS.md).
-O hit test dos setores usa a inversa da mesma projeção usada no desenho.
+Mantenha regras nos scripts de domínio. Para sprites definitivos, preserve as
+âncoras e o hit test descritos em [VISUAIS.md](VISUAIS.md). Nenhum asset externo
+foi adicionado nesta etapa. O layout isométrico foi preservado.
 
-## Ferramentas e verificação
+Metadados novos foram criados pelos escritores do GMSync 0.1.0 e normalizados
+pelo ProjectTool da IDE com seus tipos locais. GMSync lê o projeto; não é uma
+dependência de execução. Stitch permanece desabilitado no lançador da sessão.
+Python em tools é somente automação de desenvolvimento; nenhum código Python,
+JavaScript ou C# participa da lógica do jogo.
 
-GMSync 0.1.0: [Marketplace](https://marketplace.visualstudio.com/items?itemName=atennebris.gmsync),
-[código-fonte](https://github.com/Atennebris/GMSync), publisher atennebris;
-origem e manifesto conferidos na preparação do ambiente. Não é dependência
-do jogo. A ponte TCP não foi instalada. Associações GML/YY/YYP estão em
-.vscode/settings.json, com formatação automática de metadados desativada.
-
-Stitch 1.81.0 permanece desabilitado no lançador da sessão devido à
-[incompatibilidade reportada com a IDE 2026.0.0.16](https://github.com/bscotch/stitch/issues/306).
-Use ABRIR_NO_VSCODE.cmd. Não foi certificado IntelliSense semântico completo.
-
-Carga nativa, compilação, execução, cliques, referências e integridade dos
-arquivos originais foram verificados. Detalhes e evidências em [ETAPAS.md](ETAPAS.md).
+Verificações reproduzíveis em [VALIDACAO.md](VALIDACAO.md).

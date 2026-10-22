@@ -4,3 +4,4 @@
 *.yydebug
 /debug.log
 /.backups/
+/.testes/
