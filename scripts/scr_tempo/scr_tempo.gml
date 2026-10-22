@@ -1,5 +1,6 @@
 /// Cada avanço processa um dia de operação; dia 1 é preparação.
 function simulacao_avancar_dia(_jogo) {
+    if(exploracao_ativa(_jogo))return exploracao_avancar_dia(_jogo);
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     if(_jogo.avancando) return {ok:false,mensagem:"Dia já está em processamento."};
     _jogo.avancando=true;

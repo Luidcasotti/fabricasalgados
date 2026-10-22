@@ -1,22 +1,17 @@
-# Etapas — V0.1 — 21/10/2026
+# Etapa atual — exploração jogável — 21/10/2026
 
-- [x] Projeto existente preservado em GameMaker/GML, com fábrica isométrica e três setores.
-- [x] Cinco insumos, receitas e parâmetros editáveis, validação e restauração de padrões.
-- [x] Compras com prazo, produção com reservas, fila e histórico de encomendas.
-- [x] Duração finita e encerramento automático sem apagar pendências.
-- [x] Pausa, revisão, retomada, reinício e menu.
-- [x] Dashboard com dados reais, fórmulas, não aplicável e feedback contextual.
-- [x] Balões de personagens e diário de ações/consequências por data da simulação.
-- [x] Manuais de aluno/professor, extensão de casos e melhorias futuras documentados.
-- [x] 29 recursos: referências, eventos, inicialização e navegação conferidos.
-- [x] Compilação Windows/VM e 172 verificações aprovadas, incluindo partida completa e reinício.
-- [x] Inspeção das capturas de todas as abas e dos balões.
-- [x] Projeto reaberto na IDE e árvore de 29 recursos lida pelo GMSync no VS Code.
+- [x] Preservar projeto, recursos anteriores, tag v0.1 e backup completo.
+- [x] Registrar cinco salas, dois objetos, quatro scripts e um sprite próprios.
+- [x] WASD/setas, quatro direções, animação, colisões e câmera.
+- [x] Caminhos até todos os alvos, portas dos três setores e retorno persistente.
+- [x] Aceite/recusa, compras pagas com prazo, retirada e mochila presenciais.
+- [x] Depósito, receita/produção local e entrega manual no Comercial.
+- [x] Relógio sem ações automáticas, capacidade, fim e reinício.
+- [x] Objetivo, pedido, HUD, ajuda, balões e diário.
+- [x] Dashboard/auditoria com os três locais de ingredientes.
+- [x] 41 recursos e sprite conferidos; ProjectTool abriu/normalizou.
+- [x] 354 verificações Windows/VM: 231 regras/controladores + 123 partida.
+- [x] Capturas/manuais atualizados e limites explícitos.
 
-Backups fora do repositório: antes-simulacao-principal.zip e antes-aprendizado-v01.zip
-em C:\fabrica\.backups. Histórico Git preserva o protótipo e a simulação anterior
-em commits separados. Repositório: https://github.com/Luidcasotti/fabricasalgados.
-
-Próximas etapas são melhorias de escopo, não correções de bloqueadores conhecidos:
-validação com turmas, persistência/exportação, acessibilidade e novos cenários.
-Consulte RELATORIO_V01.md e MELHORIAS_FUTURAS.md.
+Próximas etapas: avaliação com pessoas, acessibilidade, persistência/exportação
+e arte definitiva. Veja RELATORIO_EXPLORACAO.md. RELATORIO_V01.md é histórico.

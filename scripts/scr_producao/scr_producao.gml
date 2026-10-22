@@ -49,6 +49,7 @@ function producao_planejar(_jogo,_id,_quantidade) {
         insumos:_insumos,custo_ingredientes_centavos:_custo,variavel_centavos:_variavel,capacidade:_cap};
 }
 function producao_agendar(_jogo,_id,_quantidade) {
+    if(exploracao_ativa(_jogo))return {ok:false,mensagem:"Cozinhe presencialmente na bancada da Produção."};
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     var _plano=producao_planejar(_jogo,_id,_quantidade);
     if(!_plano.ok) return _plano;
@@ -68,6 +69,7 @@ function producao_cancelar(_jogo,_id) {
     return {ok:true,mensagem:"Plano cancelado; reservas liberadas."};
 }
 function producao_executar_lote(_jogo,_plano) {
+    if(exploracao_ativa(_jogo))return {ok:false,mensagem:"Cozinhe presencialmente na bancada da Produção."};
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     if(_plano.status!="planejado" || _plano.dia_execucao>_jogo.dia) return {ok:false,mensagem:"Lote não está previsto para hoje."};
     if(_jogo.producao.capacidade_usada+_plano.capacidade>_jogo.parametros.capacidade_diaria)

@@ -12,7 +12,11 @@ function simulacao_auditar(_jogo) {
             for(var _n=0;_n<array_length(_insumos);_n++)
                 if(_insumos[_n].ingrediente_id==_item.id) _esperado-=_insumos[_n].quantidade;
         }
-        var _atual=estoque_quantidade(_jogo.estoque.materias_primas,_item.id);
+        var _atual=exploracao_total_insumo(_jogo,_item.id);
+        if(exploracao_ativa(_jogo)) {
+            var _locais=[_jogo.estoque.materias_primas,_jogo.cozinha,_jogo.carregados];
+            for(var _l=0;_l<array_length(_locais);_l++) {var _q=estoque_quantidade(_locais[_l],_item.id);if(_q<0 || _q>1000000 || floor(_q)!=_q)array_push(_erros,"Saldo físico inválido: "+_item.id);}
+        }
         if(_atual!=_esperado || _atual<0 || _atual>1000000) array_push(_erros,"Conservação: "+_item.id);
     }
     for(var _i=0;_i<array_length(_jogo.catalogo.produtos);_i++) {

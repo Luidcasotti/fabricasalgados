@@ -1,16 +1,13 @@
-# Documentação — Fábrica de Salgados V0.1
+# Documentação — exploração jogável
 
-- [Manual do aluno](MANUAL_DO_ALUNO.md): configuração, controles, ciclo, diário e leitura de resultados.
-- [Manual do professor](MANUAL_DO_PROFESSOR.md): aplicação, cenários e expansão dos casos pedagógicos.
-- [Relatório final](RELATORIO_V01.md): funcionalidades, testes, limites e execução.
-- [Regras da simulação](REGRAS_SIMULACAO.md): dados, transações e ordem diária.
-- [Arquitetura](ARQUITETURA.md): responsabilidades e invariantes.
-- [Validação](VALIDACAO.md): 172 verificações e comandos reproduzíveis.
-- [Melhorias futuras](MELHORIAS_FUTURAS.md) e [visuais](VISUAIS.md).
+- [Relatório da etapa](RELATORIO_EXPLORACAO.md): entrega, testes e limites.
+- [Manual do aluno](MANUAL_DO_ALUNO.md) e [do professor](MANUAL_DO_PROFESSOR.md).
+- [Arquitetura](ARQUITETURA.md): salas, recursos e responsabilidades.
+- [Regras](REGRAS_SIMULACAO.md): estoques, transações e ordem dos dias.
+- [Validação](VALIDACAO.md): comandos reproduzíveis e cobertura real.
+- [Visuais](VISUAIS.md) e [melhorias futuras](MELHORIAS_FUTURAS.md).
+- [Relatório V0.1](RELATORIO_V01.md): documento histórico da etapa anterior.
 
-Abra o .yyp na raiz pelo GameMaker e pressione F5 com Windows/VM. Versões
-verificadas: IDE 2026.0.0.16 e runtime 2026.0.0.23. Para edição, use
-ABRIR_NO_VSCODE.cmd. Não há dependências externas obrigatórias para o jogo.
-
-A V0.1 tem 29 recursos registrados, 51 parâmetros e período finito.
-Números fictícios para aprendizagem. Sem salvamento da sessão em disco.
+Abra o .yyp original na raiz e use F5 com Windows/VM. O projeto tem 41 recursos.
+Valores fictícios; sem salvamento de sessão em disco. A tag Git v0.1 preserva
+o protótipo anterior; agora as ações exigem percurso físico pelos setores.

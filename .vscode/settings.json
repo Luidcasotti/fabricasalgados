@@ -11,5 +11,92 @@
   "[yyp]": {
     "editor.formatOnSave": false,
     "editor.formatOnPaste": false
+  },
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "keyword.control.gml",
+        "settings": {
+          "foreground": "#f92672",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": [
+          "storage.type.gml",
+          "storage.modifier.gml",
+          "storage.type.class"
+        ],
+        "settings": {
+          "foreground": "#66d9e8"
+        }
+      },
+      {
+        "scope": "storage.type.function.gml",
+        "settings": {
+          "foreground": "#66d9e8",
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "constant.language.gml",
+        "settings": {
+          "foreground": "#ae81ff"
+        }
+      },
+      {
+        "scope": "string.quoted.double.gml",
+        "settings": {
+          "foreground": "#e6db74"
+        }
+      },
+      {
+        "scope": [
+          "comment.line.double-slash.gml",
+          "comment.line.triple-slash.gml",
+          "comment.block.gml"
+        ],
+        "settings": {
+          "foreground": "#75715e",
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "constant.numeric",
+        "settings": {
+          "foreground": "#ae81ff"
+        }
+      },
+      {
+        "scope": "entity.name.function.gml",
+        "settings": {
+          "foreground": "#a6e22e",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "support.function.gml",
+        "settings": {
+          "foreground": "#66d9e8"
+        }
+      },
+      {
+        "scope": [
+          "keyword.operator.arithmetic.gml",
+          "keyword.operator.comparison.gml",
+          "keyword.operator.logical.gml",
+          "keyword.operator.assignment.gml",
+          "keyword.operator.bitwise.gml",
+          "keyword.operator.ternary.gml",
+          "keyword.operator.new.gml"
+        ],
+        "settings": {
+          "foreground": "#f92672"
+        }
+      }
+    ]
+  },
+  "workbench.colorCustomizations": {
+    "editor.background": "#272822"
   }
 }

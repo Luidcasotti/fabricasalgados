@@ -1,41 +1,43 @@
-# Fábrica de Salgados — V0.1
+# Fábrica de Salgados — exploração jogável
 
-Jogo educacional para explorar estoque, produção, pedidos, prazos e dinheiro.
-**GameMaker / GML Code**, sem dependências externas obrigatórias e sem assets pagos.
-Todos os números e receitas são **fictícios para aprendizagem**.
+Jogo educacional em **GameMaker / GML Code**. Caminhe pela fábrica, transporte
+ingredientes, cozinhe e entregue encomendas. Valores e receitas são **fictícios
+para aprendizagem**. O projeto existente e o histórico da V0.1 foram preservados.
 
-![Fábrica isométrica](docs/imagens/v01-fabrica.png)
+![Corredor e cozinheiro](docs/imagens/exploracao-corredor.png)
 
 ## Abrir e jogar
 
-1. Abra **`BLANK GAMEFabricaDeSalgados.yyp`**, na raiz, pelo GameMaker.
-2. Selecione Windows/VM e pressione **F5**.
-3. Entre em **Novo jogo / Parâmetros**, configure a atividade e inicie.
-4. Aceite pedidos, compre insumos e planeje quantidades nos três setores.
-5. Use **Avançar dia**. Ao completar a duração, analise o dashboard e o diário.
+1. Abra `BLANK GAMEFabricaDeSalgados.yyp`, na raiz, pelo GameMaker.
+2. Selecione **Windows / VM** e pressione **F5**.
+3. Escolha **Novo jogo / Parâmetros**, ajuste a atividade e inicie.
+4. Use **WASD ou setas** para caminhar e **E** perto de portas e equipamentos.
+5. Converse com Marta no Comercial; consulte a receita na Produção; retire
+   ingredientes nas prateleiras do Estoque; leve-os à mesa de depósito;
+   cozinhe na bancada e volte ao balcão do Comercial para entregar.
 
-Verificado com IDE **2026.0.0.16** e runtime **2026.0.0.23**. O nome original do
-arquivo foi preservado. Dia 1 é preparação; a duração configura quantos dias
-de operação serão processados. Pausar e rever resultados não avançam o tempo.
+**Encerrar dia** atualiza compras e prazos; não produz nem entrega automaticamente.
+O dia 1 já é jogável. Pausa, resultados parciais, diário, reinício e dashboard
+final continuam disponíveis. Não há Game Over por resultado negativo.
 
-![Dashboard de uma partida de teste](docs/imagens/v01-dashboard.png)
+![Receita presencial](docs/imagens/exploracao-producao.png)
 
-## Documentação
+Ambiente: IDE **2026.0.0.16**, runtime **2026.0.0.23**, Windows/VM.
+São **41 recursos registrados**: dez salas, sete objetos, 23 scripts e um sprite
+próprio com oito quadros. Sem dependências externas obrigatórias ou assets pagos.
 
-- [Manual do aluno](docs/MANUAL_DO_ALUNO.md)
-- [Manual do professor e novos casos pedagógicos](docs/MANUAL_DO_PROFESSOR.md)
-- [Relatório final V0.1](docs/RELATORIO_V01.md)
-- [Regras e fórmulas](docs/REGRAS_SIMULACAO.md)
-- [Arquitetura](docs/ARQUITETURA.md)
-- [Testes reproduzíveis](docs/VALIDACAO.md)
-- [Melhorias futuras e limites](docs/MELHORIAS_FUTURAS.md)
-- [Substituir os visuais provisórios](docs/VISUAIS.md)
+## Documentação e desenvolvimento
 
-## Desenvolvimento e testes
+- [Manual do aluno](docs/MANUAL_DO_ALUNO.md) e [do professor](docs/MANUAL_DO_PROFESSOR.md)
+- [Relatório desta etapa](docs/RELATORIO_EXPLORACAO.md)
+- [Arquitetura](docs/ARQUITETURA.md) e [regras](docs/REGRAS_SIMULACAO.md)
+- [Testes e limites](docs/VALIDACAO.md)
+- [Visuais provisórios](docs/VISUAIS.md) e [melhorias futuras](docs/MELHORIAS_FUTURAS.md)
+- [Relatório histórico V0.1](docs/RELATORIO_V01.md)
 
-Execute `ABRIR_NO_VSCODE.cmd` para editar. GMSync oferece a leitura dos recursos;
-Stitch fica desabilitado nessa sessão por incompatibilidade com o formato instalado.
-Os testes são GML. Python é usado somente para automação opcional de desenvolvimento:
+Para editar, use `ABRIR_NO_VSCODE.cmd`. GMSync lê os recursos; Stitch permanece
+desabilitado nessa sessão pela incompatibilidade já identificada. O jogo usa
+somente GML; Python é automação opcional de desenvolvimento.
 
 ```powershell
 python tools/verificar_projeto.py
@@ -43,10 +45,10 @@ python tools/verificar_simulacao.py
 python tools/verificar_simulacao.py --partida
 ```
 
-Foram aprovadas **172 verificações**: 148 de regras/controladores e 24 em uma
-partida automatizada pelas salas reais do GameMaker, com término e reinício.
-Consulte os limites da validação em docs/VALIDACAO.md.
+**354 verificações aprovadas no runtime**: 231 de regras/controladores e 123 na
+partida pelas salas reais, incluindo término e reinício. As capturas mostram a
+execução automatizada, não uma validação de usabilidade por estudantes.
 
-O protótipo **não salva partidas em disco**. Continuar usa apenas a sessão
-aberta. Reiniciar passa pelos parâmetros antes de criar uma nova sessão.
-Não existe Game Over definitivo por resultado negativo.
+**Limites:** progresso persiste entre salas e pelo menu enquanto o programa está
+aberto; não há salvamento em disco. Arte, colisões e animação são provisórias.
+Consulte o relatório para os testes manuais ainda necessários.

@@ -38,8 +38,8 @@ function jogo_ir_para(_fase) {
     switch(_fase) {
         case FaseJogo.MENU:_destino=rm_menu;break;
         case FaseJogo.PARAMETROS:_destino=rm_parametros;break;
-        case FaseJogo.FABRICA:_destino=rm_fabrica;break;
-        case FaseJogo.RESULTADOS:_destino=rm_resultados;break;
+        case FaseJogo.FABRICA:_destino=exploracao_ativa(global.jogo)?mundo_sala(global.jogo.exploracao.setor):rm_fabrica;break;
+        case FaseJogo.RESULTADOS:_destino=exploracao_ativa(global.jogo)?rm_dashboard:rm_resultados;break;
         default:return false;
     }
     global.jogo.fase=_fase;room_goto(_destino);return true;

@@ -24,7 +24,7 @@ for required in (igor, runner, args.usuario_runtime):
 if target.exists(): parser.error('Destino já existe; escolha outro para preservar os resultados.')
 if target == root or target in root.parents: parser.error('Destino não pode substituir a raiz ou seus ancestrais.')
 target.mkdir(parents=True)
-for folder in ('objects', 'scripts', 'rooms', 'options', 'datafiles'):
+for folder in ('objects', 'scripts', 'rooms', 'options', 'datafiles', 'sprites'):
     if (root/folder).exists(): shutil.copytree(root/folder, target/folder)
 for pattern in ('*.yyp', '*.resource_order'):
     for file in root.glob(pattern): shutil.copy2(file, target/file.name)
@@ -40,12 +40,14 @@ var _interface = testes_interface_simulacao_executar();
 if (!_interface.ok) throw "FDS_INTERFACE_FALHOU: " + json_stringify(_interface.falhas);
 var _v01 = testes_v01_executar();
 if (!_v01.ok) throw "FDS_V01_FALHOU: " + json_stringify(_v01.falhas);
+var _exploracao = testes_exploracao_executar();
+if (!_exploracao.ok) throw "FDS_EXPLORACAO_FALHOU: " + json_stringify(_exploracao.falhas);
 show_debug_message("FDS_SIMULACAO_APROVADA");
 game_end();
 ''')
 if args.partida:
-    for obj in ('obj_menu','obj_parametros','obj_fabrica','obj_resultados'):
-        (target/f'objects/{obj}/Step_0.gml').write_text('teste_v01_navegar();\n', encoding='utf-8')
+    for obj in ('obj_menu','obj_parametros','obj_exploracao','obj_resultados'):
+        (target/f'objects/{obj}/Step_0.gml').write_text(('exploracao_controle_passo(id);\n' if obj=='obj_exploracao' else '') + 'teste_exploracao_partida();\n', encoding='utf-8')
 build = target/'build'
 build.mkdir()
 command = [str(igor), f'--project={yyp}', '--runtime=VM', f'--runtimePath={runtime}',
@@ -79,14 +81,14 @@ if args.partida:
     folder_line = next((line for line in output.splitlines() if line.startswith('FDS_CAPTURAS_DIR: ')), '')
     if folder_line:
         captures = Path(folder_line.removeprefix('FDS_CAPTURAS_DIR: ').strip())
-        candidates = list(captures.glob('fds-v01-*.png'))
+        candidates = list(captures.glob('fds-exploracao-*.png'))
         # screen_save respeita o sandbox do GameMaker, que pode diferir de working_directory.
         localdata = Path(os.environ.get('LOCALAPPDATA', str(Path.home()/'AppData/Local')))
-        candidates.extend(localdata.glob('*/fds-v01-*.png'))
+        candidates.extend(localdata.glob('*/fds-exploracao-*.png'))
         for file in candidates:
             if file.stat().st_mtime >= started - 1 and file.resolve().parent != target:
                 shutil.copy2(file, target/file.name)
-    expected = [f'fds-v01-dashboard-{i}.png' for i in range(6)]
+    expected = [f'fds-exploracao-dashboard-{i}.png' for i in range(6)]
     if not all((target/name).is_file() for name in expected):
         print('FALHA: partida passou, mas faltam capturas das seis abas para inspeção.')
         sys.exit(1)

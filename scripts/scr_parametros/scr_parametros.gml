@@ -99,7 +99,7 @@ function parametros_clique(_mx,_my) {
     else if(ui_contem(layout.voltar,_mx,_my)) jogo_ir_para(FaseJogo.MENU);
     else if(ui_contem(layout.iniciar,_mx,_my)) {
         var _val=parametros_validar(configuracao);mensagem=_val.mensagem;
-        if(_val.ok) {global.jogo=jogo_criar(configuracao);jogo_ir_para(FaseJogo.FABRICA);}
+        if(_val.ok) {global.jogo=jogo_criar(configuracao);exploracao_iniciar(global.jogo);jogo_ir_para(FaseJogo.FABRICA);}
     } else for(var _i=0;_i<6;_i++) {
         var _idx=pagina*6+_i;if(_idx>=array_length(campos)) break;
         var _c=campos[_idx],_l=layout.linhas[_i],_valor=parametro_ler(configuracao,_c);

@@ -20,7 +20,7 @@ project = read(yyp)
 resources = {entry['id']['name']: entry['id']['path'] for entry in project['resources']}
 assert len(resources) == len(project['resources']), 'Nomes duplicados'
 order = [entry['roomId']['name'] for entry in project['RoomOrderNodes']]
-assert order[:4] == ['rm_menu', 'rm_parametros', 'rm_fabrica', 'rm_resultados'], order
+assert order[:7] == ['rm_menu','rm_parametros','rm_corredor','rm_comercial','rm_producao','rm_estoque','rm_dashboard'], order
 assert 'Room1' in order and project['defaultScriptType'] == 0
 references(project)
 for name, relative in resources.items():
@@ -34,12 +34,25 @@ for name, relative in resources.items():
         for event in resource['eventList']:
             prefix = {0:'Create', 3:'Step', 8:'Draw', 12:'CleanUp'}[event['eventType']]
             assert path.with_name(f"{prefix}_{event['eventNum']}.gml").is_file()
+    if relative.startswith('sprites/'):
+        assert resource['width'] > 0 and resource['height'] > 0
+        frames = resource['frames']
+        assert len(frames) == resource['sequence']['length']
+        keys = resource['sequence']['tracks'][0]['keyframes']['Keyframes']
+        assert len(keys) == len(frames)
+        for index, frame in enumerate(frames):
+            assert path.with_name(frame['name']+'.png').is_file()
+            assert keys[index]['Channels']['0']['Id']['name'] == frame['name']
+            for layer in resource['layers']:
+                assert (path.parent/'layers'/frame['name']/(layer['name']+'.png')).is_file()
     if name.startswith('rm_'):
         instances = [i for layer in resource['layers'] for i in layer.get('instances', [])]
-        assert len(instances) == 2 and instances[0]['objectId']['name'] == 'obj_game'
+        assert len(instances) == (3 if name in ('rm_corredor','rm_comercial','rm_producao','rm_estoque') else 2) and instances[0]['objectId']['name'] == 'obj_game'
         assert [i['name'] for i in instances] == [i['name'] for i in resource['instanceCreationOrder']]
 assert read(root/resources['obj_game'])['persistent'] is True
+for obj in ('obj_exploracao','obj_cozinheiro'):
+    assert read(root/resources[obj])['persistent'] is False
 for required in ('scr_compras','scr_tempo','scr_parametros','scr_testes_simulacao'):
     assert required in resources, required
 print(json.dumps({'recursos':len(resources), 'ordem_salas':order,
-                  'referencias':'OK','eventos':'OK','GML_Code':True},ensure_ascii=False,indent=2))
+                  'referencias':'OK','eventos':'OK','frames_sprite':'OK','GML_Code':True},ensure_ascii=False,indent=2))

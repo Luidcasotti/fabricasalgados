@@ -1,0 +1,32 @@
+{
+  "data_local": "2026-10-21",
+  "IDE": "2026.0.0.16",
+  "runtime": "2026.0.0.23",
+  "alvo": "Windows/VM",
+  "recursos": 41,
+  "regras_anteriores": 72,
+  "interface_anterior": 22,
+  "aprendizado_v01": 54,
+  "exploracao": 83,
+  "partida_salas_reais": 123,
+  "total": 354,
+  "falhas": 0,
+  "project_tool_save": 0,
+  "project_tool_open": 0,
+  "git_base": "87f23d02c0f756dddb067ea014d531e7536c4394",
+  "hashes_sha256": {
+    "BLANK GAMEFabricaDeSalgados.yyp": "e6c6c21e71eddeb0272346af20d71afeb3883da885e06b6a38512df0072c2634",
+    "scripts/scr_mundo/scr_mundo.gml": "d7008390b6ea002ff48a3c22a3929c6927543e39f564fb0697e7a88f0cfa0c22",
+    "scripts/scr_logistica/scr_logistica.gml": "3168823ed44846652a8bd1804a911a0c197f213abd89bcb633ab295e2cfb2dc1",
+    "scripts/scr_exploracao_interface/scr_exploracao_interface.gml": "aa18084bc6480835c0727bdbda1f21d69b551fd37ec872bc6bea37f5fabc28b1",
+    "scripts/scr_testes_exploracao/scr_testes_exploracao.gml": "c07b55738f7fd90f3545425c5c46591da294b67299a835e4b8421fd3fde684fc"
+  },
+  "compilacao_principal": 0,
+  "ide_abertura_confirmada": true,
+  "gmsync_recursos": {
+    "objetos": 7,
+    "scripts": 23,
+    "salas": 10,
+    "sprites": 1
+  }
+}

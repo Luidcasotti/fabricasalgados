@@ -1,3 +1,5 @@
+> Documento histórico. A jogabilidade atual está em [RELATORIO_EXPLORACAO.md](RELATORIO_EXPLORACAO.md).
+
 # Relatório de entrega — V0.1
 
 Data: 21/10/2026, fuso America/Rio_Branco.

@@ -15,6 +15,7 @@ function compras_proxima_chegada(_jogo,_id) {
     return _dia;
 }
 function compra_realizar(_jogo,_id,_quantidade) {
+    if(exploracao_ativa(_jogo) && !mundo_perto(_jogo,"compras"))return {ok:false,mensagem:"Aproxime-se do local de compras e pressione E."};
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     var _item=ingrediente_obter(_jogo.catalogo,_id);
     if(is_undefined(_item) || !quantidade_valida(_quantidade)) return {ok:false,mensagem:"Compra inválida."};

@@ -23,12 +23,17 @@ function dashboard_calcular(_jogo) {
     }
     for(var _i=0;_i<array_length(_jogo.catalogo.ingredientes);_i++) {
         var _p=_jogo.catalogo.ingredientes[_i];
-        array_push(_r.estoque_final,{id:_p.id,nome:_p.nome,fisico:estoque_quantidade(_jogo.estoque.materias_primas,_p.id),
+        array_push(_r.estoque_final,{id:_p.id,nome:_p.nome,fisico:exploracao_total_insumo(_jogo,_p.id),
+            deposito:estoque_quantidade(_jogo.estoque.materias_primas,_p.id),
+            cozinha:exploracao_ativa(_jogo)?estoque_quantidade(_jogo.cozinha,_p.id):0,
+            mochila:exploracao_ativa(_jogo)?estoque_quantidade(_jogo.carregados,_p.id):0,
             minimo:_p.estoque_minimo,reservado:producao_reserva_ingrediente(_jogo,_p.id),transito:compras_pendentes_quantidade(_jogo,_p.id)});
     }
     for(var _i=0;_i<array_length(_jogo.historico_dias);_i++) _r.capacidade_usada_total+=_jogo.historico_dias[_i].capacidade_usada;
     _r.dias_processados=array_length(_jogo.historico_dias);
-    _r.capacidade_disponivel_total=_r.dias_processados*_jogo.parametros.capacidade_diaria;
+    _r.dias_observados=_r.dias_processados;
+    if(exploracao_ativa(_jogo) && !_jogo.encerrado) {_r.capacidade_usada_total+=_jogo.producao.capacidade_usada;_r.dias_observados++;}
+    _r.capacidade_disponivel_total=_r.dias_observados*_jogo.parametros.capacidade_diaria;
     _r.utilizacao_capacidade=indicador_percentual(_r.capacidade_usada_total,_r.capacidade_disponivel_total);
     _r.taxa_pontualidade=indicador_percentual(_r.entregas_pontuais,_r.pedidos_atendidos);
     _r.custos_pagos_centavos=_r.compras_centavos+_r.variaveis_centavos;
@@ -122,21 +127,21 @@ function dashboard_producao() {
         ui_texto(710,_y,string(_p.prontos),2,_v.tinta);ui_texto(1000,_y,string(_p.pendente),2,_v.tinta);
     }
     ui_texto(44,496,"CAPACIDADE: "+string(_r.capacidade_usada_total)+" / "+string(_r.capacidade_disponivel_total)+" = "+indicador_percentual_texto(_r.utilizacao_capacidade),2,_v.azul);
-    ui_texto(44,534,"USO = PONTOS DOS LOTES EXECUTADOS / (DIAS PROCESSADOS X CAPACIDADE DIÁRIA) X 100.",1,_v.suave);
-    ui_texto(44,552,"PLANOS CANCELADOS OU AINDA NÃO EXECUTADOS NÃO CONTAM COMO PRODUÇÃO.",1,_v.suave);
+    ui_texto(44,534,"USO = PONTOS DOS LOTES EXECUTADOS / (DIAS OBSERVADOS X CAPACIDADE DIÁRIA) X 100.",1,_v.suave);
+    ui_texto(44,552,"NA EXPLORAÇÃO, O DIA ATUAL CONTA COMO OBSERVADO. NÃO É SOMADO DE NOVO AO ENCERRÁ-LO.",1,_v.suave);
 }
 function dashboard_estoque() {
     var _v=global.visual,_r=resumo;
-    var _titulos=["INSUMO","FÍSICO","MÍNIMO","RESERVADO","EM TRÂNSITO"],_xs=[44,450,630,820,1040];
-    for(var _i=0;_i<5;_i++) ui_texto(_xs[_i],194,_titulos[_i],2,_v.suave);
+    var _titulos=["INSUMO","TOTAL","DEPÓSITO","COZINHA","MOCHILA","TRÂNSITO"],_xs=[44,390,550,740,920,1080];
+    for(var _i=0;_i<6;_i++)ui_texto(_xs[_i],194,_titulos[_i],2,_v.suave);
     for(var _i=0;_i<5;_i++) {
-        var _idx=pagina_dashboard*5+_i;if(_idx>=array_length(_r.estoque_final)) break;
+        var _idx=pagina_dashboard*5+_i;if(_idx>=array_length(_r.estoque_final))break;
         var _p=_r.estoque_final[_idx],_y=240+_i*48;
-        var _val=[_p.nome,string(_p.fisico),string(_p.minimo),string(_p.reservado),string(_p.transito)];
-        for(var _k=0;_k<5;_k++) ui_texto(_xs[_k],_y,_val[_k],2,_v.tinta);
+        var _val=[_p.nome,string(_p.fisico),string(_p.deposito),string(_p.cozinha),string(_p.mochila),string(_p.transito)];
+        for(var _k=0;_k<6;_k++)ui_texto(_xs[_k],_y,_val[_k],2,_v.tinta);
     }
-    ui_texto(44,514,"FÍSICO = ESTOQUE INICIAL + COMPRAS RECEBIDAS - INSUMOS CONSUMIDOS.",1,_v.suave);
-    ui_texto(44,540,"RESERVA NÃO É CONSUMO. COMPRAS EM TRÂNSITO NÃO SÃO ESTOQUE FÍSICO.",1,_v.suave);
+    ui_texto(44,514,"TOTAL FÍSICO = DEPÓSITO + COZINHA + MOCHILA = INICIAL + RECEBIDO - CONSUMIDO.",1,_v.suave);
+    ui_texto(44,540,"TRANSFERIR NÃO CRIA ESTOQUE. COMPRAS EM TRÂNSITO AINDA NÃO SÃO ESTOQUE FÍSICO.",1,_v.suave);
 }
 function dashboard_diario(_jogo,_pagina,_x,_y,_largura) {
     if(array_length(_jogo.diario)==0) {ui_texto(_x,_y,"NENHUMA DECISÃO REGISTRADA.",2,global.visual.suave);return;}
@@ -148,7 +153,7 @@ function dashboard_diario(_jogo,_pagina,_x,_y,_largura) {
 }
 function dashboard_desenhar() {
     var _v=global.visual,_j=global.jogo;ui_fundo();
-    ui_titulo(_j.encerrado?"V0.1 / PERÍODO ENCERRADO / REFLITA E EXPERIMENTE DE NOVO":"V0.1 / ACOMPANHAMENTO DA SIMULAÇÃO");
+    ui_titulo(_j.encerrado?"EXPLORAÇÃO / PERÍODO ENCERRADO / REFLITA E EXPERIMENTE DE NOVO":"EXPLORAÇÃO / ACOMPANHAMENTO DA SIMULAÇÃO");
     var _nomes=["PANORAMA","PRODUÇÃO","ESTOQUE","REFLEXÃO","DIÁRIO","EVENTOS"];
     for(var _i=0;_i<6;_i++) ui_botao(layout.tabs[_i],_nomes[_i],_v.azul,true,aba_dashboard==_i);
     ui_cartao(24,174,1232,400,_v.claro);

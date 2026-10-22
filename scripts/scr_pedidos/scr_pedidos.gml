@@ -21,6 +21,7 @@ function pedidos_gerar_dia(_jogo) {
     _jogo.ultimo_dia_gerado=_jogo.dia;return _criados;
 }
 function pedido_decidir(_jogo,_id,_aceitar) {
+    if(exploracao_ativa(_jogo) && !mundo_perto(_jogo,"vendas"))return {ok:false,mensagem:"Aproxime-se do local de vendas e pressione E."};
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     var _p=catalogo_buscar(_jogo.pedidos,_id);
     if(is_undefined(_p) || _p.status!="ofertado") return {ok:false,mensagem:"Oferta já decidida ou inexistente."};
@@ -29,7 +30,7 @@ function pedido_decidir(_jogo,_id,_aceitar) {
     if(_aceitar) {_p.dia_aceite=_jogo.dia;_p.sequencia_aceite=_jogo.proximo_aceite_id++;}
     diario_registrar(_jogo,(_aceitar?"ACEITAR":"RECUSAR")+" PEDIDO #"+string(_id),string(_p.quantidade)+" "+produto_obter(_jogo.catalogo,_p.produto_id).nome+"; valor "+financas_formatar(_p.total_centavos)+"; prazo dia "+string(_p.prazo_dia)+(_aceitar?". Entrou na fila.":". Não entrou na fila; registro preservado."));
     if(_aceitar) pedagogia_disparar(_jogo,"aceite",{pedido:_p});
-    return {ok:true,mensagem:_aceitar ? "Pedido aceito. Entrega ao avançar o dia." : "Pedido recusado e mantido no histórico."};
+    return {ok:true,mensagem:_aceitar ? (exploracao_ativa(_jogo)?"Pedido aceito. Produza e entregue no balcão do Comercial.":"Pedido aceito. Entrega ao avançar o dia.") : "Pedido recusado e mantido no histórico."};
 }
 function pedidos_fila(_jogo) {
     var _fila=[];
@@ -38,6 +39,7 @@ function pedidos_fila(_jogo) {
     return _fila;
 }
 function pedido_entregar(_jogo,_pedido) {
+    if(exploracao_ativa(_jogo) && !mundo_perto(_jogo,"entrega"))return {ok:false,mensagem:"Aproxime-se do local de entrega e pressione E."};
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     if(_pedido.status!="aceito") return {ok:false,mensagem:"Pedido não está na fila."};
     if(estoque_quantidade(_jogo.estoque.produtos,_pedido.produto_id)<_pedido.quantidade)

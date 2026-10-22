@@ -40,7 +40,7 @@ function pedagogia_casos_criar() {
             },
             mensagem:function(_j,_c){return "A compra deixa mais "+ingrediente_obter(_j.catalogo,_c.compra.ingrediente_id).nome+" que a demanda aceita e o mínimo. Essa reserva faz sentido para seu caixa e seus próximos pedidos?";}},
         {id:"compra_apos_periodo",evento:"compra",prioridade:90,personagem:"CAIO / ESTOQUE",positivo:false,
-            verificar:function(_j,_c){return _c.compra.dia_chegada>1+_j.parametros.duracao_dias;},
+            verificar:function(_j,_c){return _c.compra.dia_chegada>_j.parametros.duracao_dias+(exploracao_ativa(_j)?0:1);},
             mensagem:function(_j,_c){return "Essa compra só chega depois do período da atividade. O que acontece com o dinheiro pago e com o estoque mostrado no dashboard?";}},
         {id:"producao_sem_demanda",evento:"plano",prioridade:50,personagem:"BIA / PRODUÇÃO",positivo:false,
             verificar:function(_j,_c){

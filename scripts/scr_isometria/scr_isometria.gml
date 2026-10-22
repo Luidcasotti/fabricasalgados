@@ -1,5 +1,6 @@
 /// Projeção única compartilhada por desenho e hit test (superfície 640x360).
 function iso_ponto(_u, _v, _z = 0) {
+    if(variable_global_exists("iso_mundo") && global.iso_mundo) return {x:600+(_u-_v)*18,y:140+(_u+_v)*9-_z};
     return {x:386 + (_u - _v) * 18, y:95 + (_u + _v) * 9 - _z};
 }
 function iso_inverter(_x, _y) {

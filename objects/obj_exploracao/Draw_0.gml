@@ -1,0 +1,1 @@
+mundo_desenhar(mundo);

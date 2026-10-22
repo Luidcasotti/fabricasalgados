@@ -1,170 +1,77 @@
-# Regras da simulação
+# Regras da exploração jogável
 
-Esta é uma simulação educacional. **Todos os valores, quantidades, unidades,
-receitas e prazos são fictícios para aprendizagem.** Não representam preços
-de mercado, receitas culinárias, orientação empresarial ou medidas reais.
+Valores e porções são fictícios, para aprendizagem. Padrões: cinco dias,
+R$ 1.000,00, capacidade 100 pontos/dia. Coxinha, pastel e bolinha de queijo têm
+receitas por farinha, frango, queijo, óleo e embalagens. Estoques, mínimos,
+custos, preços, capacidade, duração, prazos e receitas são editáveis antes da partida.
 
-## Parâmetros iniciais editáveis
+## Estoques e presença
 
-Em Novo jogo / Parâmetros, são editáveis duração em dias de operação, caixa inicial, capacidade diária,
-quantidade mínima/máxima das ofertas, prazo de entrega, validade de aceite,
-estoque inicial/mínimo, custo unitário e prazo de cada ingrediente, além de
-preço de venda, custo variável, capacidade por unidade e cada quantidade de
-ingrediente das receitas. São 51 campos no catálogo inicial, em nove páginas.
-Os limites numéricos são validados antes de iniciar a sessão.
+- Depósito: estoque inicial; compras recebidas entram nele.
+- Mochila: retiradas da prateleira correspondente; até 80 unidades somadas.
+- Cozinha: recebe a mochila na mesa de depósito; única fonte da bancada.
+- Produtos prontos: aumentam ao cozinhar e diminuem ao entregar no Comercial.
+  Seu transporte é abstraído; não ocupa a mochila de ingredientes nesta etapa.
 
-| Insumo | Inicial | Mínimo | Custo unitário | Reposição |
-| --- | ---: | ---: | ---: | ---: |
-| Farinha | 120 | 30 | R$ 0,60 | 1 dia |
-| Frango | 60 | 15 | R$ 0,80 | 2 dias |
-| Queijo | 100 | 25 | R$ 0,70 | 1 dia |
-| Óleo | 200 | 40 | R$ 0,20 | 1 dia |
-| Embalagens | 120 | 30 | R$ 0,15 | 2 dias |
+Total físico por insumo = depósito + cozinha + mochila = inicial + compras
+recebidas − consumo dos lotes. Transferência não altera total nem caixa.
+Quantidades são inteiras, não negativas, até um milhão por item/local.
+Retirada/depósito validam a operação inteira antes de alterar saldos. Mínimo é
+alvo do depósito, não gatilho de compra automática.
 
-Cada quantidade representa porções didáticas; embalagens são unidades.
-Caixa inicial: R$ 1.000,00. Capacidade diária: 100 pontos.
+E abre somente ações próximas no setor correto. APIs repetem essa verificação.
+Só o computador do Estoque compra; só Marta analisa ofertas; só a bancada cozinha;
+só o balcão do Comercial entrega. Pausa bloqueia ações e movimento.
 
-| Produto | Farinha | Frango | Queijo | Óleo | Embalagem | Preço de venda |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Coxinha | 1 | 1 | 0 | 1 | 1 | R$ 6,00 |
-| Pastel | 1 | 0 | 1 | 1 | 1 | R$ 5,00 |
-| Bolinha de queijo | 1 | 0 | 2 | 1 | 1 | R$ 4,00 |
+## Produção, compras e pedidos
 
-Padrão: um ponto de capacidade e R$ 0,25 de custo variável adicional por
-salgado. Esse custo representa energia/consumíveis fictícios, separado dos
-insumos da receita. Quantidade zero na receita exclui aquele insumo; pelo
-menos um insumo precisa permanecer positivo. IDs não podem se repetir.
-Novos parâmetros só valem para uma sessão nova; não alteram pedidos ou planos
-já registrados. Os dados da sessão são uma cópia independente da configuração.
+Cozinhar executa imediatamente o lote escolhido: exige receita completa na
+cozinha, capacidade restante, espaço para acabados e dinheiro para custo variável.
+Falha não consome recursos. Lote registra receita, quantidades e custos.
+Depósito e mochila não abastecem a bancada automaticamente.
 
-## Estoque e compras
+Compra paga quantidade × custo unitário ao confirmar. Fica em trânsito até
+dia da compra + prazo; recebimento único não cobra novamente. Compras após o
+horizonte podem terminar pagas e em trânsito, visíveis no dashboard.
 
-- **Físico** é o saldo realmente disponível no depósito. **Reservado** é a soma
-  comprometida por planos; **livre = físico − reservado**.
-- **Em trânsito** não é físico e não pode ser reservado para produção.
-- Comprar valida ID, quantidade inteira positiva, limite físico e dinheiro livre.
-  O dinheiro é pago imediatamente; o estoque físico permanece inalterado.
-- A compra guarda quantidade, custo vigente, pagamento, dia da compra, dia de
-  chegada e status. Comprada no dia D com prazo P, chega ao iniciar D+P.
-- Cada compra só pode ser recebida uma vez. Não há reposição automática por
-  estoque baixo e não há cancelamento/reembolso de compra nesta etapa.
-- O aviso de mínimo compara o saldo **livre** ao mínimo configurado. Ele informa;
-  não realiza uma compra. Prazo mínimo de reposição: um dia.
-- Saldos físicos são inteiros, nunca negativos, com limite de um milhão por item.
-  Compras pendentes também ocupam esse limite para evitar excesso na chegada.
+Cada produto gera oferta única por dia; repetição não duplica. Aceitar entra
+na fila por aceite; recusar preserva o registro. Preço contratado e prazo ficam
+no pedido. Entrega manual exige quantidade integral pronta, baixa acabados e
+registra receita única. Pedidos não atendidos permanecem aceitos, mesmo atrasados.
+Não há entrega parcial. Atraso = máximo(0, dia da entrega − prazo).
+Pedido aberto atrasado é distinto de entrega atrasada.
 
-## Planejamento e execução da produção
+## Ordem fixa de Encerrar dia
 
-O aluno seleciona produto e quantidade (1 a 1.000 por clique na interface).
-O domínio também valida quantidades e os limites físicos/capacidade.
-O plano é para o **próximo dia**, não para um horário do dia atual.
+O dia 1 já permite jogar. Duração é o número de dias jogáveis, sem dia extra.
 
-Ao planejar, são conferidos os insumos livres, capacidade ainda não reservada
-do próximo dia, espaço para produtos acabados e caixa livre para o custo variável.
-Todos os planos competem pelas mesmas reservas: não se pode comprometer o
-mesmo frango, capacidade ou dinheiro duas vezes. Compras futuras não contam
-como estoque até chegarem. O caixa livre é o saldo menos os custos variáveis
-reservados. Compras não podem gastar esse dinheiro reservado.
+1. Registrar produção/capacidade efetivas e fechar o dia atual.
+2. Se for o último, encerrar preservando pendências e abrir dashboard.
+3. Senão, incrementar o dia e receber no depósito as compras vencidas.
+4. Atualizar prazos: expirar ofertas sem decisão; manter os aceitos atrasados.
+5. Gerar ofertas únicas com chave dia/produto.
+6. Renovar capacidade diária; orientar o jogador e guardar resumo nos eventos.
 
-Planejar não consome estoque, não produz unidades e não paga o custo variável.
-Cancelar um plano ainda pendente libera todas as reservas sem produzir e mantém
-o registro como cancelado. Cada execução valida novamente todos os efeitos;
-uma falha mantém o plano pendente, sem consumo parcial ou cobrança parcial.
+**Nada é produzido ou entregue pelo relógio.** Essas ações ocorreram no local.
+Ajuda, pausa, menu e resultados não avançam dias. Resultado negativo não encerra.
+Ao terminar, consulta, reinício e menu continuam disponíveis.
 
-Ao executar, os insumos são consumidos conforme o snapshot da receita, o custo
-variável é pago, a capacidade diária é ocupada e os produtos acabados entram
-no estoque. O custo dos ingredientes é registrado no lote como informação;
-não é debitado de novo, pois compras já foram pagas. Lotes executados nunca
-voltam a executar. O total acumulado permanece; a capacidade usada e unidades
-do dia são reiniciadas a cada novo dia.
+## Finanças e dashboard
 
-## Encomendas, fila e atrasos
+- Receita/vendas: soma dos recebimentos de entregas confirmadas.
+- Custos pagos: compras + custos variáveis. Ingrediente não é pago de novo ao
+  cozinhar; sua compra já movimentou caixa. O inicial é dotação didática.
+- Resultado de caixa = receitas − compras − variáveis. Não é faturamento nem
+  lucro contábil. Saldo final = capital inicial + resultado de caixa.
+- Capacidade usada: pontos dos lotes realmente executados.
+- Utilização = pontos usados / (dias observados × capacidade diária) × 100.
+  Na exploração, o dia aberto já é observado; fechá-lo não conta outra vez.
+- Pontualidade = entregas no prazo / entregas realizadas × 100. Denominador
+  zero mostra não aplicável, sem inventar percentual.
 
-Uma oferta por produto é criada no início de cada dia, inclusive no dia 1.
-Quantidades padrão variam de 5 a 15 por fórmula determinística para permitir
-repetir os cenários: mínimo + ((dia−1)×7 + índice×5) módulo (máximo−mínimo+1).
-Preço unitário e total são fixados quando a oferta é criada.
+Dashboard mostra depósito/cozinha/mochila, total físico, trânsito, produção por
+produto, prontos, pendências, pedidos, finanças, reflexões e diário. Eventos do
+fechamento não substituem o diário das ações individuais.
 
-A identidade é **dia de geração + ID do produto**, além de um ID numérico único.
-O marcador de dia e a chave por oferta impedem criar duas vezes o mesmo pedido,
-mesmo se a rotina de geração for chamada novamente. Aceitar não clona a oferta.
-
-- Padrão de entrega: até o dia de geração + 2, inclusive.
-- Padrão de aceite: até o dia de geração + 1, inclusive, limitado ao prazo de entrega.
-- Ofertas podem ser aceitas ou recusadas; recusas e ofertas expiradas são preservadas.
-- Aceitos recebem uma sequência de aceite e entram em fila nessa ordem.
-- No processamento diário, cada pedido aceito é tentado uma vez. Sem produtos
-  suficientes para a quantidade inteira, permanece na fila e o processamento
-  segue para os demais; não há entrega parcial. Produtos não são reservados por
-  pedido, e o primeiro elegível na ordem de aceite tem prioridade de uso.
-- Só uma entrega efetiva reduz produtos acabados e registra receita.
-- Entregue no prazo: dia de entrega ≤ prazo. Atraso: máximo(0, entrega − prazo).
-- Pedidos aceitos vencidos continuam aceitos, com atraso atualizado. Nunca
-  expiram como ofertas nem são apagados por falta de estoque.
-- Estados: ofertado, aceito, recusado, expirado e entregue. Filas, ofertas e
-  histórico da interface são consultas desse mesmo conjunto persistente.
-
-## Avançar um dia: ordem fixa
-
-O botão avança de D para **D+1** e executa, sincronicamente:
-
-1. **Chegadas:** receber compras em trânsito com chegada ≤ D+1.
-2. **Produção:** zerar uso diário, executar os planos elegíveis em ordem de
-   agendamento, consumir insumos, pagar custos variáveis e adicionar produtos.
-3. **Entregas:** tentar cada pedido aceito em ordem de aceite, baixando produtos
-   e recebendo dinheiro quando há estoque suficiente.
-4. **Prazos e ofertas:** marcar ofertas vencidas, atualizar atrasos de aceitos
-   e gerar o lote único de ofertas do novo dia.
-5. Registrar o resumo no histórico de dias e mostrá-lo paginado.
-
-Assim, uma chegada ocorre antes do consumo, e um produto concluído pode ser
-entregue no mesmo processamento. O prazo de entrega é inclusivo. Uma rotina
-não é chamada por frame; apenas o botão dispara a transição. A trava de
-reentrada e o resumo aberto bloqueiam avanço repetido acidental. Fechar o
-resumo ou trocar de setor permite planejar/avançar novamente.
-
-## Finanças e resultado
-
-Dinheiro é inteiro em centavos. Cada movimento guarda tipo, dia, descrição,
-valor assinado e referência única à compra, lote ou pedido. Repetir a mesma
-referência não gera nova cobrança/receita. Caixa negativo é proibido.
-
-- Capital inicial não é receita de venda.
-- Compra paga é saída no dia da contratação; chegada não paga novamente.
-- Custo variável adicional é saída na execução do lote.
-- Receita de entrega só é entrada quando o pedido é efetivamente atendido.
-- **Resultado de caixa = receitas de entregas − compras pagas − custos variáveis pagos.**
-- **Saldo em caixa = capital inicial + resultado de caixa.**
-
-Faturamento/receita não é lucro. O resultado mostrado é de caixa, e não lucro
-contábil: não há depreciação, salários, impostos, perdas, avaliação contábil do
-estoque inicial ou custo de mercadoria vendida por FIFO. O custo de ingredientes
-dos lotes é informativo e não pode ser subtraído de novo como pagamento.
-
-## Limites desta etapa
-
-Não há save/load, perecimento, entregas parciais, contratação ou IA de empregados.
-A produção tem execução diária, sem animação de duração intradiária. Os gráficos
-isométricos e funcionários são preservados como representações visuais.
-Não há juros, crédito, multa por atraso ou pedido sumindo por vencimento.
-
-## Período finito, pausa e aprendizagem na V0.1
-
-A duração padrão é cinco dias de operação (editável de 1 a 60). Dia 1 é
-preparação; cada avanço processa o dia seguinte e soma um a dias_processados.
-Após o último, não se geram novas ofertas, novas ações são bloqueadas e o
-dashboard abre. Pedidos, compras em trânsito, planos e estoques são preservados.
-Pausar bloqueia decisões econômicas e dias sem bloquear consultas. Resultado
-negativo não provoca encerramento antecipado.
-
-O diário registra data da simulação, ação e consequência. Casos pedagógicos
-são consultas extensíveis, sem penalidades econômicas. Todas as reflexões
-disparadas ficam registradas; a maior prioridade aparece no balão.
-
-Pontualidade = entregas no prazo / entregas realizadas × 100. Utilização =
-capacidade usada nos dias registrados / (dias processados × capacidade diária) × 100.
-Sem denominador, exibir não aplicável. Zero de produção com dias disponíveis
-gera 0%, pois há dados suficientes. Aceitos incluem os já entregues;
-recebidos são ofertas únicas. Nunca tratar pedido aberto atrasado como entregue.
-
-Manuais: MANUAL_DO_ALUNO.md e MANUAL_DO_PROFESSOR.md.
+Agendamento/execução automática antigos sobrevivem apenas nos recursos/testes
+históricos da V0.1, fora do fluxo normal da exploração.
