@@ -64,6 +64,8 @@ Ambiente: **GameMaker IDE 2026.0.0.16, runtime 2026.0.0.23, Windows/VM**.
 
 | Verificação | Resultado |
 | --- | --- |
+| Abertura na IDE após integrar no projeto principal | OnProjectLoaded e SUCCESSFUL LOAD AND LINK; janela do projeto aberta. |
+| Leitura pela extensão GMSync instalada | 30 objetos, 27 scripts, dez salas e 24 sprites reconhecidos. |
 | ProjectTool SAVE e OPEN | Código 0; SUCCESSFUL LOAD AND LINK nos 91 recursos. |
 | Compilação normal, sem injeção de testes | Igor código 0; 24 sprites, 30 objetos, dez salas. |
 | Validador do projeto | Registro, referências, eventos, quadros e ordem das salas OK. |
@@ -118,6 +120,10 @@ Piso, paredes, portas, pia, forno, cadeiras e plantas do corredor ainda são
 primitivas GML e não entram na edição dos estudantes. O fogão e os utensílios
 são cenário; a produção funcional continua na bancada.
 
+O ui.log da IDE também registrou avisos internos de desserialização de
+PackageManager/layout; eles não impediram carregar ou compilar o projeto.
+Não foram alteradas configurações globais da IDE para ocultá-los.
+
 A avaliação humana da legibilidade/usabilidade e a execução nos computadores
 da turma ficam para a preparação presencial. Outros alvos, YYC e resoluções
 não foram testados nesta etapa. Os ramos comprar/recusar mantêm a validação da
@@ -125,3 +131,12 @@ etapa anterior; não foram reexecutados para esta mudança de apresentação.
 Não há salvamento de sessão em disco: Continuar/checkpoint duram enquanto o
 programa está aberto. Faça uma cópia por grupo e teste novamente após integrar
 os desenhos, conforme o roteiro.
+
+
+## Distribuição
+
+O código e os roteiros estão em `main` no
+[repositório fabricasalgados](https://github.com/Luidcasotti/fabricasalgados).
+O pacote local completo para copiar aos grupos é
+`C:\fabrica\entregas\FabricaDeSalgados_Aula_2026-10-23.zip`.
+Extraia-o antes de abrir o .yyp; não execute o projeto dentro do ZIP.

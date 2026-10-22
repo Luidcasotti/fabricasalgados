@@ -261,5 +261,14 @@
     "sprites/spr_prod_utensilios_aula/b57e466f-ce47-4fe7-8873-e142627d0c28.png": "479d16c45289a2634745ae61c4d2435bafb769180c68024cae28e0743beaa095",
     "sprites/spr_prod_utensilios_aula/layers/b57e466f-ce47-4fe7-8873-e142627d0c28/52f1ab1f-c59c-4f27-94a1-2d6dfbb0987b.png": "479d16c45289a2634745ae61c4d2435bafb769180c68024cae28e0743beaa095",
     "sprites/spr_prod_utensilios_aula/spr_prod_utensilios_aula.yy": "50e6e2ff4c7dd6360f1c6218d27fa65759421e363b139fca3107ec4ad394925a"
-  }
+  },
+  "ide_abertura_confirmada": true,
+  "ide_evidencia": "SUCCESSFUL LOAD AND LINK; OnProjectLoaded; ProjectFileWatcher na raiz principal; janela BLANK GAMEFabricaDeSalgados - GameMaker-LTS2026",
+  "gmsync_recursos": {
+    "objetos": 30,
+    "scripts": 27,
+    "salas": 10,
+    "sprites": 24
+  },
+  "pacote_local": "C:\\fabrica\\entregas\\FabricaDeSalgados_Aula_2026-10-23.zip"
 }
