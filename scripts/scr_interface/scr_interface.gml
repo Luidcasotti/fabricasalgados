@@ -8,6 +8,7 @@ function visual_iniciar() {
         laranja: make_color_rgb(214, 96, 54), verde: make_color_rgb(66, 116, 91),
         azul: make_color_rgb(60, 113, 132), ouro: make_color_rgb(224, 175, 77), fonte: {}
     };
+    variable_struct_set(global.visual.fonte,"&",[12,18,20,8,21,18,13]);
     var _letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;!?-+/()$%#=>";
     var _linhas = [
         [14,17,17,31,17,17,17], [30,17,17,30,17,17,30], [14,17,16,16,16,17,14],

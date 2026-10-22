@@ -16,3 +16,7 @@ e entrega. Arte e animação são provisórias. Próximos trabalhos:
 
 Preservar dados reais nos indicadores, compras com prazo, ações presenciais e
 possibilidade de refletir sobre resultados negativos sem Game Over definitivo.
+
+
+A história guiada já tem cinco missões, três perguntas e recuperação por checkpoint.
+Novos capítulos devem usar eventos confirmados e ser avaliados com estudantes.

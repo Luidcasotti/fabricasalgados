@@ -11,6 +11,7 @@ function mundo_setor() {
 function mundo_criar(_setor) {
     var _m={setor:_setor,nome:"CORREDOR",w:24,h:14,entrada:{u:3,v:10,face:0},moveis:[],alvos:[],bloqueios:[]};
     if(_setor=="corredor") {
+        if(variable_global_exists("jogo") && missoes_ativa(global.jogo))array_push(_m.moveis,{tipo:"npc",papel:"gestor",u:5,v:3,w:.5,h:.5});
         _m.w=36;_m.h=10;_m.entrada={u:4,v:5,face:0};
         var _setores=["comercial","producao","estoque"],_nomes=["COMERCIAL","PRODUÇÃO","ESTOQUE"];
         for(var _i=0;_i<3;_i++) array_push(_m.alvos,{id:"porta_"+_setores[_i],tipo:"porta",nome:_nomes[_i],u:7+_i*11,v:2,raio:1.6,destino:_setores[_i]});
@@ -103,7 +104,7 @@ function mundo_alvo_proximo(_ator,_m) {
 }
 function mundo_interagir(_controle,_alvo) {
     var _j=global.jogo;
-    if(is_undefined(_alvo) || simulacao_bloqueio(_j)!="" || !mundo_perto(_j,_alvo.id)) return false;
+    if(is_undefined(_alvo) || historia_aberta(_j) || simulacao_bloqueio(_j)!="" || !mundo_perto(_j,_alvo.id)) return false;
     if(_alvo.tipo=="porta") {
         var _anterior=_j.exploracao.setor;
         _j.exploracao.setor=_alvo.destino;
@@ -115,6 +116,19 @@ function mundo_interagir(_controle,_alvo) {
     }
     _controle.painel=_alvo;_controle.selecao=0;_controle.quantidade=5;
     _controle.mensagem="Converse, confira e tome sua decisão.";
+    missoes_evento(_j,"interacao",{id:_alvo.id});
+    if(missoes_ativa(_j)) {
+        if(_alvo.id=="bancada") {
+            var _produto=(_j.missoes.etapa>=EtapaMissao.DESAFIO)?"bolinha_queijo":"coxinha";
+            for(var _i=0;_i<array_length(_j.catalogo.produtos);_i++)if(_j.catalogo.produtos[_i].id==_produto)_controle.selecao=_i;
+            _controle.quantidade=10;
+        }
+        if(_alvo.id=="prateleira_frango")_controle.quantidade=max(1,min(_j.exploracao.limite_transporte-exploracao_carregado_total(_j),missoes_necessario(_j,"coxinha","frango")-estoque_quantidade(_j.cozinha,"frango")-estoque_quantidade(_j.carregados,"frango")));
+        if(_alvo.id=="compras") {
+            for(var _i=0;_i<array_length(_j.catalogo.ingredientes);_i++)if(_j.catalogo.ingredientes[_i].id=="queijo")_controle.selecao=_i;
+            _controle.quantidade=max(1,missoes_necessario(_j,"bolinha_queijo","queijo")-exploracao_total_insumo(_j,"queijo")-compras_pendentes_quantidade(_j,"queijo"));
+        }
+    }
     return true;
 }
 function mundo_camera(_c,_ator) {

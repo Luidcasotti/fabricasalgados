@@ -75,3 +75,13 @@ fechamento não substituem o diário das ações individuais.
 
 Agendamento/execução automática antigos sobrevivem apenas nos recursos/testes
 históricos da V0.1, fora do fluxo normal da exploração.
+
+## História guiada
+
+Neste modo, ofertas automáticas são substituídas por dois casos únicos; etapas
+bloqueiam ações fora da ordem e o relógio até a primeira entrega. A cozinha
+recebe uma transferência inicial dos insumos, exceto frango. Compras/receita/
+finanças continuam reais. Negociação preserva prazo original e novo. Recusa
+inicial permite outra oferta sem apagar a anterior. Concluir a história fecha
+o dia corrente e abre resultados sem esperar todo o limite de dias. Reiniciar
+capítulo restaura todos os dados juntos. Regras e limites em MISSOES_E_HISTORIA.md.

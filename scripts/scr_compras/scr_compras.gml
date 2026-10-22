@@ -15,6 +15,7 @@ function compras_proxima_chegada(_jogo,_id) {
     return _dia;
 }
 function compra_realizar(_jogo,_id,_quantidade) {
+    var _missao=missoes_permitir(_jogo,"comprar",_id,_quantidade);if(!_missao.ok)return _missao;
     if(exploracao_ativa(_jogo) && !mundo_perto(_jogo,"compras"))return {ok:false,mensagem:"Aproxime-se do local de compras e pressione E."};
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     var _item=ingrediente_obter(_jogo.catalogo,_id);
@@ -32,6 +33,7 @@ function compra_realizar(_jogo,_id,_quantidade) {
     _jogo.proximo_compra_id++;
     diario_registrar(_jogo,"COMPRAR "+_item.nome,string(_quantidade)+" unidade(s); pago "+financas_formatar(_total)+"; chegada prevista no dia "+string(_jogo.dia+_item.prazo_dias)+". O físico não mudou.");
     pedagogia_disparar(_jogo,"compra",{compra:_jogo.compras[array_length(_jogo.compras)-1]});
+    missoes_evento(_jogo,"compra",{compra:_jogo.compras[array_length(_jogo.compras)-1]});
     return {ok:true,mensagem:"Compra paga. Chegada no dia "+string(_jogo.dia+_item.prazo_dias)+"."};
 }
 function compras_receber(_jogo,_eventos) {

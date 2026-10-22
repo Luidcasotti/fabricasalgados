@@ -1,6 +1,6 @@
 var _c=instance_find(obj_exploracao,0);
 if(!instance_exists(_c))exit;
-if(simulacao_bloqueio(global.jogo)=="" && is_undefined(_c.painel) && !_c.ajuda) {
+if(simulacao_bloqueio(global.jogo)=="" && is_undefined(_c.painel) && !_c.ajuda && !historia_modal(_c)) {
     var _dx=keyboard_check(ord("D"))+keyboard_check(vk_right)-keyboard_check(ord("A"))-keyboard_check(vk_left);
     var _dy=keyboard_check(ord("S"))+keyboard_check(vk_down)-keyboard_check(ord("W"))-keyboard_check(vk_up);
     // Uma direção de tela por vez. Velocidade constante nos quatro eixos.

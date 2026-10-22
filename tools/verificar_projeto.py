@@ -52,7 +52,7 @@ for name, relative in resources.items():
 assert read(root/resources['obj_game'])['persistent'] is True
 for obj in ('obj_exploracao','obj_cozinheiro'):
     assert read(root/resources[obj])['persistent'] is False
-for required in ('scr_compras','scr_tempo','scr_parametros','scr_testes_simulacao'):
+for required in ('scr_compras','scr_tempo','scr_parametros','scr_testes_simulacao','scr_missoes','scr_historia','scr_testes_missoes'):
     assert required in resources, required
 print(json.dumps({'recursos':len(resources), 'ordem_salas':order,
                   'referencias':'OK','eventos':'OK','frames_sprite':'OK','GML_Code':True},ensure_ascii=False,indent=2))

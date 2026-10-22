@@ -1,17 +1,18 @@
-# Etapa atual — exploração jogável — 21/10/2026
+# Etapa atual — missões, história e aprendizagem
 
-- [x] Preservar projeto, recursos anteriores, tag v0.1 e backup completo.
-- [x] Registrar cinco salas, dois objetos, quatro scripts e um sprite próprios.
-- [x] WASD/setas, quatro direções, animação, colisões e câmera.
-- [x] Caminhos até todos os alvos, portas dos três setores e retorno persistente.
-- [x] Aceite/recusa, compras pagas com prazo, retirada e mochila presenciais.
-- [x] Depósito, receita/produção local e entrega manual no Comercial.
-- [x] Relógio sem ações automáticas, capacidade, fim e reinício.
-- [x] Objetivo, pedido, HUD, ajuda, balões e diário.
-- [x] Dashboard/auditoria com os três locais de ingredientes.
-- [x] 41 recursos e sprite conferidos; ProjectTool abriu/normalizou.
-- [x] 354 verificações Windows/VM: 231 regras/controladores + 123 partida.
-- [x] Capturas/manuais atualizados e limites explícitos.
+- [x] Projeto anterior e backup preservados; 44 recursos registrados e íntegros.
+- [x] Introdução da Sabor & Gestão e modo guiado/livre explícitos.
+- [x] Primeiro pedido de 10 coxinhas viável, com falta local real de frango.
+- [x] Missões por ações, orientação visual e ajuda com repetição de falas.
+- [x] Produção com barra curta, receita real, pausa e cancelamento sem consumo.
+- [x] Segundo caso com falta geral, compra com prazo, negociação ou recusa.
+- [x] Três perguntas contextualizadas, explicações e respostas sem punição.
+- [x] Recuperação de recusa e checkpoint com confirmação explícita.
+- [x] Dashboard de aprendizagem com dados reais, problemas e prática observada.
+- [x] 66 verificações novas; 963 verificações executadas nas suítes e quatro partidas.
+- [x] Três ramos da história e modo livre chegaram ao fim e reiniciaram.
+- [x] Documentação e capturas atualizadas; limites da automação explícitos.
 
-Próximas etapas: avaliação com pessoas, acessibilidade, persistência/exportação
-e arte definitiva. Veja RELATORIO_EXPLORACAO.md. RELATORIO_V01.md é histórico.
+Próxima etapa: partida humana com aluno/professor para avaliar leitura, orientação
+e tempo de caminhada, antes de ampliar o roteiro. Depois, acessibilidade e
+salvamento/exportação. Consulte RELATORIO_HISTORIA.md e MISSOES_E_HISTORIA.md.

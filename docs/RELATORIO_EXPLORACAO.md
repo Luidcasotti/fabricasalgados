@@ -1,3 +1,5 @@
+> Documento da etapa anterior. Atual: [RELATORIO_HISTORIA.md](RELATORIO_HISTORIA.md).
+
 # Entrega — reformulação da jogabilidade
 
 A fábrica agora é explorável em salas reais. O cozinheiro caminha, contorna móveis,

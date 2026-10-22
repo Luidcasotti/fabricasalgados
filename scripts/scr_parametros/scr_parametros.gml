@@ -85,6 +85,7 @@ function parametros_layout() {
     return _l;
 }
 function parametros_clique(_mx,_my) {
+    if(campo_editando<0 && ui_contem(ui_area(930,102,326,46),_mx,_my)) {modo_guiado=!modo_guiado;configuracao=modo_guiado?missoes_parametros():parametros_padrao();campos=parametros_campos(configuracao);pagina=0;mensagem=modo_guiado?"História: receita inicial viável; queijo inicial zero e reposição com prazo.":"Livre: parâmetros e exploração sem sequência de missões.";return;}
     if(campo_editando>=0) {
         if(ui_contem(layout.cancelar,_mx,_my)) campo_editando=-1;
         else if(ui_contem(layout.confirmar,_mx,_my)) parametros_confirmar();
@@ -93,13 +94,13 @@ function parametros_clique(_mx,_my) {
     if(ui_contem(layout.anterior,_mx,_my)) pagina=max(0,pagina-1);
     else if(ui_contem(layout.proxima,_mx,_my)) pagina=min(ceil(array_length(campos)/6)-1,pagina+1);
     else if(ui_contem(layout.restaurar,_mx,_my)) {
-        configuracao=parametros_padrao();campos=parametros_campos(configuracao);pagina=0;
+        configuracao=modo_guiado?missoes_parametros():parametros_padrao();campos=parametros_campos(configuracao);pagina=0;
         mensagem="Padrões restaurados na configuração. A partida atual só muda ao iniciar.";
     }
     else if(ui_contem(layout.voltar,_mx,_my)) jogo_ir_para(FaseJogo.MENU);
     else if(ui_contem(layout.iniciar,_mx,_my)) {
-        var _val=parametros_validar(configuracao);mensagem=_val.mensagem;
-        if(_val.ok) {global.jogo=jogo_criar(configuracao);exploracao_iniciar(global.jogo);jogo_ir_para(FaseJogo.FABRICA);}
+        var _val=modo_guiado?missoes_validar_config(configuracao):parametros_validar(configuracao);mensagem=_val.mensagem;
+        if(_val.ok) {global.jogo=jogo_criar(configuracao);exploracao_iniciar(global.jogo);if(modo_guiado)missoes_iniciar(global.jogo);jogo_ir_para(FaseJogo.FABRICA);}
     } else for(var _i=0;_i<6;_i++) {
         var _idx=pagina*6+_i;if(_idx>=array_length(campos)) break;
         var _c=campos[_idx],_l=layout.linhas[_i],_valor=parametro_ler(configuracao,_c);
@@ -118,7 +119,8 @@ function parametros_confirmar() {
 }
 function parametros_desenhar() {
     var _v=global.visual;ui_fundo();ui_titulo("VALORES FICTÍCIOS PARA APRENDIZAGEM");
-    ui_texto(24,116,"PARÂMETROS / CLIQUE NO VALOR PARA DIGITAR OU USE + E -",2,_v.tinta);
+    ui_texto(24,116,"PARÂMETROS / CLIQUE NO VALOR OU USE + E -",2,_v.tinta);
+    ui_botao(ui_area(930,102,326,46),modo_guiado?"HISTÓRIA GUIADA":"MODO LIVRE",_v.verde);
     for(var _i=0;_i<6;_i++) {
         var _idx=pagina*6+_i;if(_idx>=array_length(campos)) break;
         var _c=campos[_idx],_l=layout.linhas[_i],_yy=172+_i*65;

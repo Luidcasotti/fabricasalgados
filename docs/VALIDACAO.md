@@ -1,44 +1,61 @@
-# Validação — exploração jogável
+# Validação — missões e história
 
-Windows, IDE GameMaker 2026.0.0.16, runtime 2026.0.0.23, Windows/VM.
-Recursos novos pelos escritores GMSync; ProjectTool oficial executou PROJECT SAVE
-e PROJECT OPEN com código 0 e SUCCESSFUL LOAD AND LINK.
+Windows/VM, IDE GameMaker 2026.0.0.16 e runtime 2026.0.0.23. ProjectTool oficial
+abriu e normalizou os recursos (PROJECT SAVE/OPEN, código 0). Projeto principal
+compilado sem injeção de testes. Validação estática: **44 recursos**, referências,
+eventos, ordem de salas, instâncias e todos os quadros/camadas do sprite.
 
-| Conjunto | Verificações | Resultado |
-| --- | ---: | --- |
-| Regras anteriores | 72 | Zero falhas |
-| Interface anterior | 22 | Zero falhas |
-| Aprendizado/dashboard V0.1 | 54 | Zero falhas |
-| Logística/receitas/geometria | 83 | Zero falhas |
-| Partida nas salas reais | 123 | Zero falhas |
-| **Total no runtime** | **354** | **Aprovadas** |
+## Execuções aprovadas
 
-Validação estática: 41 recursos, referências, eventos, ordem das salas, instâncias,
-oito quadros/camadas do sprite. GMSync confirmou no VS Code 7 objetos, 23 scripts,
-10 salas e 1 sprite. Room1 e opções originais sem mudanças. A auditoria
-soma depósito+cozinha+mochila e verifica consumo, prontos, dinheiro e unicidade.
+| Conjunto | Verificações executadas | Falhas |
+| --- | ---: | ---: |
+| Regras anteriores da simulação | 72 | 0 |
+| Interface anterior | 22 | 0 |
+| Aprendizado/dashboard V0.1 | 54 | 0 |
+| Logística/exploração anterior | 83 | 0 |
+| Missões e história novas | 66 | 0 |
+| Partida completa no modo livre | 123 | 0 |
+| História: negociar e entregar no prazo | 206 | 0 |
+| História: aceitar prazo original e entregar atrasado | 205 | 0 |
+| História: recusar segundo pedido | 132 | 0 |
+| **Total executado** | **963** | **0** |
 
-Os 83 casos novos abrangem retirada remota/errada/excessiva, limite da mochila,
-depósito repetido, falta na cozinha, capacidade/custo, compra paga com prazo,
-recebimento único, relógio sem ações automáticas, pausa/fim/dashboard, receitas
-dos três produtos (também receita alterada), entrega atrasada, paredes/móveis
-e caminhos até todos os alvos E.
+As 963 verificações ocorreram em cinco execuções: uma suíte de regras e quatro
+partidas. Há verificações comuns repetidas entre ramos; não são 963 cenários
+independentes nem uma métrica de aprendizagem. Logs resultaram em
+FDS_SIMULACAO_APROVADA ou FDS_PARTIDA_APROVADA. Evidências atuais:
+evidencias-historia.json e imagens/historia-*.png. evidencias-exploracao.json
+refere-se ao snapshot anterior, commit 3717f4f, não aos hashes da história atual.
 
-A partida usa salas/controladores reais em uma **cópia**: menu → parâmetros →
-corredor → Comercial → Estoque → Produção → Comercial → resultados parcial →
-fim → seis abas do dashboard → reinício → segundo fim → menu/continuar.
-O ator usa movimento/colisão reais. BFS somente do teste encontra caminho e
-acelera o percurso, sem teletransportar. WASD/setas são pressionadas pela API de
-entrada do GameMaker; E abre painéis pelo Step normal. Botões usam hit tests GUI;
-portas usam a função de E com proximidade e room_goto. Não simula cliques físicos
-do Windows nem substitui uma partida humana.
+## Cobertura nova
 
-Caso completo: cinco coxinhas; retira 5 farinha+5 frango+5 óleo+5 embalagens;
-compra dez farinhas por R$ 6,00; deposita; cozinha com variável R$ 1,25; entrega
-por R$ 30,00. Final de dois dias: saldo R$ 1.022,75, resultado R$ 22,75, farinha
-125, capacidade 5/200=2,5%, seis ofertas e uma entrega pontual. Valores conferidos
-nos registros reais do Runner. Capturas exploracao-*.png foram inspecionadas;
-evidencias-exploracao.json registra versões, contagens e hashes centrais.
+Introdução completa, leitura persistente, receita inicial viável e conservação
+da transferência de preparação; proximidade e conversa real; entrar em sala
+não avança etapa; ação fora da ordem não consome recursos; primeira recusa com
+nova oferta sem apagar histórico; falta local/geral; retirada excessiva e falta
+de dinheiro; pausa da barra, confirmação única do lote; lead time e recebimento
+único; negociação/recusa/atraso; checkpoint financeiro e físico; período/fim;
+dashboard com problemas, evidências e respostas reais; reinício e continuar.
+
+Os três percursos da história atravessam as salas reais e usam E pelo Step normal,
+hit tests da GUI, movimento com colisão e barra real. O driver opcional apenas
+acelera caminhada por trajetos calculados; não teletransporta para as ações.
+Ver informações da encomenda, ajuda e repetição de explicações foram exercitados.
+Cada ramo chegou ao dashboard, navegou sete abas e iniciou outra sessão guiada.
+O modo livre continua percorrendo seu ciclo e seis abas.
+
+Resultados didáticos comparados aos dados reais, com os padrões:
+
+| Ramo | Recebidos / entregues / recusados | Compras | Receitas | Variáveis | Resultado de caixa | Atrasos |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Negociar | 2 / 2 / 0 | R$ 14,00 | R$ 100,00 | R$ 5,00 | R$ 81,00 | 0 |
+| Prazo original | 2 / 2 / 0 | R$ 14,00 | R$ 100,00 | R$ 5,00 | R$ 81,00 | 1 entrega / 1 dia |
+| Recusar | 2 / 1 / 1 | R$ 0,00 | R$ 60,00 | R$ 2,50 | R$ 57,50 | 0 |
+
+O prazo original do segundo pedido é dia 2; a compra no dia 1 chega no dia 3;
+negociar combina dia 4. Capacidade total usada: 20 pontos em três dias observados
+nos ramos de duas entregas; 10 em um dia no ramo de recusa. Todos os estoques,
+lotes, movimentos e IDs foram auditados. Resultado de caixa não é lucro contábil.
 
 ## Reproduzir
 
@@ -46,18 +63,22 @@ evidencias-exploracao.json registra versões, contagens e hashes centrais.
 python tools/verificar_projeto.py
 python tools/verificar_simulacao.py
 python tools/verificar_simulacao.py --partida
+python tools/verificar_simulacao.py --historia negociar
+python tools/verificar_simulacao.py --historia comprar
+python tools/verificar_simulacao.py --historia recusar
 ```
 
-Python só no desenvolvimento, além do runtime/usuário GameMaker instalados.
-Use --runtime e --usuario-runtime para outros caminhos. Cada execução cria cópia
-nova em .testes; nunca sobrescreve destino existente. Logs: compilacao.log e
-execucao.log. --partida coleta capturas e exige as seis abas. Limite: 30 segundos.
-Nenhum teste executa na partida normal; falha não aprova a entrega.
+Python serve apenas ao desenvolvimento. Requer runtime/usuário GameMaker local;
+--runtime e --usuario-runtime permitem outros caminhos. Cada execução copia o
+projeto para destino novo (.testes por padrão), compila, roda e guarda logs e
+capturas. Não sobrescreve destino existente; testes não executam na partida normal.
+Uma execução não pode combinar --partida e --historia. Limite do Runner: 30 s.
+Cada partida exige capturas das seis ou sete abas antes de aprovar.
 
 ## Limites
 
-Automação comprova regras, entrada no runtime, navegação e desenho, sem avaliar
-leitura, ritmo e acessibilidade com pessoas. Não foram validados YYC, outras
-plataformas/resoluções ou restauração após fechar. Não existe salvamento em disco.
-Arte/colisões/animação provisórias. Esses limites não impediram iniciar, completar,
-encerrar e reiniciar a partida no Windows/VM testado.
+Automação usa APIs de entrada do GameMaker e hit tests; não comprova conforto de
+teclado/mouse físicos, acessibilidade ou aprendizagem de estudantes reais.
+Faltam avaliação humana e outras plataformas/resoluções/YYC. Arte e retratos
+provisórios. Não há persistência em disco: checkpoint e Continuar duram somente
+enquanto o programa está aberto. Nenhum bloqueador apareceu nos percursos testados.

@@ -29,3 +29,9 @@ já amplia. Se mudar ocupação no chão, atualize volume de colisão e deixe al
 alcançável fora do móvel. Teste oclusão, quatro direções, contorno dos equipamentos,
 portas e transporte antes de trocar próxima arte. Registre autoria/licença futura;
 não remova colisão/interação ao substituir apenas o desenho.
+
+
+Na história, scr_historia desenha retratos provisórios próprios do gerente e
+cozinheiro, seta de objetivo e barra. Falas ocupam uma caixa persistente com
+CONTINUAR; perguntas usam três alternativas grandes. A fonte ganhou o glifo &.
+Ao substituir retratos, preserve contraste e espaço de leitura/alternativas.

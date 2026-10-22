@@ -1,3 +1,24 @@
+# História guiada — atualização
+
+Escolha HISTÓRIA GUIADA nos parâmetros para a sequência educativa, ou LIVRE
+para as atividades descritas abaixo. Alternar modo reaplica seus padrões.
+Leia [Missões e história](MISSOES_E_HISTORIA.md) para etapas, escolhas e recuperação.
+
+A primeira encomenda guiada é de **10 coxinhas**. Demais ingredientes já estão
+separados na cozinha; busque somente o frango e deposite. A barra registra o lote
+uma vez. No segundo caso, falta queijo na empresa: comprar exige espera; negociar
+muda o prazo com registro; recusar também conclui o desafio. Perguntas erradas
+explicam sem penalizar. A ajuda mostra missão/ação/local/motivo e repete falas.
+
+Reiniciar missão restaura início da história ou capítulo do segundo pedido,
+com confirmação; todas as alterações posteriores ao checkpoint são desfeitas.
+Isso não salva em disco. APRENDIZAGEM mostra problemas/prática/respostas,
+sem atribuir nota ou garantir domínio do conteúdo.
+
+---
+
+## Exploração e atividades no modo livre
+
 # Manual do aluno — explore, decida e compare
 
 Você administra a fábrica enquanto controla um cozinheiro. Combine pedidos,

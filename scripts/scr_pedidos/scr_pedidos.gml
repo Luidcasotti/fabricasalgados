@@ -2,7 +2,7 @@ function pedidos_contar_status(_pedidos,_status) {
     var _n=0;for(var _i=0;_i<array_length(_pedidos);_i++) if(_pedidos[_i].status==_status) _n++;return _n;
 }
 function pedidos_gerar_dia(_jogo) {
-    if(_jogo.encerrado) return 0;
+    if(_jogo.encerrado || missoes_ativa(_jogo)) return 0;
     if(_jogo.ultimo_dia_gerado>=_jogo.dia) return 0;
     var _criados=0,_p=_jogo.parametros;
     for(var _i=0;_i<array_length(_jogo.catalogo.produtos);_i++) {
@@ -21,6 +21,7 @@ function pedidos_gerar_dia(_jogo) {
     _jogo.ultimo_dia_gerado=_jogo.dia;return _criados;
 }
 function pedido_decidir(_jogo,_id,_aceitar) {
+    var _missao=missoes_permitir(_jogo,(_aceitar?"aceitar":"recusar"),_id,0);if(!_missao.ok)return _missao;
     if(exploracao_ativa(_jogo) && !mundo_perto(_jogo,"vendas"))return {ok:false,mensagem:"Aproxime-se do local de vendas e pressione E."};
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     var _p=catalogo_buscar(_jogo.pedidos,_id);
@@ -30,6 +31,7 @@ function pedido_decidir(_jogo,_id,_aceitar) {
     if(_aceitar) {_p.dia_aceite=_jogo.dia;_p.sequencia_aceite=_jogo.proximo_aceite_id++;}
     diario_registrar(_jogo,(_aceitar?"ACEITAR":"RECUSAR")+" PEDIDO #"+string(_id),string(_p.quantidade)+" "+produto_obter(_jogo.catalogo,_p.produto_id).nome+"; valor "+financas_formatar(_p.total_centavos)+"; prazo dia "+string(_p.prazo_dia)+(_aceitar?". Entrou na fila.":". Não entrou na fila; registro preservado."));
     if(_aceitar) pedagogia_disparar(_jogo,"aceite",{pedido:_p});
+    missoes_evento(_jogo,"decisao",{id:_id,aceitar:_aceitar});
     return {ok:true,mensagem:_aceitar ? (exploracao_ativa(_jogo)?"Pedido aceito. Produza e entregue no balcão do Comercial.":"Pedido aceito. Entrega ao avançar o dia.") : "Pedido recusado e mantido no histórico."};
 }
 function pedidos_fila(_jogo) {
@@ -39,6 +41,7 @@ function pedidos_fila(_jogo) {
     return _fila;
 }
 function pedido_entregar(_jogo,_pedido) {
+    var _missao=missoes_permitir(_jogo,"entregar",_pedido.id,0);if(!_missao.ok)return _missao;
     if(exploracao_ativa(_jogo) && !mundo_perto(_jogo,"entrega"))return {ok:false,mensagem:"Aproxime-se do local de entrega e pressione E."};
     var _bloqueio=simulacao_bloqueio(_jogo);if(_bloqueio!="") return {ok:false,mensagem:_bloqueio};
     if(_pedido.status!="aceito") return {ok:false,mensagem:"Pedido não está na fila."};
@@ -51,6 +54,7 @@ function pedido_entregar(_jogo,_pedido) {
     _pedido.atraso_dias=max(0,_jogo.dia-_pedido.prazo_dia);_pedido.pontual=_pedido.atraso_dias==0;
     diario_registrar(_jogo,"ENTREGAR PEDIDO #"+string(_pedido.id),"Receita "+financas_formatar(_pedido.total_centavos)+"; baixa de "+string(_pedido.quantidade)+" produtos; atraso de "+string(_pedido.atraso_dias)+" dia(s).");
     pedagogia_disparar(_jogo,"entrega",{pedido:_pedido});
+    missoes_evento(_jogo,"entrega",{id:_pedido.id});
     return {ok:true,mensagem:"Pedido #"+string(_pedido.id)+" entregue "+(_pedido.pontual ? "no prazo." : "com "+string(_pedido.atraso_dias)+" dia(s) de atraso.")};
 }
 function pedidos_entregar_fila(_jogo,_eventos) {

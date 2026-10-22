@@ -1,0 +1,42 @@
+{
+  "data_local": "2026-10-21",
+  "git_base": "3717f4f1fb9de0b41e1d605d679c707269ac10a4",
+  "IDE": "2026.0.0.16",
+  "runtime": "2026.0.0.23",
+  "alvo": "Windows/VM",
+  "recursos": 44,
+  "contagens": {
+    "regras": {
+      "SIMULACAO": 72,
+      "INTERFACE": 22,
+      "V01": 54,
+      "EXPLORACAO": 83,
+      "MISSOES": 66
+    },
+    "livre": 123,
+    "negociar": 206,
+    "comprar": 205,
+    "recusar": 132
+  },
+  "falhas": 0,
+  "project_tool_save": 0,
+  "project_tool_open": 0,
+  "compilacao_principal": 0,
+  "hashes_sha256": {
+    "BLANK GAMEFabricaDeSalgados.yyp": "ca4733ddc8e13f3ac4cfc411849baed4693436479c8001b9a1923fbee40177ed",
+    "scripts/scr_missoes/scr_missoes.gml": "55ae174f20f0efb7931c9dcc3e3a06e8d8fc73f9ec8b17c4ff49cd1116475219",
+    "scripts/scr_historia/scr_historia.gml": "07247e75ce262174e73afedc714070c83c6e6fb3fa67c5e5be4d07710e59b334",
+    "scripts/scr_testes_missoes/scr_testes_missoes.gml": "77eb9a8722336015e0c72aaeca36ce4a5b7394380342904067bc43f72f677483",
+    "scripts/scr_exploracao_interface/scr_exploracao_interface.gml": "f339389949900f54355e29a910ef0f383e2e60ce2e0388cdf879f92d7967aad1"
+  },
+  "verificacoes_executadas": 963,
+  "execucoes": 5,
+  "data_verificacao_final": "2026-10-22",
+  "ide_abertura_confirmada": true,
+  "gmsync_recursos": {
+    "objetos": 7,
+    "scripts": 26,
+    "salas": 10,
+    "sprites": 1
+  }
+}

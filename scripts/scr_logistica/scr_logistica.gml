@@ -24,6 +24,7 @@ function exploracao_bloqueio_local(_j,_alvo) {
     return "";
 }
 function exploracao_retirar(_j,_id,_q) {
+    var _missao=missoes_permitir(_j,"retirar",_id,_q);if(!_missao.ok)return _missao;
     var _b=exploracao_bloqueio_local(_j,"prateleira_"+_id);if(_b!="")return {ok:false,mensagem:_b};
     if(!quantidade_valida(_q) || is_undefined(ingrediente_obter(_j.catalogo,_id)))return {ok:false,mensagem:"Quantidade ou ingrediente inválido."};
     if(estoque_quantidade(_j.estoque.materias_primas,_id)<_q)return {ok:false,mensagem:"Não há essa quantidade na prateleira."};
@@ -31,9 +32,11 @@ function exploracao_retirar(_j,_id,_q) {
     estoque_ajustar(_j.estoque.materias_primas,_id,-_q);estoque_ajustar(_j.carregados,_id,_q);
     array_push(_j.exploracao.transferencias,{dia:_j.dia,id:_id,quantidade:_q,origem:"estoque",destino:"mochila"});
     diario_registrar(_j,"RETIRAR "+ingrediente_obter(_j.catalogo,_id).nome,string(_q)+" do estoque para a mochila. Nada foi produzido ou duplicado.");
+    missoes_evento(_j,"retirada",{id:_id,quantidade:_q});
     return {ok:true,mensagem:"Ingredientes na mochila. Leve à mesa de depósito na Produção."};
 }
 function exploracao_depositar(_j) {
+    var _missao=missoes_permitir(_j,"depositar","",0);if(!_missao.ok)return _missao;
     var _b=exploracao_bloqueio_local(_j,"deposito");if(_b!="")return {ok:false,mensagem:_b};
     var _total=exploracao_carregado_total(_j);if(_total==0)return {ok:false,mensagem:"Mochila vazia. Retire ingredientes no Estoque."};
     for(var _i=0;_i<array_length(_j.carregados);_i++) {
@@ -45,6 +48,7 @@ function exploracao_depositar(_j) {
         array_push(_j.exploracao.transferencias,{dia:_j.dia,id:_a.id,quantidade:_q,origem:"mochila",destino:"cozinha"});
     }
     diario_registrar(_j,"ABASTECER A COZINHA",string(_total)+" unidades transferidas da mochila para a cozinha, sem duplicação.");
+    missoes_evento(_j,"deposito",{});
     return {ok:true,mensagem:"Cozinha abastecida. Consulte a receita na bancada."};
 }
 function exploracao_receita_validar(_j,_id,_q) {
@@ -55,6 +59,7 @@ function exploracao_receita_validar(_j,_id,_q) {
     return _v;
 }
 function exploracao_produzir(_j,_id,_q) {
+    var _missao=missoes_permitir(_j,"produzir",_id,_q);if(!_missao.ok)return _missao;
     var _b=exploracao_bloqueio_local(_j,"bancada");if(_b!="")return {ok:false,mensagem:_b};
     var _p=exploracao_receita_validar(_j,_id,_q);if(!_p.ok)return _p;
     _p.id=_j.producao.proximo_id;_p.dia_planejado=_j.dia;_p.dia_execucao=_j.dia;_p.produzido_dia=_j.dia;_p.status="produzido";
@@ -69,10 +74,12 @@ function exploracao_produzir(_j,_id,_q) {
     array_push(_j.producao.lotes,{id:_p.id,dia:_j.dia,produto_id:_id,quantidade:_q,capacidade:_p.capacidade,insumos:_p.insumos,custo_ingredientes_centavos:_p.custo_ingredientes_centavos,variavel_centavos:_p.variavel_centavos});
     diario_registrar(_j,"COZINHAR "+produto_obter(_j.catalogo,_id).nome,string(_q)+" prontos; ingredientes consumidos da cozinha; custo variável "+financas_formatar(_p.variavel_centavos)+". Entregue no balcão do Comercial.");
     pedagogia_disparar(_j,"plano",{plano:_p});
+    missoes_evento(_j,"producao",{id:_id,quantidade:_q});
     return {ok:true,mensagem:string(_q)+" salgados prontos! Volte ao balcão do Comercial para entregar."};
 }
 /// Fecha o dia atual, preserva produção e entrega presenciais; abre o próximo dia.
 function exploracao_avancar_dia(_j) {
+    var _missao=missoes_permitir(_j,"dia","",0);if(!_missao.ok)return _missao;
     var _b=simulacao_bloqueio(_j);if(_b!="")return {ok:false,mensagem:_b};
     if(_j.avancando)return {ok:false,mensagem:"Dia já em processamento."};
     _j.avancando=true;
@@ -99,6 +106,7 @@ function exploracao_avancar_dia(_j) {
     } finally {_j.avancando=false;}
 }
 function exploracao_objetivo(_j) {
+    if(missoes_ativa(_j))return missoes_guia(_j).acao;
     var _fila=pedidos_fila(_j);if(array_length(_fila)==0)return "Procure Marta no Comercial e analise as encomendas.";
     var _p=_fila[0];if(estoque_quantidade(_j.estoque.produtos,_p.produto_id)>=_p.quantidade)return "Leve os salgados ao balcão do Comercial e entregue o pedido.";
     if(exploracao_carregado_total(_j)>0)return "Transporte os ingredientes até a mesa de depósito na Produção.";

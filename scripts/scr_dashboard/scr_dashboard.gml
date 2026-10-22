@@ -69,7 +69,7 @@ function dashboard_eventos(_jogo) {
     return _lista;
 }
 function dashboard_layout() {
-    var _tabs=[];for(var _i=0;_i<6;_i++) array_push(_tabs,ui_area(24+_i*208,110,192,44));
+    var _tabs=[],_n=missoes_ativa(global.jogo)?7:6,_passo=1248/_n;for(var _i=0;_i<_n;_i++)array_push(_tabs,ui_area(24+_i*_passo,110,_passo-16,44));
     return {tabs:_tabs,anterior:ui_area(24,584,180,44),proxima:ui_area(220,584,180,44),
         voltar:ui_area(24,644,280,56),reiniciar:ui_area(322,644,518,56),menu:ui_area(858,644,398,56)};
 }
@@ -80,11 +80,12 @@ function dashboard_paginas() {
         case 3:return max(1,array_length(reflexoes));
         case 4:return max(1,array_length(global.jogo.diario));
         case 5:return max(1,ceil(array_length(eventos)/3));
+        case 6:return max(1,array_length(missoes_relatorio(global.jogo)));
     }
     return 1;
 }
 function dashboard_clicar(_mx,_my) {
-    for(var _i=0;_i<6;_i++) if(ui_contem(layout.tabs[_i],_mx,_my)) {aba_dashboard=_i;pagina_dashboard=0;return;}
+    for(var _i=0;_i<array_length(layout.tabs);_i++) if(ui_contem(layout.tabs[_i],_mx,_my)) {aba_dashboard=_i;pagina_dashboard=0;return;}
     if(ui_contem(layout.anterior,_mx,_my)) pagina_dashboard=max(0,pagina_dashboard-1);
     if(ui_contem(layout.proxima,_mx,_my)) pagina_dashboard=min(dashboard_paginas()-1,pagina_dashboard+1);
     if(ui_contem(layout.menu,_mx,_my)) jogo_ir_para(FaseJogo.MENU);
@@ -155,11 +156,16 @@ function dashboard_desenhar() {
     var _v=global.visual,_j=global.jogo;ui_fundo();
     ui_titulo(_j.encerrado?"EXPLORAÇÃO / PERÍODO ENCERRADO / REFLITA E EXPERIMENTE DE NOVO":"EXPLORAÇÃO / ACOMPANHAMENTO DA SIMULAÇÃO");
     var _nomes=["PANORAMA","PRODUÇÃO","ESTOQUE","REFLEXÃO","DIÁRIO","EVENTOS"];
-    for(var _i=0;_i<6;_i++) ui_botao(layout.tabs[_i],_nomes[_i],_v.azul,true,aba_dashboard==_i);
+    if(missoes_ativa(_j))array_push(_nomes,"APRENDIZAGEM");
+    for(var _i=0;_i<array_length(layout.tabs);_i++) ui_botao(layout.tabs[_i],_nomes[_i],_v.azul,true,aba_dashboard==_i);
     ui_cartao(24,174,1232,400,_v.claro);
     pagina_dashboard=clamp(pagina_dashboard,0,dashboard_paginas()-1);
     switch(aba_dashboard) {
         case 0:dashboard_panorama();break;
+        case 6:
+            var _apr=missoes_relatorio(_j)[pagina_dashboard];ui_texto(44,214,_apr.titulo,2,_v.azul);
+            ui_paragrafo(44,272,_apr.texto,1150,_v.tinta);
+            ui_texto(44,534,"REGISTROS DE PRÁTICA E RESPOSTAS; NÃO SÃO UMA NOTA OU CERTIFICADO DE APRENDIZAGEM.",1,_v.suave);break;
         case 1:dashboard_producao();break;
         case 2:dashboard_estoque();break;
         case 3:

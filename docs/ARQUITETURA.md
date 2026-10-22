@@ -1,7 +1,7 @@
 # Arquitetura — exploração da fábrica
 
 Projeto existente: `BLANK GAMEFabricaDeSalgados.yyp`, GameMaker/GML Code.
-41 recursos: **10 salas, 7 objetos, 23 scripts, 1 sprite**. Os recursos novos
+44 recursos: **10 salas, 7 objetos, 26 scripts, 1 sprite**. Os recursos novos
 foram criados pelos escritores do GMSync e normalizados/abertos pelo ProjectTool
 oficial. Não houve recriação do projeto. Room1 e opções originais foram preservadas.
 
@@ -102,3 +102,12 @@ Novos produtos seguem o catálogo e seletores. Novos ingredientes exigem também
 prateleira/alvo em mundo_criar e ajuste dos validadores/testes do catálogo padrão.
 Novos móveis precisam de volume e alvo fora da colisão. Registre recursos pela
 IDE/GMSync e confirme .yy/.yyp antes de publicar.
+
+## História guiada
+
+scr_missoes, scr_historia e scr_testes_missoes foram adicionados. Estado fica em
+global.jogo.missoes; não há novo singleton. Etapas, guardas e eventos confirmados
+controlam o avanço; fila de falas/respostas persiste entre salas. Produção guiada
+é confirmada após 90 frames; checkpoint serializa somente dados, sem referências
+a instâncias. Leia MISSOES_E_HISTORIA.md para contratos e extensão por alunos.
+O modo livre e as rotinas de regressão continuam sem estado de missões.
