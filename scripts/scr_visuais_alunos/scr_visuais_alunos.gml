@@ -22,7 +22,9 @@ function visuais_alunos_movel(_m,_setor) {
             }break;
     }
     if(_obj==noone)return false;
-    var _p=mundo_projetar(_m.u,_m.v);return visuais_alunos_sprite(_obj,_p.x,_p.y);
+    var _p=mundo_projetar(_m.u,_m.v);
+    var _bob=(_m.tipo=="npc")?floor(sin(current_time/650+_m.u)*1.1):0;
+    return visuais_alunos_sprite(_obj,_p.x,_p.y+_bob);
 }
 function visuais_alunos_em(_obj,_u,_v,_z=0) {
     var _p=mundo_projetar(_u,_v);visuais_alunos_sprite(_obj,_p.x,_p.y-_z);
@@ -46,16 +48,8 @@ function visuais_alunos_ambiente(_setor) {
     }
 }
 function visuais_alunos_rotulo(_alvo) {
-    var _obj=noone;
-    switch(_alvo.id) {
-        case "prateleira_farinha":_obj=obj_aula_est_placa_farinha;break;
-        case "prateleira_frango":_obj=obj_aula_est_placa_frango;break;
-        case "prateleira_queijo":_obj=obj_aula_est_placa_queijo;break;
-        case "prateleira_oleo":_obj=obj_aula_est_placa_oleo;break;
-        case "prateleira_embalagens":_obj=obj_aula_est_placa_embalagens;break;
-    }
-    if(_obj==noone)return false;
-    var _p=mundo_projetar(_alvo.u,_alvo.v);return visuais_alunos_sprite(_obj,_p.x,_p.y-45);
+    // Nomes são desenhados pela fonte comum legível, em vez das antigas placas bitmap.
+    return false;
 }
 function visuais_alunos_retrato(_x,_y,_chef) {
     // O retrato acompanha o sprite real que o grupo personalizou.

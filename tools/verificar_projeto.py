@@ -2,6 +2,7 @@
 from pathlib import Path
 import json
 import re
+import wave
 
 root = Path(__file__).resolve().parents[1]
 yyp, = root.glob('*.yyp')
@@ -30,9 +31,16 @@ for name, relative in resources.items():
     references(resource)
     if relative.startswith('scripts/'):
         assert resource['isDnD'] is False and path.with_suffix('.gml').is_file()
+    if relative.startswith('sounds/'):
+        sound = path.parent/resource['soundFile']
+        assert sound.is_file()
+        with wave.open(str(sound), 'rb') as wav:
+            assert wav.getnchannels() == 1 and wav.getsampwidth() == 2
+            assert wav.getframerate() == resource['sampleRate']
+            assert 0 < wav.getnframes()/wav.getframerate() < 1
     if relative.startswith('objects/'):
         for event in resource['eventList']:
-            prefix = {0:'Create', 3:'Step', 8:'Draw', 12:'CleanUp'}[event['eventType']]
+            prefix = {0:'Create', 3:'Step', 8:'Draw', 9:'KeyPress', 12:'CleanUp'}[event['eventType']]
             assert path.with_name(f"{prefix}_{event['eventNum']}.gml").is_file()
     if relative.startswith('sprites/'):
         assert resource['width'] > 0 and resource['height'] > 0

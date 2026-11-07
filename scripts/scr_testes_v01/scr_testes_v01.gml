@@ -6,7 +6,7 @@ function teste_feedback_tem(_j,_id) {
 function testes_v01_executar() {
     var _t={total:0,falhas:[]};
     var _exigir=method(_t,function(_cond,_nome){total++;if(!_cond) array_push(falhas,_nome);show_debug_message((_cond?"OK V01: ":"FALHA V01: ")+_nome);});
-    var _cfg=parametros_padrao(),_j=jogo_criar(),_r=dashboard_calcular(_j),_antes;
+    var _cfg=parametros_teste_legado(),_j=jogo_teste_legado(),_r=dashboard_calcular(_j),_antes;
     _exigir(_cfg.duracao_dias==5 && parametros_validar(_cfg).ok,"duracao padrao valida");
     _cfg.duracao_dias=0;_exigir(!parametros_validar(_cfg).ok,"duracao zero rejeitada");
     _cfg.duracao_dias=61;_exigir(!parametros_validar(_cfg).ok,"duracao acima do limite rejeitada");
@@ -29,7 +29,7 @@ function testes_v01_executar() {
     _exigir(teste_feedback_tem(_j,"producao_sem_demanda"),"reflexao producao acima de pedidos aceitos");
     _exigir(array_length(_j.diario)>4 && _j.fala_visivel,"feedback e consequencias registrados");
 
-    _cfg=parametros_padrao();_cfg.duracao_dias=1;_j=jogo_criar(_cfg);
+    _cfg=parametros_teste_legado();_cfg.duracao_dias=1;_j=jogo_teste_legado(_cfg);
     pedido_decidir(_j,1,true);pedido_decidir(_j,2,false);compra_realizar(_j,"farinha",10);producao_agendar(_j,"coxinha",5);
     _exigir(!_j.encerrado && _j.dias_processados==0,"nao encerra durante preparacao");
     simulacao_avancar_dia(_j);_r=dashboard_calcular(_j);
@@ -46,26 +46,26 @@ function testes_v01_executar() {
     _exigir(!compra_realizar(_j,"farinha",1).ok && !producao_agendar(_j,"coxinha",1).ok && !pedido_decidir(_j,3,true).ok && !simulacao_pausar(_j),"fim bloqueia novas decisoes");
     _exigir(pedidos_gerar_dia(_j)==0 && array_length(_j.pedidos)==3,"fim nao duplica pedidos");
     _exigir(array_length(dashboard_reflexoes(_j,_r))>=1 && array_length(dashboard_eventos(_j))>0,"reflexoes e eventos acessiveis no fim");
-    var _nova=jogo_criar(_j.parametros);
+    var _nova=jogo_teste_legado(_j.parametros);
     _exigir(!_nova.encerrado && _nova.parametros.duracao_dias==1 && _nova.financas.saldo_centavos==100000 && array_length(_nova.diario)==1,"reinicio com mesmos parametros e dados novos");
 
-    _cfg=parametros_padrao();_cfg.duracao_dias=2;_cfg.prazo_pedido_dias=1;_j=jogo_criar(_cfg);
+    _cfg=parametros_teste_legado();_cfg.duracao_dias=2;_cfg.prazo_pedido_dias=1;_j=jogo_teste_legado(_cfg);
     pedido_decidir(_j,1,true);simulacao_avancar_dia(_j);simulacao_avancar_dia(_j);_r=dashboard_calcular(_j);
     _exigir(_j.encerrado && _r.pedidos_pendentes==1 && _r.abertos_atrasados==1 && _r.entregas_atrasadas==0,"distingue pedido aberto atrasado de entrega atrasada");
     _exigir(is_undefined(_r.taxa_pontualidade) && _j.pedidos[0].status=="aceito","sem entrega taxa nao aplicavel e pedido preservado");
-    _cfg=parametros_padrao();_cfg.duracao_dias=3;_cfg.prazo_pedido_dias=1;_j=jogo_criar(_cfg);
+    _cfg=parametros_teste_legado();_cfg.duracao_dias=3;_cfg.prazo_pedido_dias=1;_j=jogo_teste_legado(_cfg);
     pedido_decidir(_j,1,true);simulacao_avancar_dia(_j);simulacao_avancar_dia(_j);producao_agendar(_j,"coxinha",5);simulacao_avancar_dia(_j);
     _exigir(teste_feedback_tem(_j,"entrega_atrasada") && dashboard_calcular(_j).entregas_atrasadas==1,"reflexao de atraso com dias reais");
-    _cfg=parametros_padrao();_cfg.catalogo.ingredientes[1].estoque_inicial=10;_cfg.catalogo.ingredientes[1].estoque_minimo=15;_j=jogo_criar(_cfg);
+    _cfg=parametros_teste_legado();_cfg.catalogo.ingredientes[1].estoque_inicial=10;_cfg.catalogo.ingredientes[1].estoque_minimo=15;_j=jogo_teste_legado(_cfg);
     simulacao_avancar_dia(_j);_exigir(teste_feedback_tem(_j,"reposicao_nao_planejada"),"feedback falta de planejamento de reposicao");
-    _cfg=parametros_padrao();_cfg.duracao_dias=1;_j=jogo_criar(_cfg);compra_realizar(_j,"frango",20);
+    _cfg=parametros_teste_legado();_cfg.duracao_dias=1;_j=jogo_teste_legado(_cfg);compra_realizar(_j,"frango",20);
     _exigir(teste_feedback_tem(_j,"compra_apos_periodo"),"compra que chega apos periodo vira reflexao");
     simulacao_avancar_dia(_j);_r=dashboard_calcular(_j);
     _exigir(_r.estoque_final[1].fisico==60 && _r.estoque_final[1].transito==20 && _r.compras_em_transito==1,"transito final nao inventa estoque fisico");
     _exigir(_r.resultado_caixa_centavos==-1600 && simulacao_auditar(_j).ok,"resultado negativo valido no periodo final");
-    _cfg=parametros_padrao();_cfg.duracao_dias=2;_j=jogo_criar(_cfg);compra_realizar(_j,"farinha",10);simulacao_avancar_dia(_j);
+    _cfg=parametros_teste_legado();_cfg.duracao_dias=2;_j=jogo_teste_legado(_cfg);compra_realizar(_j,"farinha",10);simulacao_avancar_dia(_j);
     _exigir(!_j.encerrado && dashboard_calcular(_j).resultado_caixa_centavos<0,"resultado negativo nao causa game over");
-    _j=jogo_criar(_cfg);producao_agendar(_j,"coxinha",5);simulacao_avancar_dia(_j);producao_agendar(_j,"coxinha",10);simulacao_avancar_dia(_j);_r=dashboard_calcular(_j);
+    _j=jogo_teste_legado(_cfg);producao_agendar(_j,"coxinha",5);simulacao_avancar_dia(_j);producao_agendar(_j,"coxinha",10);simulacao_avancar_dia(_j);_r=dashboard_calcular(_j);
     _exigir(_r.capacidade_usada_total==15 && _r.capacidade_disponivel_total==200 && _r.utilizacao_capacidade==7.5,"utilizacao acumulada sem percentual inventado");
     _exigir(_r.producao_por_produto[0].produzida==15 && _r.producao_por_produto[0].prontos==15,"soma lotes por produto mesmo sem entregas");
     _exigir(simulacao_auditar(_j).ok,"conservacao partida finita completa");
@@ -76,7 +76,7 @@ function testes_v01_executar() {
     _exigir(_diario_valido,"diario tem ordem data acao e consequencia");
 
     // Contexto real dos controladores: restauração, bolão, pausa, dashboard e navegação.
-    var _original=global.jogo;global.jogo=jogo_criar();
+    var _original=global.jogo;global.jogo=jogo_teste_legado();
     var _param=instance_create_depth(0,0,-1000,obj_parametros);
     with(_param) {
         configuracao.duracao_dias=9;configuracao.catalogo.produtos[0].receita[0].quantidade=3;
@@ -94,13 +94,13 @@ function testes_v01_executar() {
         _exigir(global.jogo.fala_visivel,"balao aparece na decisao");
         fabrica_clicar(550,146);_exigir(!global.jogo.fala_visivel && painel=="comercial","fechar balao nao atravessa para painel");instance_destroy();
     }
-    _cfg=parametros_padrao();_cfg.duracao_dias=1;global.jogo=jogo_criar(_cfg);simulacao_avancar_dia(global.jogo);
+    _cfg=parametros_teste_legado();_cfg.duracao_dias=1;global.jogo=jogo_teste_legado(_cfg);simulacao_avancar_dia(global.jogo);
     var _dash=instance_create_depth(0,0,-1000,obj_resultados);
     with(_dash) {
         dashboard_clicar(330,132);_exigir(aba_dashboard==1,"navegar aba producao do dashboard");
         dashboard_clicar(1220,132);_exigir(aba_dashboard==5 && dashboard_paginas()>0,"aba eventos final");
         dashboard_clicar(980,132);_exigir(aba_dashboard==4 && dashboard_paginas()==array_length(global.jogo.diario),"diario completo no dashboard");
-        dashboard_clicar(150,670);_exigir(aba_dashboard==5 && global.jogo.encerrado,"fim nao retoma partida encerrada");
+        dashboard_clicar(150,670);_exigir(global.jogo.fase==FaseJogo.MENU && global.jogo.encerrado,"fim oferece retorno ao menu sem reabrir partida encerrada");
         dashboard_clicar(500,670);_exigir(global.jogo.fase==FaseJogo.PARAMETROS,"reiniciar abre parametros para nova partida");
         instance_destroy();
     }

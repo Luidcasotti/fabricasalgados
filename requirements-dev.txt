@@ -1,0 +1,2 @@
+# Opcional: regenerar os atlas de fontes; não é dependência do jogo.
+Pillow==12.3.0

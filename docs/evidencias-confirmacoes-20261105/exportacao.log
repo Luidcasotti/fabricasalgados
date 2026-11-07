@@ -1,0 +1,89 @@
+Options: C:\ProgramData\GameMakerStudio2-LTS2026\Cache\runtimes\runtime-2026.0.0.23\bin\platform_setting_defaults.json
+Options: C:\Users\Luid Casotti\AppData\Roaming\GameMakerStudio2-LTS2026\luidcasottyyy_5138537\local_settings.json
+Options: Default
+Failed to load Options from Default
+Setting up the Asset compiler
+Found Project Format 2
+Core Resources : Info - +++ GMSC serialisation:  SUCCESSFUL LOAD AND LINK TIME: 343.6888ms
+Success
+finished adding assets from C:/Users/Luid Casotti/GameMakerProjects/fabrica/BLANK GAMEFabricaDeSalgados/BLANK GAMEFabricaDeSalgados.yyp.
+Release build
+Options: C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\build\html5-20261105-091726\cache\ExtensionOptions.json
+OptionsIni
+Options: C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\build\html5-20261105-091726\cache\PlatformOptions.json
+Looking for built-in fallback image in C:\ProgramData\GameMakerStudio2-LTS2026\Cache\runtimes\runtime-2026.0.0.23\bin\BuiltinImages
+Saving HTML5 file... C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\build\html5-20261105-091726\jogo\html5game\BLANK GAMEFabricaDeSalgados.js
+Looking for built-in particle images in C:\ProgramData\GameMakerStudio2-LTS2026\Cache\runtimes\runtime-2026.0.0.23\bin\assetcompiler\ParticleImages
+Looking for built-in font images in C:\ProgramData\GameMakerStudio2-LTS2026\Cache\runtimes\runtime-2026.0.0.23\bin\assetcompiler\BuiltinFonts
+Fonts - Texture group not found in FONT_builtin.yy
+Texture Group - __YY__0fallbacktexture.png_YYG_AUTO_GEN_TEX_GROUP_NAME_
+Texture Group - Default
+Converting snd_feira_producao to MP3 with quality 4, mono @ 44100Hz
+Converting snd_feira_objetivo to MP3 with quality 4, mono @ 44100Hz
+Converting snd_feira_porta to MP3 with quality 4, mono @ 44100Hz
+Converting snd_feira_alerta to MP3 with quality 4, mono @ 44100Hz
+Converting snd_feira_pedido to MP3 with quality 4, mono @ 44100Hz
+Converting snd_feira_coleta to MP3 with quality 4, mono @ 44100Hz
+
+
+
+
+Converting snd_feira_porta to Ogg with quality 4, mono @ 44100Hz
+Converting snd_feira_alerta to Ogg with quality 4, mono @ 44100Hz
+
+
+Converting snd_feira_producao to Ogg with quality 4, mono @ 44100Hz
+
+
+Converting snd_feira_coleta to Ogg with quality 4, mono @ 44100Hz
+
+
+Converting snd_feira_pedido to Ogg with quality 4, mono @ 44100Hz
+
+
+
+
+
+
+
+
+
+
+Input #0, wav, from 'C:/Users/Luid Casotti/GameMakerProjects/fabrica/BLANK GAMEFabricaDeSalgados/sounds/snd_feira_porta/snd_feira_porta.wav':
+  Duration: 00:00:00.15, bitrate: 707 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 44100 Hz, 1 channels, s16, 705 kb/s
+Input #0, wav, from 'C:/Users/Luid Casotti/GameMakerProjects/fabrica/BLANK GAMEFabricaDeSalgados/sounds/snd_feira_alerta/snd_feira_alerta.wav':
+  Duration: 00:00:00.15, bitrate: 707 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 44100 Hz, 1 channels, s16, 705 kb/s
+Input #0, wav, from 'C:/Users/Luid Casotti/GameMakerProjects/fabrica/BLANK GAMEFabricaDeSalgados/sounds/snd_feira_producao/snd_feira_producao.wav':
+  Duration: 00:00:00.22, bitrate: 707 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 44100 Hz, 1 channels, s16, 705 kb/s
+Input #0, wav, from 'C:/Users/Luid Casotti/GameMakerProjects/fabrica/BLANK GAMEFabricaDeSalgados/sounds/snd_feira_coleta/snd_feira_coleta.wav':
+  Duration: 00:00:00.15, bitrate: 707 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 44100 Hz, 1 channels, s16, 705 kb/s
+
+
+Input #0, wav, from 'C:/Users/Luid Casotti/GameMakerProjects/fabrica/BLANK GAMEFabricaDeSalgados/sounds/snd_feira_pedido/snd_feira_pedido.wav':
+  Duration: 00:00:00.15, bitrate: 707 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 44100 Hz, 1 channels, s16, 705 kb/s
+Converting snd_feira_objetivo to Ogg with quality 4, mono @ 44100Hz
+
+
+Input #0, wav, from 'C:/Users/Luid Casotti/GameMakerProjects/fabrica/BLANK GAMEFabricaDeSalgados/sounds/snd_feira_objetivo/snd_feira_objetivo.wav':
+  Duration: 00:00:00.15, bitrate: 707 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 44100 Hz, 1 channels, s16, 705 kb/s
+0 Compressing texture... writing texture BLANK GAMEFabricaDeSalgados_texture_0.png... 
+1 Compressing texture... writing texture BLANK GAMEFabricaDeSalgados_texture_1.png... 
+Obfuscating...
+Unknown identifier in compile_if_weak_ref(_va3
+Done! 
+Stats : GMA : Elapsed=2665.3058
+Stats : GMA : sp=24,au=6,bk=0,pt=0,sc=31,sh=0,fo=5,tl=0,ob=30,ro=10,da=0,ex=0,ma=0,fm=0x921D6FE600B0
+[Deploy] Copy Assets/Included files to target dir
+PlatformOptions
+DoIndexFile
+DoSplash
+DoCodeInjection
+DoIcon
+Igor complete.
+Igor complete.

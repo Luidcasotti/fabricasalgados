@@ -1,0 +1,167 @@
+
+***************************************
+ *     GameMaker v2026.0.0.23    *
+***************************************
+Setting scheduler resolution to 1
+Attempting to use high process priority settings
+Set process priority to HIGH_PRIORITY_CLASS
+Set main thread priority to HIGHEST
+Registered with MMCSS 'Games' task
+Set MMCSS thread priority to CRITICAL
+Reading File C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\20261027-231534\build\BLANK GAMEFabricaDeSalgados.win took 0 ms
+DirectX11: Using hardware device
+Collision Event time(microsecs)=2
+Variable_Global_Init()
+PrepareGame()
+Audio_Init()
+Audio group 0 -> Loaded
+Attempting to set gamepadcount to 12
+Game_Prepare()
+Script_Prepare() 
+TimeLine_Prepare() 
+Object_Prepare() 
+Room_Prepare() 
+Finished PrepareGame() 
+Run_Start
+Done g_EffectsManager.Init()
+Done RenderStateManager
+CreateColPairs took 0.000000s 1 usecs for 31 object types obj_col_numb=0 physobjcount=0 resizes 0 final size 0
+Done ObjectLists
+Done Extension_Initialize
+About to startroom
+Total memory used = 8363932 (0x007f9f9c) bytes 7.98MB
+Free memory = 5560392 (0x0054d848) bytes 5.30MB
+Peak memory used = 12501723 (0x00bec2db) bytes 11.92MB
+**********************************.
+Entering main loop.
+**********************************.
+OK PARTIDA: história selecionada
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_comercial
+OK PARTIDA: interação / porta_comercial
+OK PARTIDA: sala / comercial
+OK PARTIDA: rota / vendas
+OK PARTIDA: interação / vendas
+OK PARTIDA: painel / vendas
+OK PARTIDA: ação conservada / aceitar
+OK PARTIDA: sala / comercial
+OK PARTIDA: rota / saida
+OK PARTIDA: interação / saida
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_producao
+OK PARTIDA: interação / porta_producao
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / bancada
+OK PARTIDA: interação / bancada
+OK PARTIDA: painel / bancada
+OK PARTIDA: pergunta manual
+OK PARTIDA: R$10 por acerto
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / saida
+OK PARTIDA: interação / saida
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_estoque
+OK PARTIDA: interação / porta_estoque
+OK PARTIDA: sala / estoque
+OK PARTIDA: rota / prateleira_queijo
+OK PARTIDA: interação / prateleira_queijo
+OK PARTIDA: painel / prateleira_queijo
+OK PARTIDA: retirada sugerida correta
+OK PARTIDA: ação conservada / retirar
+OK PARTIDA: sala / estoque
+OK PARTIDA: rota / saida
+OK PARTIDA: interação / saida
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_producao
+OK PARTIDA: interação / porta_producao
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / deposito
+OK PARTIDA: interação / deposito
+OK PARTIDA: painel / deposito
+OK PARTIDA: ação conservada / depositar
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / bancada
+OK PARTIDA: interação / bancada
+OK PARTIDA: painel / bancada
+OK PARTIDA: ação conservada / produzir
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / saida
+OK PARTIDA: interação / saida
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_comercial
+OK PARTIDA: interação / porta_comercial
+OK PARTIDA: sala / comercial
+OK PARTIDA: rota / entrega
+OK PARTIDA: interação / entrega
+OK PARTIDA: painel / entrega
+OK PARTIDA: ação conservada / entregar
+OK PARTIDA: sala / comercial
+OK PARTIDA: rota / vendas
+OK PARTIDA: interação / vendas
+OK PARTIDA: painel / vendas
+OK PARTIDA: ação conservada / aceitar
+OK PARTIDA: sala / comercial
+OK PARTIDA: rota / saida
+OK PARTIDA: interação / saida
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_producao
+OK PARTIDA: interação / porta_producao
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / bancada
+OK PARTIDA: interação / bancada
+OK PARTIDA: painel / bancada
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / saida
+OK PARTIDA: interação / saida
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_estoque
+OK PARTIDA: interação / porta_estoque
+OK PARTIDA: sala / estoque
+OK PARTIDA: rota / prateleira_frango
+OK PARTIDA: interação / prateleira_frango
+OK PARTIDA: painel / prateleira_frango
+OK PARTIDA: retirada sugerida correta
+OK PARTIDA: ação conservada / retirar
+OK PARTIDA: sala / estoque
+OK PARTIDA: rota / saida
+OK PARTIDA: interação / saida
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_producao
+OK PARTIDA: interação / porta_producao
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / deposito
+OK PARTIDA: interação / deposito
+OK PARTIDA: painel / deposito
+OK PARTIDA: ação conservada / depositar
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / bancada
+OK PARTIDA: interação / bancada
+OK PARTIDA: painel / bancada
+OK PARTIDA: ação conservada / produzir
+OK PARTIDA: sala / producao
+OK PARTIDA: rota / saida
+OK PARTIDA: interação / saida
+OK PARTIDA: sala / corredor
+OK PARTIDA: rota / porta_comercial
+OK PARTIDA: interação / porta_comercial
+OK PARTIDA: sala / comercial
+OK PARTIDA: rota / entrega
+OK PARTIDA: interação / entrega
+OK PARTIDA: painel / entrega
+OK PARTIDA: ação conservada / entregar
+OK PARTIDA: fim auditado
+OK PARTIDA: pedidos entregues
+OK PARTIDA: bônus separado de vendas
+OK PARTIDA: aba de resultados
+OK PARTIDA: aba de resultados
+OK PARTIDA: aba de resultados
+OK PARTIDA: aba de resultados
+OK PARTIDA: aba de resultados
+OK PARTIDA: aba de resultados
+OK PARTIDA: aba de resultados
+FDS_CAPTURAS_DIR: C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\20261027-231534\build\
+FDS_PARTIDA_APROVADA: 124 / HISTORIA turno
+###game_end###0
+Attempting to set gamepadcount to 0
+Script_Free called with 601 and global 31
+Unsetting previous scheduler resolution of 1

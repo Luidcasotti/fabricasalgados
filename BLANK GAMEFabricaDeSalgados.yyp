@@ -19,6 +19,14 @@
   },
   "name":"BLANK GAMEFabricaDeSalgados",
   "resources":[
+    {"id":{"name":"fnt_interface_4","path":"fonts/fnt_interface_4/fnt_interface_4.yy",},},
+
+    {"id":{"name":"fnt_interface_3","path":"fonts/fnt_interface_3/fnt_interface_3.yy",},},
+
+    {"id":{"name":"fnt_interface_2","path":"fonts/fnt_interface_2/fnt_interface_2.yy",},},
+
+    {"id":{"name":"fnt_interface_1","path":"fonts/fnt_interface_1/fnt_interface_1.yy",},},
+
     {"id":{"name":"obj_aula_atendente","path":"objects/obj_aula_atendente/obj_aula_atendente.yy",},},
     {"id":{"name":"obj_aula_com_balcao","path":"objects/obj_aula_com_balcao/obj_aula_com_balcao.yy",},},
     {"id":{"name":"obj_aula_com_computador","path":"objects/obj_aula_com_computador/obj_aula_com_computador.yy",},},
@@ -110,6 +118,16 @@
     {"id":{"name":"spr_prod_fogao_aula","path":"sprites/spr_prod_fogao_aula/spr_prod_fogao_aula.yy",},},
     {"id":{"name":"spr_prod_placa_aula","path":"sprites/spr_prod_placa_aula/spr_prod_placa_aula.yy",},},
     {"id":{"name":"spr_prod_utensilios_aula","path":"sprites/spr_prod_utensilios_aula/spr_prod_utensilios_aula.yy",},},
+    {"id":{"name":"scr_feira","path":"scripts/scr_feira/scr_feira.yy",},},
+    {"id":{"name":"scr_hud_estoque","path":"scripts/scr_hud_estoque/scr_hud_estoque.yy",},},
+    {"id":{"name":"scr_feedback","path":"scripts/scr_feedback/scr_feedback.yy",},},
+    {"id":{"name":"snd_feira_porta","path":"sounds/snd_feira_porta/snd_feira_porta.yy",},},
+    {"id":{"name":"snd_feira_pedido","path":"sounds/snd_feira_pedido/snd_feira_pedido.yy",},},
+    {"id":{"name":"snd_feira_coleta","path":"sounds/snd_feira_coleta/snd_feira_coleta.yy",},},
+    {"id":{"name":"snd_feira_producao","path":"sounds/snd_feira_producao/snd_feira_producao.yy",},},
+    {"id":{"name":"snd_feira_objetivo","path":"sounds/snd_feira_objetivo/snd_feira_objetivo.yy",},},
+    {"id":{"name":"snd_feira_alerta","path":"sounds/snd_feira_alerta/snd_feira_alerta.yy",},},
+    {"id":{"name":"scr_testes_feira","path":"scripts/scr_testes_feira/scr_testes_feira.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

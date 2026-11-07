@@ -1,0 +1,203 @@
+{
+  "ok": true,
+  "errors": [],
+  "clockDelta": 1.1309999999999996,
+  "loss": {
+    "ativa": true,
+    "tempo": 120,
+    "limite": 120,
+    "lembrete": 0,
+    "avisou": true,
+    "concluida": true,
+    "venceu": false,
+    "fim": 0.4090000000000001,
+    "entregues": 0,
+    "setor": "producao",
+    "pausado": false,
+    "bonus": 0,
+    "saldo": 100000,
+    "vendas": 0,
+    "variaveis": 0,
+    "produzidos": 0,
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 10
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 20
+      },
+      {
+        "id": "oleo",
+        "q": 10
+      },
+      {
+        "id": "embalagens",
+        "q": 10
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "painel": "bancada",
+    "lote": false,
+    "quantidade": 10,
+    "modal": false
+  },
+  "win": {
+    "ativa": true,
+    "tempo": 26.636000000000003,
+    "limite": 120,
+    "lembrete": 0,
+    "avisou": false,
+    "concluida": true,
+    "venceu": true,
+    "fim": 0.2830000000000001,
+    "entregues": 10,
+    "setor": "comercial",
+    "pausado": false,
+    "bonus": 1000,
+    "saldo": 104750,
+    "vendas": 4000,
+    "variaveis": 250,
+    "produzidos": 10,
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "painel": "entrega",
+    "lote": false,
+    "quantidade": 5,
+    "modal": false
+  },
+  "fresh": {
+    "ativa": true,
+    "tempo": 0.3800000000000001,
+    "limite": 120,
+    "lembrete": 0,
+    "avisou": false,
+    "concluida": false,
+    "venceu": false,
+    "fim": 0,
+    "entregues": 0,
+    "setor": "corredor",
+    "pausado": false,
+    "bonus": 0,
+    "saldo": 100000,
+    "vendas": 0,
+    "variaveis": 0,
+    "produzidos": 0,
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "lote": false,
+    "quantidade": 5,
+    "modal": false
+  },
+  "qa": "Posicionamento do ator e saltos do contador apenas no navegador de teste; entradas e transições reais."
+}

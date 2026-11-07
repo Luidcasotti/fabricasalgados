@@ -1,3 +1,5 @@
+> **Registro histórico.** Este documento descreve uma etapa anterior e pode conter regras ou números já substituídos. Para o funcionamento atual, consulte o [índice](README.md) e as [regras atuais](REGRAS_SIMULACAO.md).
+
 > Documento da etapa anterior. Atual: [RELATORIO_HISTORIA.md](RELATORIO_HISTORIA.md).
 
 # Entrega — reformulação da jogabilidade

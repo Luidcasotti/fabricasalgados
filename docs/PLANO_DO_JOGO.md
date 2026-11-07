@@ -1,3 +1,5 @@
+> **Registro histórico.** Este documento descreve uma etapa anterior e pode conter regras ou números já substituídos. Para o funcionamento atual, consulte o [índice](README.md) e as [regras atuais](REGRAS_SIMULACAO.md).
+
 # Plano — Fábrica de Salgados
 
 Jogo educacional GameMaker/GML para estudantes de 16 a 24 anos. Explorar os três

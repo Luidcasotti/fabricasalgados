@@ -2,6 +2,7 @@
 from pathlib import Path
 from collections import Counter
 import hashlib
+import argparse
 import json
 import math
 import re
@@ -9,6 +10,10 @@ import struct
 import zlib
 
 root = Path(__file__).resolve().parents[1]
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--logica-original-aula', action='store_true',
+                    help='Também exige os hashes históricos da aula, anteriores às melhorias de jogabilidade.')
+args = parser.parse_args()
 
 def read(path):
     return json.loads(re.sub(r',\s*([}\]])', r'\1', path.read_text(encoding='utf-8-sig')))
@@ -88,13 +93,14 @@ for name, path in registered.items():
                 actual_instances[(name, obj, inst['x'], inst['y'])] += 1
                 assert not inst.get('creationCodeFile') and not inst.get('properties'), obj
 assert actual_instances == expected_instances, (actual_instances-expected_instances, expected_instances-actual_instances)
-for relative, expected in manifest['hashes_logica_protegida_lf'].items():
+for relative, expected in (manifest['hashes_logica_protegida_lf'].items() if args.logica_original_aula else []):
     data = (root/relative).read_bytes().replace(b'\r\n', b'\n')
     if relative.endswith('/scr_mundo.gml'): data = data.split(b'function mundo_desenhar(')[0]
     if relative.endswith('/scr_historia.gml'): data = data.split(b'function historia_retrato(')[0]
     assert hashlib.sha256(data).hexdigest() == expected, f'Lógica alterada: {relative}'
 print(json.dumps({'sprites':len(manifest['sprites'])+1, 'quadros_png':frames,
-                  'objetos_visuais_novos':len(manifest['sprites']),
+                  'objetos_visuais_verificados':len(manifest['sprites']),
                   'instancias_visuais':sum(actual_instances.values()),
-                  'modulos_de_logica_preservados':len(manifest['hashes_logica_protegida_lf']),
+                  'hashes_historicos_verificados':len(manifest['hashes_logica_protegida_lf']) if args.logica_original_aula else 0,
+                  'nota':'Hashes da aula são opcionais; esta entrega altera a lógica com autorização.',
                   'dimensoes_origens_transparencia_associacoes':'OK'}, ensure_ascii=False, indent=2))

@@ -1,82 +1,42 @@
-/// Interface original por primitivas: fonte bitmap 5x7, sem arquivos externos.
+/// Texto antisserrilhado em atlas incorporado, com acentos e caixa original.
 function visual_iniciar() {
     if (variable_global_exists("visual")) return;
     global.visual = {
-        papel: make_color_rgb(244, 239, 222), claro: make_color_rgb(255, 252, 239),
-        tinta: make_color_rgb(32, 53, 63), suave: make_color_rgb(92, 110, 107),
-        linha: make_color_rgb(201, 205, 185), sombra: make_color_rgb(216, 215, 195),
-        laranja: make_color_rgb(214, 96, 54), verde: make_color_rgb(66, 116, 91),
-        azul: make_color_rgb(60, 113, 132), ouro: make_color_rgb(224, 175, 77), fonte: {}
+        papel: make_color_rgb(14, 21, 30), claro: make_color_rgb(240, 240, 224),
+        tinta: make_color_rgb(240, 245, 248), suave: make_color_rgb(185, 201, 213),
+        linha: make_color_rgb(73, 91, 107), sombra: make_color_rgb(5, 10, 17),
+        laranja: make_color_rgb(185, 82, 47), verde: make_color_rgb(43, 139, 76),
+        azul: make_color_rgb(32, 123, 151), ouro: make_color_rgb(239, 189, 81),
+        painel: make_color_rgb(19, 26, 38), borda: make_color_rgb(136, 158, 171),
+        ciano: make_color_rgb(67, 213, 221), vermelho: make_color_rgb(235, 89, 84), fonte: {}
     };
-    variable_struct_set(global.visual.fonte,"&",[12,18,20,8,21,18,13]);
-    var _letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;!?-+/()$%#=>";
-    var _linhas = [
-        [14,17,17,31,17,17,17], [30,17,17,30,17,17,30], [14,17,16,16,16,17,14],
-        [30,17,17,17,17,17,30], [31,16,16,30,16,16,31], [31,16,16,30,16,16,16],
-        [14,17,16,23,17,17,15], [17,17,17,31,17,17,17], [14,4,4,4,4,4,14],
-        [7,2,2,2,18,18,12], [17,18,20,24,20,18,17], [16,16,16,16,16,16,31],
-        [17,27,21,21,17,17,17], [17,25,25,21,19,19,17], [14,17,17,17,17,17,14],
-        [30,17,17,30,16,16,16], [14,17,17,17,21,18,13], [30,17,17,30,20,18,17],
-        [15,16,16,14,1,1,30], [31,4,4,4,4,4,4], [17,17,17,17,17,17,14],
-        [17,17,17,17,17,10,4], [17,17,17,21,21,21,10], [17,17,10,4,10,17,17],
-        [17,17,10,4,4,4,4], [31,1,2,4,8,16,31],
-        [14,17,19,21,25,17,14], [4,12,4,4,4,4,14], [14,17,1,2,4,8,31],
-        [30,1,1,14,1,1,30], [2,6,10,18,31,2,2], [31,16,16,30,1,1,30],
-        [14,16,16,30,17,17,14], [31,1,2,4,8,8,8], [14,17,17,14,17,17,14],
-        [14,17,17,15,1,1,14],
-        [0,0,0,0,0,6,6], [0,0,0,0,6,4,8], [0,6,6,0,6,6,0],
-        [0,6,6,0,6,4,8], [4,4,4,4,4,0,4], [14,17,1,2,4,0,4],
-        [0,0,0,31,0,0,0], [0,4,4,31,4,4,0], [1,2,2,4,8,8,16],
-        [2,4,8,8,8,4,2], [8,4,2,2,2,4,8], [4,15,20,14,5,30,4],
-        [25,25,2,4,8,19,19], [10,31,10,10,31,10,0], [0,0,31,0,31,0,0],
-        [16,8,4,2,4,8,16]
-    ];
-    for (var _i = 1; _i <= string_length(_letras); _i++) {
-        variable_struct_set(global.visual.fonte, string_char_at(_letras, _i), _linhas[_i - 1]);
-    }
+    global.visual.fontes=[fnt_interface_1,fnt_interface_2,fnt_interface_3,fnt_interface_4];
 }
-
-function ui_texto_largura(_texto, _escala) { return max(0, string_length(string(_texto)) * 6 - 1) * _escala; }
-
-function ui_texto(_x, _y, _texto, _escala, _cor) {
-    var _origem = round(_x);
-    _x = _origem; _y = round(_y);
-    _texto = string_upper(string(_texto));
-    draw_set_color(_cor);
-    for (var _i = 1; _i <= string_length(_texto); _i++) {
-        var _ch = string_char_at(_texto, _i);
-        if (_ch == "\n") { _x = _origem; _y += 11 * _escala; continue; }
-        var _base = _ch;
-        var _acento = 0;
-        if (string_pos(_ch, "ÁÉÍÓÚ") > 0) { _base = string_char_at("AEIOU", string_pos(_ch, "ÁÉÍÓÚ")); _acento = 1; }
-        if (string_pos(_ch, "ÃÕ") > 0) { _base = string_char_at("AO", string_pos(_ch, "ÃÕ")); _acento = 2; }
-        if (string_pos(_ch, "ÂÊÔ") > 0) { _base = string_char_at("AEO", string_pos(_ch, "ÂÊÔ")); _acento = 3; }
-        if (_ch == "À") { _base = "A"; _acento = 4; }
-        if (_ch == "Ü") { _base = "U"; _acento = 5; }
-        if (_ch == "Ç") { _base = "C"; _acento = 6; }
-        if (variable_struct_exists(global.visual.fonte, _base)) {
-            var _rows = variable_struct_get(global.visual.fonte, _base);
-            for (var _r = 0; _r < 7; _r++) {
-                for (var _c = 0; _c < 5; _c++) {
-                    if ((_rows[_r] & (1 << (4 - _c))) != 0) {
-                        draw_rectangle(_x + _c * _escala, _y + _r * _escala,
-                            _x + (_c + 1) * _escala, _y + (_r + 1) * _escala, false);
-                    }
-                }
-            }
-            if (_acento > 0 && _acento < 6) {
-                var _mascara = [0, 6, 10, 4, 12, 10][_acento];
-                for (var _c = 0; _c < 5; _c++) {
-                    if ((_mascara & (1 << (4 - _c))) != 0) draw_rectangle(
-                        _x + _c * _escala, _y - 2 * _escala,
-                        _x + (_c + 1) * _escala, _y - _escala, false);
-                }
-            }
-            if (_acento == 6) draw_rectangle(_x + 2 * _escala, _y + 7 * _escala,
-                _x + 3 * _escala, _y + 8 * _escala, false);
-        }
-        _x += 6 * _escala;
-    }
+function ui_fonte(_escala){return global.visual.fontes[clamp(round(_escala)-1,0,3)];}
+function ui_cor_texto(_cor){
+    if(_cor==global.visual.azul)return global.visual.ciano;
+    if(_cor==global.visual.verde)return make_color_rgb(113,224,156);
+    if(_cor==global.visual.laranja)return make_color_rgb(255,178,128);
+    return _cor;
+}
+function ui_texto_largura(_texto,_escala){
+    var _ant=draw_get_font();draw_set_font(ui_fonte(_escala));
+    var _w=string_width(string(_texto));draw_set_font(_ant);return _w*(variable_global_exists("iso_mundo") && global.iso_mundo?.6:1);
+}
+function ui_texto(_x,_y,_texto,_escala,_cor){
+    var _ant=draw_get_font(),_ha=draw_get_halign(),_va=draw_get_valign();
+    var _filtro=gpu_get_texfilter();gpu_set_texfilter(true);
+    draw_set_font(ui_fonte(_escala));draw_set_halign(fa_left);draw_set_valign(fa_top);draw_set_color(ui_cor_texto(_cor));
+    var _s=variable_global_exists("iso_mundo") && global.iso_mundo?.6:1;
+    draw_text_transformed(round(_x),round(_y)-floor(3*_escala*_s),string(_texto),_s,_s,0);
+    draw_set_font(_ant);draw_set_halign(_ha);draw_set_valign(_va);gpu_set_texfilter(_filtro);
+}
+function ui_texto_ajustado(_x,_y,_texto,_escala,_largura,_cor){
+    var _ant=draw_get_font(),_ha=draw_get_halign(),_va=draw_get_valign(),_filtro=gpu_get_texfilter();
+    draw_set_font(ui_fonte(_escala));draw_set_halign(fa_left);draw_set_valign(fa_top);draw_set_color(ui_cor_texto(_cor));gpu_set_texfilter(true);
+    var _s=min(1,_largura/max(1,string_width(string(_texto))));
+    draw_text_transformed(round(_x),round(_y)-floor(3*_escala),string(_texto),_s,_s,0);
+    draw_set_font(_ant);draw_set_halign(_ha);draw_set_valign(_va);gpu_set_texfilter(_filtro);
 }
 
 function ui_centro(_x, _y, _texto, _escala, _cor) {
@@ -89,11 +49,11 @@ function ui_paragrafo(_x, _y, _texto, _largura, _cor) {
     for (var _i = 0; _i < array_length(_palavras); _i++) {
         var _nova = _linha == "" ? _palavras[_i] : _linha + " " + _palavras[_i];
         if (ui_texto_largura(_nova, 2) > _largura && _linha != "") {
-            ui_texto(_x, _y, _linha, 2, _cor); _y += 24; _linha = _palavras[_i];
+            ui_texto(_x, _y, _linha, 2, _cor); _y += 28; _linha = _palavras[_i];
         } else _linha = _nova;
     }
     ui_texto(_x, _y, _linha, 2, _cor);
-    return _y + 24;
+    return _y + 28;
 }
 
 function ui_area(_x, _y, _w, _h) { return {x:_x, y:_y, w:_w, h:_h}; }
@@ -113,33 +73,51 @@ function ui_entrada_liberada() {
 }
 
 function ui_cartao(_x, _y, _w, _h, _cor) {
-    draw_set_color(global.visual.sombra); draw_rectangle(_x + 3, _y + 4, _x + _w + 3, _y + _h + 4, false);
-    draw_set_color(_cor); draw_rectangle(_x, _y, _x + _w, _y + _h, false);
+    var _v=global.visual,_fundo=(_cor==_v.claro)?_v.painel:_cor;
+    draw_set_color(_v.sombra);draw_roundrect_ext(_x+3,_y+5,_x+_w+3,_y+_h+5,8,8,false);
+    draw_set_color(_v.borda);draw_roundrect_ext(_x,_y,_x+_w,_y+_h,8,8,false);
+    draw_set_color(_fundo);draw_roundrect_ext(_x+3,_y+3,_x+_w-3,_y+_h-3,6,6,false);
+    draw_set_color(merge_color(_v.borda,c_white,.25));draw_line(_x+12,_y+2,_x+_w-12,_y+2);
+    draw_set_color(_v.linha);draw_line(_x+9,_y+_h-3,_x+_w-9,_y+_h-3);
+}
+function ui_barra_segmentada(_x,_y,_w,_h,_fracao,_cor) {
+    draw_set_color(global.visual.borda);draw_rectangle(_x-2,_y-2,_x+_w+2,_y+_h+2,false);
+    draw_set_color(make_color_rgb(24,31,43));draw_rectangle(_x,_y,_x+_w,_y+_h,false);
+    var _n=12,_passo=_w/_n;
+    for(var _i=0;_i<_n;_i++) {
+        var _f=clamp(_fracao*_n-_i,0,1);if(_f<=0)continue;
+        var _esq=round(_x+_i*_passo+1),_dir=round(_x+(_i+_f)*_passo-1);
+        if(_dir<_esq)continue;
+        draw_set_color(_cor);draw_rectangle(_esq,_y+1,_dir,_y+_h-1,false);
+        draw_set_color(merge_color(_cor,c_white,.3));draw_line(_esq,_y+1,_dir,_y+1);
+    }
 }
 
 function ui_botao(_area, _texto, _cor, _habilitado = true, _selecionado = false) {
     var _v = global.visual;
     var _hover = ui_contem(_area, ui_mouse_x(), ui_mouse_y());
-    var _fundo = _habilitado ? _cor : _v.linha;
+    var _fundo = _habilitado ? (_cor==_v.claro?_v.azul:_cor) : _v.linha;
     if (_hover && _habilitado) _fundo = merge_color(_fundo, c_white, 0.15);
     ui_cartao(_area.x, _area.y, _area.w, _area.h, _fundo);
     if (_selecionado) {
         draw_set_color(_v.ouro); draw_rectangle(_area.x, _area.y, _area.x + _area.w, _area.y + 4, false);
     }
-    ui_centro(_area.x + _area.w / 2, _area.y + (_area.h - 14) / 2, _texto, 2,
-        _habilitado ? _v.claro : _v.suave);
+    var _esc=ui_texto_largura(_texto,2)>_area.w-24?1:2;
+    var _lum=color_get_red(_fundo)*.2126+color_get_green(_fundo)*.7152+color_get_blue(_fundo)*.0722;
+    ui_texto_ajustado(_area.x+12,_area.y+(_area.h-(_esc==1?16:22))/2,_texto,_esc,_area.w-24,_habilitado?(_lum>155?_v.painel:_v.claro):_v.suave);
 }
 
 function ui_fundo() {
     draw_clear(global.visual.papel);
-    draw_set_color(make_color_rgb(233, 230, 210));
-    for (var _x = 8; _x < 1280; _x += 24) for (var _y = 8; _y < 720; _y += 24) draw_point(_x, _y);
+    draw_set_color(make_color_rgb(29, 42, 54));
+    for (var _x = 8; _x < 1280; _x += 24) for (var _y = 8; _y < 720; _y += 28) draw_point(_x, _y);
 }
 
 function ui_titulo(_subtitulo) {
     var _v = global.visual;
-    draw_set_color(_v.tinta); draw_rectangle(0, 0, 1279, 91, false);
-    draw_set_color(_v.laranja); draw_rectangle(24, 21, 30, 68, false);
+    draw_set_color(_v.painel); draw_rectangle(0, 0, 1279, 91, false);
+    draw_set_color(_v.borda);draw_line(0,91,1279,91);
+    draw_set_color(_v.ciano); draw_rectangle(24, 21, 30, 68, false);
     ui_texto(46, 27, "FÁBRICA DE SALGADOS", 3, _v.claro);
     ui_texto(46, 59, _subtitulo, 2, _v.ouro);
 }

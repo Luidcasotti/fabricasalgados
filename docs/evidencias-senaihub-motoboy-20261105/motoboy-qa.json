@@ -1,0 +1,164 @@
+{
+  "ok": true,
+  "estoque_inicial_configurado_pela_ui": 40,
+  "cinco_missoes_com_reposicao": true,
+  "duas_entregas_reais": [
+    {
+      "missao": 3,
+      "quantidade": 20,
+      "compra": {
+        "id": 1,
+        "ingrediente": "queijo",
+        "quantidade": 20,
+        "status": "recebida",
+        "restante": 0,
+        "motoboy": true
+      },
+      "saldo": 123350
+    },
+    {
+      "missao": 5,
+      "quantidade": 40,
+      "compra": {
+        "id": 2,
+        "ingrediente": "queijo",
+        "quantidade": 40,
+        "status": "recebida",
+        "restante": 0,
+        "motoboy": true
+      },
+      "saldo": 147300
+    }
+  ],
+  "pausa_congela_entrega": true,
+  "confirmacao_congela_entrega": true,
+  "sem_cobranca_na_chegada": true,
+  "sem_virar_dia": true,
+  "win": {
+    "compras": [
+      {
+        "id": 1,
+        "ingrediente": "queijo",
+        "quantidade": 20,
+        "status": "recebida",
+        "restante": 0,
+        "motoboy": true
+      },
+      {
+        "id": 2,
+        "ingrediente": "queijo",
+        "quantidade": 40,
+        "status": "recebida",
+        "restante": 0,
+        "motoboy": true
+      }
+    ],
+    "almoxarifado": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 80
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "comprasPagas": 4200,
+    "entregasMoto": 2,
+    "avisoMoto": "Motoboy entregou 40 de Queijo! Já estão nas prateleiras. Peça a lista do pedido a Caio.",
+    "saidaMoto": 0,
+    "fase": 2,
+    "naPartida": true,
+    "encerrado": true,
+    "dia": 1,
+    "historia": true,
+    "entregues": 5,
+    "meta": 5,
+    "zerou": true,
+    "oferta": {
+      "id": 5,
+      "status": "entregue",
+      "quantidade": 20
+    },
+    "decisaoEstoque": false,
+    "ativa": true,
+    "tempo": 175.49799999999843,
+    "limite": 300,
+    "avisou": true,
+    "lembrete": 0,
+    "venceu": true,
+    "concluida": true,
+    "pausado": false,
+    "setor": "comercial",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "conferido": true,
+    "decisoes": 2,
+    "maquina": false,
+    "produzidos": 120,
+    "vendas": 62000,
+    "saldo": 154800,
+    "bonusCaixa": 0,
+    "bonusTempo": 0,
+    "resgates": 0,
+    "acertos": 0,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "errors": []
+}

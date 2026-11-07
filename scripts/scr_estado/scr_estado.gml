@@ -1,7 +1,9 @@
 enum FaseJogo {MENU, PARAMETROS, FABRICA, RESULTADOS}
 function parametros_padrao() {
-    return {duracao_dias:5,caixa_inicial_centavos:100000,capacidade_diaria:100,
-        pedido_quantidade_min:5,pedido_quantidade_max:15,prazo_pedido_dias:2,
+    return {maquinas_total:3,maquina_capacidade_hora:100,falhas_ativas:1,
+        manutencao_segundos:8,manutencao_centavos:1500,simulacao_segundos_hora:180,demonstracao_segundos:300,
+        duracao_dias:5,caixa_inicial_centavos:100000,capacidade_diaria:100,
+        pedidos_variados:1,pedido_quantidade_min:20,pedido_quantidade_max:50,prazo_pedido_dias:2,
         oferta_validade_dias:1,catalogo:produtos_catalogo_criar()};
 }
 function jogo_criar(_parametros=undefined) {
@@ -13,7 +15,7 @@ function jogo_criar(_parametros=undefined) {
         estoque:estoque_criar(_p.catalogo),compras:[],proximo_compra_id:1,
         pedidos:[],proximo_pedido_id:1,proximo_aceite_id:1,ultimo_dia_gerado:0,
         producao:producao_criar(),financas:financas_criar(_p.caixa_inicial_centavos),
-        avancando:false,pausado:false,encerrado:false,dias_processados:0,
+        avancando:false,pausado:false,encerrado:false,dias_processados:0,confirmacao:undefined,
         diario:[],feedbacks:[],fala_atual:undefined,fala_visivel:false,
         historico_dias:[],ultimo_resumo:{dia:1,eventos:["Planeje e avance o dia para executar as ações."]}};
     pedidos_gerar_dia(_j);
@@ -22,6 +24,8 @@ function jogo_criar(_parametros=undefined) {
 }
 function jogo_novo() {global.jogo=jogo_criar();}
 function simulacao_bloqueio(_jogo) {
+    if(feira_resgate_aberto(_jogo))return "Responda à pergunta para tentar ganhar mais 2 minutos.";
+    if(confirmacao_aberta(_jogo))return "Confirme a mensagem para continuar.";
     if(_jogo.encerrado) return "Período encerrado. Reveja o dashboard ou reinicie.";
     if(_jogo.pausado) return "Simulação pausada. Retome para tomar novas decisões.";
     return "";
@@ -33,7 +37,7 @@ function simulacao_pausar(_jogo) {
     return true;
 }
 function jogo_ir_para(_fase) {
-    if(_fase==FaseJogo.FABRICA && global.jogo.encerrado) _fase=FaseJogo.RESULTADOS;
+    if(_fase==FaseJogo.FABRICA && global.jogo.encerrado && !feira_ativa(global.jogo) && !missoes_zerou(global.jogo)) _fase=FaseJogo.RESULTADOS;
     var _destino;
     switch(_fase) {
         case FaseJogo.MENU:_destino=rm_menu;break;

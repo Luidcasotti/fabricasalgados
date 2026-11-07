@@ -1,0 +1,164 @@
+{
+  "ok": true,
+  "retornos": [
+    {
+      "metodo": "Esc",
+      "entregues": 0,
+      "tempo_pausado": 0.23,
+      "tempo_retomado": 1.3090000000000002,
+      "limite": 300
+    },
+    {
+      "metodo": "topo",
+      "entregues": 1,
+      "tempo_pausado": 26.094999999999978,
+      "tempo_retomado": 27.44299999999999,
+      "limite": 420
+    },
+    {
+      "metodo": "rodape",
+      "entregues": 2,
+      "tempo_pausado": 62.33500000000046,
+      "tempo_retomado": 63.68000000000041,
+      "limite": 420
+    },
+    {
+      "metodo": "Esc",
+      "entregues": 3,
+      "tempo_pausado": 88.99400000000044,
+      "tempo_retomado": 90.06600000000041,
+      "limite": 420
+    },
+    {
+      "metodo": "Enter",
+      "entregues": 4,
+      "tempo_pausado": 124.28700000000056,
+      "tempo_retomado": 125.45700000000055,
+      "limite": 420
+    },
+    {
+      "metodo": "topo",
+      "entregues": 0,
+      "tempo_pausado": 0.3320000000000001,
+      "tempo_retomado": 1.6699999999999993,
+      "limite": 300
+    }
+  ],
+  "cinco_entregas_relogio": [
+    {
+      "numero": 1,
+      "tempo": 25.096999999999973,
+      "limite": 300,
+      "vendas": 8000
+    },
+    {
+      "numero": 2,
+      "tempo": 61.70400000000044,
+      "limite": 420,
+      "vendas": 26000
+    },
+    {
+      "numero": 3,
+      "tempo": 88.47400000000047,
+      "limite": 420,
+      "vendas": 36000
+    },
+    {
+      "numero": 4,
+      "tempo": 123.78800000000057,
+      "limite": 420,
+      "vendas": 54000
+    },
+    {
+      "numero": 5,
+      "tempo": 150.10700000000057,
+      "limite": 420,
+      "vendas": 62000
+    }
+  ],
+  "historia_com_relogio": true,
+  "bonus_preservado": true,
+  "win": {
+    "fase": 2,
+    "naPartida": true,
+    "encerrado": true,
+    "dia": 1,
+    "historia": true,
+    "entregues": 5,
+    "meta": 5,
+    "zerou": true,
+    "oferta": {
+      "id": 5,
+      "status": "entregue",
+      "quantidade": 20
+    },
+    "decisaoEstoque": false,
+    "ativa": true,
+    "tempo": 150.10700000000057,
+    "limite": 420,
+    "avisou": false,
+    "lembrete": 0,
+    "venceu": true,
+    "concluida": true,
+    "pausado": false,
+    "setor": "comercial",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "conferido": true,
+    "decisoes": 2,
+    "maquina": false,
+    "produzidos": 120,
+    "vendas": 62000,
+    "saldo": 159000,
+    "bonusCaixa": 0,
+    "bonusTempo": 120,
+    "resgates": 0,
+    "acertos": 0,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "errors": []
+}

@@ -1,0 +1,30 @@
+{
+  "data": "2026-10-28",
+  "fuso": "America/Rio_Branco",
+  "runtime": "2026.0.0.23",
+  "alvo": "Windows VM / Runner oficial",
+  "logica": {
+    "simulacao": 72,
+    "interface": 22,
+    "v01": 54,
+    "exploracao": 83,
+    "missoes": 57,
+    "feira": 57,
+    "total": 345,
+    "falhas": 0
+  },
+  "partidas": {
+    "feira": 66,
+    "turno": 171,
+    "recusa": 98,
+    "livre": 123
+  },
+  "observacao": "QA percorre a geometria com colisão e usa os painéis/botões reais; a espera do preparo e da manutenção é acelerada no driver do teste. Não mede duração de um visitante. A feira final foi iniciada pelo botão TESTAR DEMONSTRAÇÃO. Valores personalizados foram validados na suíte final de lógica.",
+  "origens": {
+    "logica": ".testes/20261028-144443-654774",
+    "feira": ".testes/20261028-144709-069005",
+    "turno": ".testes/20261028-144151-132524",
+    "recusa": ".testes/20261028-144224-254791",
+    "livre": ".testes/20261028-143929-687143"
+  }
+}

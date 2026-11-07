@@ -1,0 +1,146 @@
+{
+  "ok": true,
+  "historia_botao_inicia": true,
+  "encerrar_jogo_confirma_e_volta_menu": true,
+  "cancelar_saida_preserva_partida": true,
+  "continuar_retoma": true,
+  "encerrar_dia_funciona": true,
+  "cinco_pedidos_com_cliques_reais": [
+    {
+      "numero": 1,
+      "oferta": {
+        "id": 1,
+        "status": "ofertado",
+        "quantidade": 20
+      },
+      "vendas": 8000,
+      "produzidos": 20
+    },
+    {
+      "numero": 2,
+      "oferta": {
+        "id": 2,
+        "status": "ofertado",
+        "quantidade": 30
+      },
+      "vendas": 26000,
+      "produzidos": 50
+    },
+    {
+      "numero": 3,
+      "oferta": {
+        "id": 3,
+        "status": "ofertado",
+        "quantidade": 20
+      },
+      "vendas": 36000,
+      "produzidos": 70
+    },
+    {
+      "numero": 4,
+      "oferta": {
+        "id": 4,
+        "status": "ofertado",
+        "quantidade": 30
+      },
+      "vendas": 54000,
+      "produzidos": 100
+    },
+    {
+      "numero": 5,
+      "oferta": {
+        "id": 5,
+        "status": "ofertado",
+        "quantidade": 20
+      },
+      "vendas": 62000,
+      "produzidos": 120
+    }
+  ],
+  "final_zerou": true,
+  "jogar_novamente_reinicia": true,
+  "win": {
+    "naPartida": true,
+    "encerrado": true,
+    "dia": 1,
+    "historia": true,
+    "entregues": 5,
+    "meta": 5,
+    "zerou": true,
+    "oferta": {
+      "id": 5,
+      "status": "entregue",
+      "quantidade": 20
+    },
+    "decisaoEstoque": false,
+    "ativa": true,
+    "tempo": 147.79999999999993,
+    "limite": 300,
+    "avisou": false,
+    "lembrete": 0,
+    "venceu": true,
+    "concluida": true,
+    "pausado": false,
+    "setor": "comercial",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "painel": "entrega",
+    "painelTipo": "entrega",
+    "conferido": true,
+    "decisoes": 2,
+    "maquina": false,
+    "produzidos": 120,
+    "vendas": 62000,
+    "saldo": 159000,
+    "bonusCaixa": 0,
+    "bonusTempo": 0,
+    "resgates": 0,
+    "acertos": 0,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "errors": []
+}

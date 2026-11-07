@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "pixels_verdes_nas_barras": {
+    "hud-vazio": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "hud-mochila": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "hud-depositado": [
+      648,
+      0,
+      648,
+      652
+    ],
+    "hud-consumido": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

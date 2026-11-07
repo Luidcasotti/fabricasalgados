@@ -1,3 +1,5 @@
+> **Registro histórico.** Este documento descreve uma etapa anterior e pode conter regras ou números já substituídos. Para o funcionamento atual, consulte o [índice](README.md) e as [regras atuais](REGRAS_SIMULACAO.md).
+
 # Relatório — fábrica preparada para a aula
 
 Verificação em **22/10/2026**, atividade prevista para **23/10/2026**.

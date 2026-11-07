@@ -47,6 +47,7 @@ function parametros_campos(_p) {
     for(var _i=0;_i<array_length(_p.catalogo.ingredientes);_i++) {
         var _n=_p.catalogo.ingredientes[_i].nome+" / ";
         array_push(_lista,parametro_campo(_n+"ESTOQUE INICIAL","ingrediente","estoque_inicial",_i,0,0,1000000,5),
+            parametro_campo(_n+"CAPACIDADE DA BARRA","ingrediente","estoque_maximo",_i,0,1,1000000,10),
             parametro_campo(_n+"ESTOQUE MÍNIMO","ingrediente","estoque_minimo",_i,0,0,1000000),
             parametro_campo(_n+"CUSTO UNITÁRIO","ingrediente","custo_centavos",_i,0,1,10000,1,true),
             parametro_campo(_n+"REPOSIÇÃO EM DIAS","ingrediente","prazo_dias",_i,0,1,30));
@@ -61,6 +62,14 @@ function parametros_campos(_p) {
             array_push(_lista,parametro_campo(_n+(is_undefined(_nome)?"ID INVÁLIDO":_nome.nome),"receita","quantidade",_i,_k,0,100));
         }
     }
+    array_push(_lista,
+        parametro_campo("MÁQUINAS / QUANTIDADE","geral","maquinas_total",0,0,1,10),
+        parametro_campo("MÁQUINAS / SALGADOS POR HORA CADA","geral","maquina_capacidade_hora",0,0,1,1000,10),
+        parametro_campo("FALHAS / 0 DESLIGA, 1 ATIVA","geral","falhas_ativas",0,0,0,1),
+        parametro_campo("MANUTENÇÃO / SEGUNDOS","geral","manutencao_segundos",0,0,1,60),
+        parametro_campo("MANUTENÇÃO / CUSTO","geral","manutencao_centavos",0,0,0,100000,100,true),
+        parametro_campo("SIMULAÇÃO / SEGUNDOS POR HORA","geral","simulacao_segundos_hora",0,0,30,600,10),
+        parametro_campo("DEMONSTRAÇÃO / SEGUNDOS","geral","demonstracao_segundos",0,0,180,300,30));
     return _lista;
 }
 function parametro_alvo(_p,_campo) {
@@ -85,7 +94,18 @@ function parametros_layout() {
     return _l;
 }
 function parametros_clique(_mx,_my) {
-    if(campo_editando<0 && ui_contem(ui_area(930,102,326,46),_mx,_my)) {modo_guiado=!modo_guiado;configuracao=modo_guiado?missoes_parametros():parametros_padrao();campos=parametros_campos(configuracao);pagina=0;mensagem=modo_guiado?"História: receita inicial viável; queijo inicial zero e reposição com prazo.":"Livre: parâmetros e exploração sem sequência de missões.";return;}
+    if(campo_editando<0 && ui_contem(ui_area(930,574,326,32),_mx,_my)){
+        var _val=missoes_validar_config(configuracao);mensagem=_val.mensagem;
+        if(_val.ok){global.jogo=feira_criar(configuracao);room_goto(rm_corredor);}return;
+    }
+    if(campo_editando<0 && ui_contem(ui_area(930,102,326,46),_mx,_my)) {
+        var _val=missoes_validar_config(configuracao);mensagem=_val.mensagem;
+        if(_val.ok)historia_jogar(configuracao);return;
+    }
+    if(campo_editando<0 && ui_contem(ui_area(600,102,310,46),_mx,_my)){
+        modo_guiado=!modo_guiado;configuracao=modo_guiado?missoes_parametros():parametros_padrao();campos=parametros_campos(configuracao);pagina=0;
+        mensagem=modo_guiado?"História selecionada: cinco missões até zerar o jogo. Clique em INICIAR HISTÓRIA.":"Modo livre selecionado. Clique em INICIAR MODO LIVRE.";return;
+    }
     if(campo_editando>=0) {
         if(ui_contem(layout.cancelar,_mx,_my)) campo_editando=-1;
         else if(ui_contem(layout.confirmar,_mx,_my)) parametros_confirmar();
@@ -100,7 +120,7 @@ function parametros_clique(_mx,_my) {
     else if(ui_contem(layout.voltar,_mx,_my)) jogo_ir_para(FaseJogo.MENU);
     else if(ui_contem(layout.iniciar,_mx,_my)) {
         var _val=modo_guiado?missoes_validar_config(configuracao):parametros_validar(configuracao);mensagem=_val.mensagem;
-        if(_val.ok) {global.jogo=jogo_criar(configuracao);exploracao_iniciar(global.jogo);if(modo_guiado)missoes_iniciar(global.jogo);jogo_ir_para(FaseJogo.FABRICA);}
+        if(_val.ok) {if(modo_guiado)historia_jogar(configuracao);else {global.jogo=jogo_criar(configuracao);exploracao_iniciar(global.jogo);jogo_ir_para(FaseJogo.FABRICA);}}
     } else for(var _i=0;_i<6;_i++) {
         var _idx=pagina*6+_i;if(_idx>=array_length(campos)) break;
         var _c=campos[_idx],_l=layout.linhas[_i],_valor=parametro_ler(configuracao,_c);
@@ -119,8 +139,9 @@ function parametros_confirmar() {
 }
 function parametros_desenhar() {
     var _v=global.visual;ui_fundo();ui_titulo("VALORES FICTÍCIOS PARA APRENDIZAGEM");
-    ui_texto(24,116,"PARÂMETROS / CLIQUE NO VALOR OU USE + E -",2,_v.tinta);
-    ui_botao(ui_area(930,102,326,46),modo_guiado?"HISTÓRIA GUIADA":"MODO LIVRE",_v.verde);
+    ui_texto(24,116,"CONFIGURE E ESCOLHA COMO JOGAR",2,_v.tinta);
+    ui_botao(ui_area(600,102,310,46),modo_guiado?"Mudar para modo livre":"Mudar para história",_v.azul);
+    ui_botao(ui_area(930,102,326,46),"JOGAR HISTÓRIA / 5 PEDIDOS",_v.verde);
     for(var _i=0;_i<6;_i++) {
         var _idx=pagina*6+_i;if(_idx>=array_length(campos)) break;
         var _c=campos[_idx],_l=layout.linhas[_i],_yy=172+_i*65;
@@ -132,14 +153,15 @@ function parametros_desenhar() {
         var _valor=parametro_ler(configuracao,_c);
         ui_botao(_l.valor,_c.moeda?financas_formatar(_valor):string(_valor),_v.azul);
     }
+    ui_botao(ui_area(930,574,326,32),"TESTAR DEMONSTRAÇÃO",_v.verde);
     ui_texto(24,586,"PÁGINA "+string(pagina+1)+" / "+string(ceil(array_length(campos)/6)),2,_v.suave);
     ui_botao(layout.anterior,"ANTERIOR",_v.tinta,pagina>0);
     ui_botao(layout.proxima,"PRÓXIMA",_v.tinta,pagina<ceil(array_length(campos)/6)-1);
     ui_botao(layout.restaurar,"RESTAURAR PADRÕES",_v.verde);
-    ui_botao(layout.voltar,"MENU",_v.tinta);ui_botao(layout.iniciar,"INICIAR SIMULAÇÃO",_v.laranja);
+    ui_botao(layout.voltar,"MENU",_v.tinta);ui_botao(layout.iniciar,modo_guiado?"INICIAR HISTÓRIA / 5 PEDIDOS":"INICIAR MODO LIVRE",_v.laranja);
     ui_texto(24,698,mensagem,1,_v.tinta);
     if(campo_editando>=0) {
-        draw_set_alpha(.65);draw_set_color(_v.tinta);draw_rectangle(0,92,1279,719,false);draw_set_alpha(1);
+        draw_set_alpha(.85);draw_set_color(_v.painel);draw_rectangle(0,92,1279,719,false);draw_set_alpha(1);
         ui_cartao(240,232,800,300,_v.claro);
         var _c=campos[campo_editando];
         ui_centro(640,264,"EDITAR PARÂMETRO",3,_v.tinta);

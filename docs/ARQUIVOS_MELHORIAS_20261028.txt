@@ -1,0 +1,28 @@
+Arquivos alterados em relação ao backup do início desta tarefa (24):
+README.md
+docs/REGRAS_SIMULACAO.md
+objects/obj_menu/Draw_64.gml
+objects/obj_parametros/Create_0.gml
+scripts/scr_dashboard/scr_dashboard.gml
+scripts/scr_estado/scr_estado.gml
+scripts/scr_exploracao_interface/scr_exploracao_interface.gml
+scripts/scr_feira/scr_feira.gml
+scripts/scr_financas/scr_financas.gml
+scripts/scr_historia/scr_historia.gml
+scripts/scr_hud_estoque/scr_hud_estoque.gml
+scripts/scr_indicadores/scr_indicadores.gml
+scripts/scr_logistica/scr_logistica.gml
+scripts/scr_missoes/scr_missoes.gml
+scripts/scr_parametros/scr_parametros.gml
+scripts/scr_pedidos/scr_pedidos.gml
+scripts/scr_producao/scr_producao.gml
+scripts/scr_produtos/scr_produtos.gml
+scripts/scr_testes_exploracao/scr_testes_exploracao.gml
+scripts/scr_testes_feira/scr_testes_feira.gml
+scripts/scr_testes_missoes/scr_testes_missoes.gml
+scripts/scr_testes_simulacao/scr_testes_simulacao.gml
+scripts/scr_testes_v01/scr_testes_v01.gml
+tools/verificar_simulacao.py
+
+Novos: docs/MELHORIAS_GESTAO_20261028.md, este inventário e docs/evidencias-gestao-20261028/.
+Nenhum arquivo preexistente foi removido. Alterações locais anteriores continuam no backup.

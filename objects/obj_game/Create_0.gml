@@ -5,3 +5,5 @@ visual_iniciar();
 display_set_gui_size(1280, 720);
 window_set_caption("Fábrica de Salgados • Gestão na prática");
 window_set_size(1280, 720);
+
+feedback_iniciar();

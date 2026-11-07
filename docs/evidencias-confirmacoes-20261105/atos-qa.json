@@ -1,0 +1,140 @@
+{
+  "ok": true,
+  "limite_segundos": 300,
+  "introducao_congela_relogio": true,
+  "confirmacoes": [
+    "aceitar",
+    "separar_pedido",
+    "depositar",
+    "produzir",
+    "cozinhar",
+    "entregar"
+  ],
+  "confirmacao_congela_relogio": true,
+  "enter_confirma": true,
+  "viagens_primeiro_pedido": 1,
+  "lembrete_segundos": 150,
+  "errors": [],
+  "win": {
+    "ativa": true,
+    "tempo": 176.6759999999986,
+    "limite": 300,
+    "avisou": true,
+    "lembrete": 0,
+    "venceu": true,
+    "concluida": true,
+    "pausado": false,
+    "setor": "comercial",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "painel": "entrega",
+    "conferido": true,
+    "decisoes": 2,
+    "maquina": false,
+    "produzidos": 20,
+    "vendas": 8000
+  },
+  "loss": {
+    "ativa": true,
+    "tempo": 300,
+    "limite": 300,
+    "avisou": true,
+    "lembrete": 0,
+    "venceu": false,
+    "concluida": true,
+    "pausado": false,
+    "setor": "corredor",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "conferido": false,
+    "decisoes": 0,
+    "maquina": false,
+    "produzidos": 0,
+    "vendas": 0
+  },
+  "qa": "Entradas e botões reais no Edge; posicionamento do ator e saltos do contador apenas no navegador de teste."
+}

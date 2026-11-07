@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "alternativas_sem_explicacao_entre_botoes": true,
+  "consequencia_apos_escolha": true,
+  "quiz_tempo_preservado": true,
+  "resgate_preservado": true,
+  "win": {
+    "ativa": true,
+    "tempo": 435.17399999999736,
+    "limite": 540,
+    "avisou": true,
+    "lembrete": 0,
+    "venceu": true,
+    "concluida": true,
+    "pausado": false,
+    "setor": "comercial",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "painel": "entrega",
+    "conferido": true,
+    "decisoes": 2,
+    "maquina": false,
+    "produzidos": 20,
+    "vendas": 8000,
+    "saldo": 107500,
+    "bonusCaixa": 0,
+    "bonusTempo": 240,
+    "resgates": 1,
+    "acertos": 1,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "errors": []
+}

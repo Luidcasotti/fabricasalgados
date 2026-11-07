@@ -1,0 +1,369 @@
+{
+  "ok": true,
+  "errors": [],
+  "shots": [
+    {
+      "name": "hud-vazio",
+      "state": {
+        "ativa": true,
+        "tempo": 1.8899999999999992,
+        "limite": 120,
+        "lembrete": 0,
+        "avisou": false,
+        "concluida": false,
+        "venceu": false,
+        "fim": 0,
+        "entregues": 0,
+        "setor": "corredor",
+        "pausado": false,
+        "bonus": 0,
+        "saldo": 100000,
+        "vendas": 0,
+        "variaveis": 0,
+        "produzidos": 0,
+        "cozinha": [
+          {
+            "id": "farinha",
+            "q": 0
+          },
+          {
+            "id": "frango",
+            "q": 0
+          },
+          {
+            "id": "queijo",
+            "q": 0
+          },
+          {
+            "id": "oleo",
+            "q": 0
+          },
+          {
+            "id": "embalagens",
+            "q": 0
+          }
+        ],
+        "mochila": [
+          {
+            "id": "farinha",
+            "q": 0
+          },
+          {
+            "id": "frango",
+            "q": 0
+          },
+          {
+            "id": "queijo",
+            "q": 0
+          },
+          {
+            "id": "oleo",
+            "q": 0
+          },
+          {
+            "id": "embalagens",
+            "q": 0
+          }
+        ],
+        "lote": false,
+        "quantidade": 5,
+        "modal": false
+      },
+      "estoque": [
+        {
+          "id": "farinha",
+          "q": 120
+        },
+        {
+          "id": "frango",
+          "q": 60
+        },
+        {
+          "id": "queijo",
+          "q": 100
+        },
+        {
+          "id": "oleo",
+          "q": 200
+        },
+        {
+          "id": "embalagens",
+          "q": 120
+        }
+      ]
+    },
+    {
+      "name": "hud-mochila",
+      "state": {
+        "ativa": true,
+        "tempo": 16.567999999999984,
+        "limite": 120,
+        "lembrete": 0,
+        "avisou": false,
+        "concluida": false,
+        "venceu": false,
+        "fim": 0,
+        "entregues": 0,
+        "setor": "estoque",
+        "pausado": false,
+        "bonus": 0,
+        "saldo": 100000,
+        "vendas": 0,
+        "variaveis": 0,
+        "produzidos": 0,
+        "cozinha": [
+          {
+            "id": "farinha",
+            "q": 0
+          },
+          {
+            "id": "frango",
+            "q": 0
+          },
+          {
+            "id": "queijo",
+            "q": 0
+          },
+          {
+            "id": "oleo",
+            "q": 0
+          },
+          {
+            "id": "embalagens",
+            "q": 0
+          }
+        ],
+        "mochila": [
+          {
+            "id": "farinha",
+            "q": 10
+          },
+          {
+            "id": "frango",
+            "q": 0
+          },
+          {
+            "id": "queijo",
+            "q": 20
+          },
+          {
+            "id": "oleo",
+            "q": 10
+          },
+          {
+            "id": "embalagens",
+            "q": 10
+          }
+        ],
+        "painel": "prateleira_embalagens",
+        "lote": false,
+        "quantidade": 10,
+        "modal": false
+      },
+      "estoque": [
+        {
+          "id": "farinha",
+          "q": 110
+        },
+        {
+          "id": "frango",
+          "q": 60
+        },
+        {
+          "id": "queijo",
+          "q": 80
+        },
+        {
+          "id": "oleo",
+          "q": 190
+        },
+        {
+          "id": "embalagens",
+          "q": 110
+        }
+      ]
+    },
+    {
+      "name": "hud-depositado",
+      "state": {
+        "ativa": true,
+        "tempo": 21.257000000000005,
+        "limite": 120,
+        "lembrete": 0,
+        "avisou": false,
+        "concluida": false,
+        "venceu": false,
+        "fim": 0,
+        "entregues": 0,
+        "setor": "producao",
+        "pausado": false,
+        "bonus": 0,
+        "saldo": 100000,
+        "vendas": 0,
+        "variaveis": 0,
+        "produzidos": 0,
+        "cozinha": [
+          {
+            "id": "farinha",
+            "q": 10
+          },
+          {
+            "id": "frango",
+            "q": 0
+          },
+          {
+            "id": "queijo",
+            "q": 20
+          },
+          {
+            "id": "oleo",
+            "q": 10
+          },
+          {
+            "id": "embalagens",
+            "q": 10
+          }
+        ],
+        "mochila": [
+          {
+            "id": "farinha",
+            "q": 0
+          },
+          {
+            "id": "frango",
+            "q": 0
+          },
+          {
+            "id": "queijo",
+            "q": 0
+          },
+          {
+            "id": "oleo",
+            "q": 0
+          },
+          {
+            "id": "embalagens",
+            "q": 0
+          }
+        ],
+        "painel": "deposito",
+        "lote": false,
+        "quantidade": 5,
+        "modal": false
+      },
+      "estoque": [
+        {
+          "id": "farinha",
+          "q": 110
+        },
+        {
+          "id": "frango",
+          "q": 60
+        },
+        {
+          "id": "queijo",
+          "q": 80
+        },
+        {
+          "id": "oleo",
+          "q": 190
+        },
+        {
+          "id": "embalagens",
+          "q": 110
+        }
+      ]
+    },
+    {
+      "name": "hud-consumido",
+      "state": {
+        "ativa": true,
+        "tempo": 26.247000000000018,
+        "limite": 120,
+        "lembrete": 0,
+        "avisou": false,
+        "concluida": false,
+        "venceu": false,
+        "fim": 0,
+        "entregues": 0,
+        "setor": "producao",
+        "pausado": false,
+        "bonus": 0,
+        "saldo": 99750,
+        "vendas": 0,
+        "variaveis": 250,
+        "produzidos": 10,
+        "cozinha": [
+          {
+            "id": "farinha",
+            "q": 0
+          },
+          {
+            "id": "frango",
+            "q": 0
+          },
+          {
+            "id": "queijo",
+            "q": 0
+          },
+          {
+            "id": "oleo",
+            "q": 0
+          },
+          {
+            "id": "embalagens",
+            "q": 0
+          }
+        ],
+        "mochila": [
+          {
+            "id": "farinha",
+            "q": 0
+          },
+          {
+            "id": "frango",
+            "q": 0
+          },
+          {
+            "id": "queijo",
+            "q": 0
+          },
+          {
+            "id": "oleo",
+            "q": 0
+          },
+          {
+            "id": "embalagens",
+            "q": 0
+          }
+        ],
+        "painel": "bancada",
+        "lote": false,
+        "quantidade": 0,
+        "modal": false
+      },
+      "estoque": [
+        {
+          "id": "farinha",
+          "q": 110
+        },
+        {
+          "id": "frango",
+          "q": 60
+        },
+        {
+          "id": "queijo",
+          "q": 80
+        },
+        {
+          "id": "oleo",
+          "q": 190
+        },
+        {
+          "id": "embalagens",
+          "q": 110
+        }
+      ]
+    }
+  ]
+}

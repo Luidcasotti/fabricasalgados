@@ -7,6 +7,7 @@ function produtos_catalogo_criar() {
         {id:"oleo",nome:"Óleo",unidade:"porção",estoque_inicial:200,estoque_minimo:40,custo_centavos:20,prazo_dias:1},
         {id:"embalagens",nome:"Embalagens",unidade:"unidade",estoque_inicial:120,estoque_minimo:30,custo_centavos:15,prazo_dias:2}
     ];
+    for(var _i=0;_i<array_length(_ingredientes);_i++)_ingredientes[_i].estoque_maximo=_ingredientes[_i].estoque_inicial;
     var _produtos=[];
     var _ids=["coxinha","pastel","bolinha_queijo"];
     var _nomes=["Coxinha","Pastel","Bolinha de queijo"];

@@ -1,0 +1,84 @@
+
+***************************************
+ *     GameMaker v2026.0.0.23    *
+***************************************
+Setting scheduler resolution to 1
+Attempting to use high process priority settings
+Set process priority to HIGH_PRIORITY_CLASS
+Set main thread priority to HIGHEST
+Registered with MMCSS 'Games' task
+Set MMCSS thread priority to CRITICAL
+Reading File C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\qa-confirmacoes-feira-a\build\BLANK GAMEFabricaDeSalgados.win took 0 ms
+DirectX11: Using hardware device
+Collision Event time(microsecs)=3
+Variable_Global_Init()
+PrepareGame()
+Audio_Init()
+Audio group 0 -> Loaded
+Attempting to set gamepadcount to 12
+Game_Prepare()
+Script_Prepare() 
+TimeLine_Prepare() 
+Object_Prepare() 
+Room_Prepare() 
+Finished PrepareGame() 
+Run_Start
+Done g_EffectsManager.Init()
+Done RenderStateManager
+CreateColPairs took 0.000000s 1 usecs for 31 object types obj_col_numb=0 physobjcount=0 resizes 0 final size 0
+Done ObjectLists
+Done Extension_Initialize
+About to startroom
+Total memory used = 8911642 (0x0087fb1a) bytes 8.50MB
+Free memory = 5470408 (0x005378c8) bytes 5.22MB
+Peak memory used = 12908887 (0x00c4f957) bytes 12.31MB
+**********************************.
+Entering main loop.
+**********************************.
+Pause event has been registered for this frame
+Pause event has been unregistered
+OK PARTIDA: história selecionada
+OK PARTIDA: rota / corredor:porta_comercial
+OK PARTIDA: interação / corredor:porta_comercial
+OK PARTIDA: rota / comercial:vendas
+OK PARTIDA: interação / comercial:vendas
+OK PARTIDA: ação conserva recursos / vendas
+OK PARTIDA: mensagem exige confirmação / aceitar
+OK PARTIDA: rota / comercial:saida
+OK PARTIDA: interação / comercial:saida
+OK PARTIDA: rota / corredor:porta_estoque
+OK PARTIDA: interação / corredor:porta_estoque
+OK PARTIDA: rota / estoque:compras
+OK PARTIDA: interação / estoque:compras
+OK PARTIDA: ação conserva recursos / compras
+OK PARTIDA: mensagem exige confirmação / separar_pedido
+OK PARTIDA: rota / estoque:saida
+OK PARTIDA: interação / estoque:saida
+OK PARTIDA: rota / corredor:porta_producao
+OK PARTIDA: interação / corredor:porta_producao
+OK PARTIDA: rota / producao:deposito
+OK PARTIDA: interação / producao:deposito
+OK PARTIDA: ação conserva recursos / deposito
+OK PARTIDA: mensagem exige confirmação / depositar
+OK PARTIDA: rota / producao:bancada
+OK PARTIDA: interação / producao:bancada
+OK PARTIDA: ação conserva recursos / bancada
+OK PARTIDA: mensagem exige confirmação / produzir
+OK PARTIDA: painel e capacidade reduzidos
+OK PARTIDA: mensagem exige confirmação / cozinhar
+OK PARTIDA: rota / producao:saida
+OK PARTIDA: interação / producao:saida
+OK PARTIDA: rota / corredor:porta_comercial
+OK PARTIDA: interação / corredor:porta_comercial
+OK PARTIDA: rota / comercial:entrega
+OK PARTIDA: interação / comercial:entrega
+OK PARTIDA: ação conserva recursos / entrega
+OK PARTIDA: mensagem exige confirmação / entregar
+OK PARTIDA: feira completa com entrega e manutenção
+OK PARTIDA: feira conserva materiais e caixa
+FDS_CAPTURAS_DIR: C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\qa-confirmacoes-feira-a\build\
+FDS_PARTIDA_APROVADA: 39 / HISTORIA feira
+###game_end###0
+Attempting to set gamepadcount to 0
+Script_Free called with 696 and global 31
+Unsetting previous scheduler resolution of 1

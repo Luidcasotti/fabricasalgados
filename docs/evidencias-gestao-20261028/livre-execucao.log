@@ -1,0 +1,166 @@
+
+***************************************
+ *     GameMaker v2026.0.0.23    *
+***************************************
+Setting scheduler resolution to 1
+Attempting to use high process priority settings
+Set process priority to HIGH_PRIORITY_CLASS
+Set main thread priority to HIGHEST
+Registered with MMCSS 'Games' task
+Set MMCSS thread priority to CRITICAL
+Reading File C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\20261028-143929-687143\build\BLANK GAMEFabricaDeSalgados.win took 0 ms
+DirectX11: Using hardware device
+Collision Event time(microsecs)=2
+Variable_Global_Init()
+PrepareGame()
+Audio_Init()
+Audio group 0 -> Loaded
+Attempting to set gamepadcount to 12
+Game_Prepare()
+Script_Prepare() 
+TimeLine_Prepare() 
+Object_Prepare() 
+Room_Prepare() 
+Finished PrepareGame() 
+Run_Start
+Done g_EffectsManager.Init()
+Done RenderStateManager
+CreateColPairs took 0.000000s 1 usecs for 31 object types obj_col_numb=0 physobjcount=0 resizes 0 final size 0
+Done ObjectLists
+Done Extension_Initialize
+About to startroom
+Total memory used = 8730297 (0x008536b9) bytes 8.33MB
+Free memory = 5487992 (0x0053bd78) bytes 5.23MB
+Peak memory used = 12705014 (0x00c1dcf6) bytes 12.12MB
+**********************************.
+Entering main loop.
+**********************************.
+OK PARTIDA: singleton no menu
+OK PARTIDA: entrada na sala real com ator e singleton
+OK PARTIDA: sprite proprio com oito quadros
+OK PARTIDA: tecla real de movimento 0
+OK PARTIDA: tecla real de movimento 1
+OK PARTIDA: tecla real de movimento 2
+OK PARTIDA: tecla real de movimento 3
+OK PARTIDA: tecla real de movimento 4
+OK PARTIDA: tecla real de movimento 5
+OK PARTIDA: tecla real de movimento 6
+OK PARTIDA: tecla real de movimento 7
+OK PARTIDA: camera acompanha ator
+OK PARTIDA: entrada e retorno / corredor
+OK PARTIDA: caminho alcançavel / porta_comercial
+OK PARTIDA: proximidade real / porta_comercial
+OK PARTIDA: E atravessa porta / porta_comercial
+OK PARTIDA: entrada e retorno / comercial
+OK PARTIDA: caminho alcançavel / vendas
+OK PARTIDA: proximidade real / vendas
+OK PARTIDA: tecla E abre painel real / vendas
+OK PARTIDA: hit test do botao / aceitar
+OK PARTIDA: aceite presencial com orientação no rodapé
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: entrada e retorno / comercial
+OK PARTIDA: caminho alcançavel / saida
+OK PARTIDA: proximidade real / saida
+OK PARTIDA: E atravessa porta / saida
+OK PARTIDA: entrada e retorno / corredor
+OK PARTIDA: caminho alcançavel / porta_estoque
+OK PARTIDA: proximidade real / porta_estoque
+OK PARTIDA: E atravessa porta / porta_estoque
+OK PARTIDA: entrada e retorno / estoque
+OK PARTIDA: caminho alcançavel / prateleira_farinha
+OK PARTIDA: proximidade real / prateleira_farinha
+OK PARTIDA: tecla E abre painel real / prateleira_farinha
+OK PARTIDA: hit test do botao / retirar
+OK PARTIDA: retirada presencial / farinha
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: entrada e retorno / estoque
+OK PARTIDA: caminho alcançavel / prateleira_frango
+OK PARTIDA: proximidade real / prateleira_frango
+OK PARTIDA: tecla E abre painel real / prateleira_frango
+OK PARTIDA: hit test do botao / retirar
+OK PARTIDA: retirada presencial / frango
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: entrada e retorno / estoque
+OK PARTIDA: caminho alcançavel / prateleira_oleo
+OK PARTIDA: proximidade real / prateleira_oleo
+OK PARTIDA: tecla E abre painel real / prateleira_oleo
+OK PARTIDA: hit test do botao / retirar
+OK PARTIDA: retirada presencial / oleo
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: entrada e retorno / estoque
+OK PARTIDA: caminho alcançavel / prateleira_embalagens
+OK PARTIDA: proximidade real / prateleira_embalagens
+OK PARTIDA: tecla E abre painel real / prateleira_embalagens
+OK PARTIDA: hit test do botao / retirar
+OK PARTIDA: retirada presencial / embalagens
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: entrada e retorno / estoque
+OK PARTIDA: caminho alcançavel / compras
+OK PARTIDA: proximidade real / compras
+OK PARTIDA: tecla E abre painel real / compras
+OK PARTIDA: hit test do botao / comprar
+OK PARTIDA: compra presencial com prazo
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: entrada e retorno / estoque
+OK PARTIDA: caminho alcançavel / saida
+OK PARTIDA: proximidade real / saida
+OK PARTIDA: E atravessa porta / saida
+OK PARTIDA: entrada e retorno / corredor
+OK PARTIDA: caminho alcançavel / porta_producao
+OK PARTIDA: proximidade real / porta_producao
+OK PARTIDA: E atravessa porta / porta_producao
+OK PARTIDA: entrada e retorno / producao
+OK PARTIDA: caminho alcançavel / deposito
+OK PARTIDA: proximidade real / deposito
+OK PARTIDA: tecla E abre painel real / deposito
+OK PARTIDA: hit test do botao / depositar
+OK PARTIDA: deposito presencial conserva mochila
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: entrada e retorno / producao
+OK PARTIDA: caminho alcançavel / bancada
+OK PARTIDA: proximidade real / bancada
+OK PARTIDA: tecla E abre painel real / bancada
+OK PARTIDA: hit test do botao / produzir
+OK PARTIDA: producao presencial consome cozinha
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: entrada e retorno / producao
+OK PARTIDA: caminho alcançavel / saida
+OK PARTIDA: proximidade real / saida
+OK PARTIDA: E atravessa porta / saida
+OK PARTIDA: entrada e retorno / corredor
+OK PARTIDA: caminho alcançavel / porta_comercial
+OK PARTIDA: proximidade real / porta_comercial
+OK PARTIDA: E atravessa porta / porta_comercial
+OK PARTIDA: entrada e retorno / comercial
+OK PARTIDA: caminho alcançavel / entrega
+OK PARTIDA: proximidade real / entrega
+OK PARTIDA: tecla E abre painel real / entrega
+OK PARTIDA: hit test do botao / entregar
+OK PARTIDA: entrega presencial sem duplicar
+OK PARTIDA: persistencia e conservacao apos acao
+OK PARTIDA: ciclo presencial completo
+OK PARTIDA: conservacao apos transporte e entrega
+OK PARTIDA: pausa bloqueia relogio pela interface
+OK PARTIDA: dashboard parcial pausa sem perder progresso
+OK PARTIDA: retomar restaura sala e estado
+OK PARTIDA: dia recebe compra paga no deposito
+OK PARTIDA: fim na sala real rm_dashboard
+OK PARTIDA: indicadores de pedidos reais
+OK PARTIDA: resultado e capacidade reais
+OK PARTIDA: estoque final e auditoria
+OK PARTIDA: aba real do dashboard 0
+OK PARTIDA: aba real do dashboard 1
+OK PARTIDA: aba real do dashboard 2
+OK PARTIDA: aba real do dashboard 3
+OK PARTIDA: aba real do dashboard 4
+OK PARTIDA: aba real do dashboard 5
+OK PARTIDA: reinicio preserva parametros editaveis
+OK PARTIDA: reinicio limpa estado e conserva arquitetura
+OK PARTIDA: segunda partida pode terminar
+OK PARTIDA: menu continuar reabre fim preservado
+FDS_CAPTURAS_DIR: C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\20261028-143929-687143\build\
+FDS_PARTIDA_APROVADA: 123 verificações
+###game_end###0
+Attempting to set gamepadcount to 0
+Script_Free called with 653 and global 31
+Unsetting previous scheduler resolution of 1

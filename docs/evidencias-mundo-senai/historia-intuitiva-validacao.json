@@ -1,0 +1,15 @@
+{
+  "logica": 309,
+  "turno": 124,
+  "recusa": 75,
+  "gml": 79,
+  "recursos": 101,
+  "web": "https://fabrica-salgados-mundo-senai.cometknoll12.chatgpt.site",
+  "site_commit": "ecbbf72fb861322eb938dcdb82cad6802d028175",
+  "exportacao": "html5-20261027-231939",
+  "limites": [
+    "Sem controles táteis",
+    "Sem salvamento em disco",
+    "Somente Edge testado nesta atualização"
+  ]
+}

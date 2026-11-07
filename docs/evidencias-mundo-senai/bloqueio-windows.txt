@@ -1,0 +1,9 @@
+Observado ao executar o compilador oficial GMAssetCompiler.exe, em 27/10/2026:
+
+System.IO.FileLoadException: Could not load file or assembly
+'C:\ProgramData\GameMakerStudio2-LTS2026\Cache\runtimes\runtime-2026.0.0.23\bin\assetcompiler\windows\x64\FileIO.dll'.
+Uma política de Controle de Aplicativo bloqueou este arquivo. (0x800711C7)
+
+Esta mensagem ocorre antes da compilação do GML. Nenhuma política de segurança
+foi alterada, e não foi tentado contornar o bloqueio.
+Os logs copiados nesta pasta registram as tentativas Windows e HTML5 pelo Igor.

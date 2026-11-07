@@ -1,82 +1,79 @@
-# Fábrica de Salgados — atividade visual em sala
+# Fábrica de Salgados · SENAI HUB
 
-Jogo educacional em **GameMaker / GML Code**. Caminhe pela fábrica, transporte
-ingredientes, cozinhe e entregue encomendas. Valores e receitas são **fictícios
-para aprendizagem**. O projeto existente e o histórico da V0.1 foram preservados.
+Jogo educativo em **GameMaker / GML** sobre pedidos, estoque, produção e decisões de gestão. Controle o cozinheiro, transporte os ingredientes e complete **cinco encomendas** para zerar a história. Receitas, porções e valores são fictícios para aprendizagem.
 
-![Corredor e cozinheiro](docs/imagens/exploracao-corredor.png)
+**[Jogar no navegador](https://fabrica-salgados-mundo-senai.casottimarinetti.chatgpt.site)** · **[Documentação completa](docs/README.md)** · **[Manual do jogador](docs/MANUAL_DO_ALUNO.md)**
 
-![Recepção da Sabor & Gestão](docs/imagens/historia-introducao.png)
+![Corredor do jogo com SENAI HUB no piso](docs/imagens/jogo-atual-corredor.png)
 
-Agora há **História guiada**: 10 coxinhas, falta local de frango, produção e entrega,
-seguida de um pedido com falta geral de queijo. Negocie, compre com prazo ou recuse.
-Diálogos aguardam leitura; perguntas explicam as alternativas. **O que preciso fazer?**
-orienta o próximo passo; **Reiniciar missão** recupera o capítulo com confirmação.
-O modo **LIVRE** preserva a exploração anterior.
+## Como jogar
 
-## Abrir e jogar
+1. Escolha **JOGAR** ou **MODO COMPLETO → JOGAR HISTÓRIA / 5 PEDIDOS**.
+2. Termine ou pule a introdução. Os **5 minutos** começam depois dela.
+3. Aceite a encomenda com **Marta**, no Comercial. O canhoto à esquerda mostra os ingredientes.
+4. No Estoque, peça a **Caio** para separar os ingredientes. Se faltar algo na empresa, compre apenas o faltante; o **motoboy chega em 12 segundos de jogo**.
+5. Deposite a mochila na Produção, prepare o pedido e entregue no balcão do Comercial.
+6. Confirme a entrega e aceite a próxima missão com Marta. A quinta entrega mostra **VOCÊ ZEROU O JOGO!**
 
-1. Abra `BLANK GAMEFabricaDeSalgados.yyp`, na raiz, pelo GameMaker.
-2. Selecione **Windows / VM** e pressione **F5**.
-3. Escolha **Novo jogo / Parâmetros**, escolha HISTÓRIA GUIADA ou LIVRE, ajuste a atividade e inicie.
-4. Use **WASD ou setas** para caminhar e **E** perto de portas e equipamentos.
-5. Converse com Marta no Comercial; consulte a receita na Produção; retire
-   ingredientes nas prateleiras do Estoque; leve-os à mesa de depósito;
-   cozinhe na bancada e volte ao balcão do Comercial para entregar.
+| Controle | Ação |
+| --- | --- |
+| WASD ou setas | Andar |
+| E | Interagir de perto ou fechar painel |
+| Enter ou Espaço | Avançar introdução e confirmar avisos |
+| Esc | Fechar painel, pausar ou voltar dos resultados |
+| H / M | Ajuda / silenciar |
+| 1, 2 ou 3 | Responder à pergunta de resgate |
 
-**Encerrar dia** atualiza compras e prazos; não produz nem entrega automaticamente.
-O dia 1 já é jogável. Pausa, resultados parciais, diário, reinício e dashboard
-final continuam disponíveis. Não há Game Over por resultado negativo.
+Cada quiz correto acrescenta **2 minutos**, uma vez por pergunta. Ao zerar o relógio, uma pergunta de resgate permite ganhar mais 2 minutos: são **até dez oportunidades por rodada**. Errar o resgate encerra a rodada. Confirmações, decisões, quizzes, pausa e resultados suspendem a contagem.
 
-![Receita presencial](docs/imagens/exploracao-producao.png)
+## Abrir o projeto
 
-Ambiente: IDE **2026.0.0.16**, runtime **2026.0.0.23**, Windows/VM.
-São **91 recursos registrados**: dez salas, 30 objetos, 27 scripts e 24 sprites
-próprios (o cozinheiro mantém seus oito quadros). Sem dependências externas obrigatórias ou assets pagos.
+```powershell
+git clone https://github.com/Luidcasotti/fabricasalgados.git
+cd fabricasalgados
+```
 
-## Aula de 23/10/2026
+Abra **`BLANK GAMEFabricaDeSalgados.yyp`**, na raiz, com o GameMaker. Selecione **Windows / VM** e pressione **F5**. Para exportar a versão Web, instale o módulo HTML5 do GameMaker e siga o [guia de publicação](docs/PUBLICACAO_WEB.md).
 
-Há **24 sprites personalizáveis**, associados aos objetos e usados no jogo:
-Comercial (4), Produção (5), Estoque (10) e Personagens (5). A arte é simples de
-propósito. Edite as imagens pela IDE, preservando dimensões/origens; as colisões,
-interações e missões continuam no sistema existente.
+Ambiente verificado: **IDE 2026.0.0.16**, **runtime 2026.0.0.23**, Windows/VM e HTML5 no Edge. O jogo não exige Python ou Node no computador de quem joga; essas ferramentas são usadas na automação de desenvolvimento.
 
-- [Roteiro da aula e divisão dos grupos](docs/atividades_alunos/ROTEIRO_DA_AULA.md)
-- [Guia de sprites: nomes reais, origens e associações](docs/atividades_alunos/GUIA_DE_SPRITES.md)
-- [Comercial](docs/atividades_alunos/ATIVIDADE_COMERCIAL.md), [Produção](docs/atividades_alunos/ATIVIDADE_PRODUCAO.md), [Estoque](docs/atividades_alunos/ATIVIDADE_ESTOQUE.md) e [Personagens](docs/atividades_alunos/ATIVIDADE_PERSONAGENS.md)
-- [Relatório da preparação e testes](docs/RELATORIO_AULA.md)
+## O que está implementado
 
-## Documentação e desenvolvimento
+- Cinco missões com canhoto, objetivo e orientação entre setores.
+- Estoques separados em almoxarifado, mochila e cozinha; produção e entrega presenciais.
+- Motoboy, previsão de chegada, aviso de recebimento e reposição sem cobrança duplicada.
+- Defeito de máquina, técnico, alternativa de equipamento e consequências educativas.
+- Quizzes com tempo extra, dez resgates e confirmações por etapa.
+- Resultados parciais com **VOLTAR AO JOGO**, diário, aprendizagem e indicadores calculados das operações reais.
+- Modo livre configurável, sons com controle de volume, fontes legíveis e nome SENAI HUB escrito normalmente no piso.
 
-- [Manual do aluno](docs/MANUAL_DO_ALUNO.md) e [do professor](docs/MANUAL_DO_PROFESSOR.md)
-- [Relatório desta etapa](docs/RELATORIO_HISTORIA.md) e [missões/história](docs/MISSOES_E_HISTORIA.md)
-- [Relatório anterior de exploração](docs/RELATORIO_EXPLORACAO.md)
-- [Arquitetura](docs/ARQUITETURA.md) e [regras](docs/REGRAS_SIMULACAO.md)
-- [Testes e limites](docs/VALIDACAO.md)
-- [Visuais provisórios](docs/VISUAIS.md) e [melhorias futuras](docs/MELHORIAS_FUTURAS.md)
-- [Relatório histórico V0.1](docs/RELATORIO_V01.md)
+![Motoboy recebendo uma encomenda no Estoque](docs/imagens/jogo-atual-motoboy.png)
 
-Para editar, use `ABRIR_NO_VSCODE.cmd`. GMSync lê os recursos; Stitch permanece
-desabilitado nessa sessão pela incompatibilidade já identificada. O jogo usa
-somente GML; Python é automação opcional de desenvolvimento.
+## Documentação
+
+| Preciso de… | Guia |
+| --- | --- |
+| Aprender a jogar e resolver dúvidas | [Manual do aluno](docs/MANUAL_DO_ALUNO.md) |
+| Preparar uma aula e atividades | [Manual do professor](docs/MANUAL_DO_PROFESSOR.md) |
+| Entender as cinco missões | [Missões e história](docs/MISSOES_E_HISTORIA.md) |
+| Conferir receitas, dinheiro e tempo | [Regras da simulação](docs/REGRAS_SIMULACAO.md) |
+| Entender o código | [Arquitetura](docs/ARQUITETURA.md) |
+| Configurar e modificar o projeto | [Desenvolvimento](docs/DESENVOLVIMENTO.md) e [Contribuição](CONTRIBUTING.md) |
+| Executar testes e conferir cobertura | [Validação](docs/VALIDACAO.md) |
+| Gerar e hospedar o HTML5 | [Publicação Web](docs/PUBLICACAO_WEB.md) |
+| Editar imagens e conhecer a autoria | [Visuais](docs/VISUAIS.md) e [créditos](docs/ASSETS_E_CREDITOS.md) |
+| Consultar mudanças e versões anteriores | [Changelog](CHANGELOG.md) e [histórico](docs/HISTORICO.md) |
+
+## Verificação rápida
 
 ```powershell
 python tools/verificar_projeto.py
 python tools/verificar_visuais.py
 python tools/verificar_simulacao.py
-python tools/verificar_simulacao.py --partida
 ```
 
-Os testes incluem **66 verificações novas de missões**, regressão da simulação e
-partidas completas dos três caminhos educativos, além do modo livre. Consulte
-[VALIDACAO.md](docs/VALIDACAO.md) para as contagens executadas e limites.
+A suíte no Runner oficial passou em **565 verificações**, sem falhas, em 06/11/2026. Os scripts aceitam caminhos locais do runtime e do perfil GameMaker; veja [como reproduzir](docs/VALIDACAO.md). São **105 recursos registrados**: 10 salas, 30 objetos, 31 scripts, 24 sprites, 4 fontes e 6 sons.
 
-```powershell
-python tools/verificar_simulacao.py --historia negociar
-python tools/verificar_simulacao.py --historia comprar
-python tools/verificar_simulacao.py --historia recusar
-```
+## Limites conhecidos
 
-**Limites:** progresso persiste entre salas e pelo menu enquanto o programa está
-aberto; não há salvamento em disco. Arte, colisões e animação são provisórias.
-Consulte o relatório para os testes manuais ainda necessários.
+O progresso fica em memória durante a sessão. **Recarregar a página ou fechar o programa perde a partida**. O transporte dos salgados prontos é abstraído; a mochila carrega ingredientes. O jogo foi verificado nos ambientes acima; toque em celular, outras plataformas e acessibilidade completa ainda precisam de avaliação. Veja [próximos passos](docs/MELHORIAS_FUTURAS.md).

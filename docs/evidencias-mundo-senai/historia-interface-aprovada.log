@@ -1,0 +1,285 @@
+
+***************************************
+ *     GameMaker v2026.0.0.23    *
+***************************************
+Setting scheduler resolution to 1
+Attempting to use high process priority settings
+Set process priority to HIGH_PRIORITY_CLASS
+Set main thread priority to HIGHEST
+Registered with MMCSS 'Games' task
+Set MMCSS thread priority to CRITICAL
+Reading File C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\20261027-225527\build\BLANK GAMEFabricaDeSalgados.win took 0 ms
+DirectX11: Using hardware device
+Collision Event time(microsecs)=2
+Variable_Global_Init()
+PrepareGame()
+Audio_Init()
+Audio group 0 -> Loaded
+Attempting to set gamepadcount to 12
+Game_Prepare()
+Script_Prepare() 
+TimeLine_Prepare() 
+Object_Prepare() 
+Room_Prepare() 
+Finished PrepareGame() 
+Run_Start
+Done g_EffectsManager.Init()
+Done RenderStateManager
+CreateColPairs took 0.000000s 0 usecs for 31 object types obj_col_numb=0 physobjcount=0 resizes 0 final size 0
+Done ObjectLists
+Done Extension_Initialize
+About to startroom
+Total memory used = 8501440 (0x0081b8c0) bytes 8.11MB
+Free memory = 5547376 (0x0054a570) bytes 5.29MB
+Peak memory used = 12634607 (0x00c0c9ef) bytes 12.05MB
+**********************************.
+Entering main loop.
+**********************************.
+OK PARTIDA: parametros oferecem preset guiado valido
+OK PARTIDA: leitura confirmada / intro_1
+OK PARTIDA: leitura confirmada / intro_2
+OK PARTIDA: leitura confirmada / intro_3
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_producao
+OK PARTIDA: proximidade / porta_producao
+OK PARTIDA: interação disponível / porta_producao
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / bancada
+OK PARTIDA: proximidade / bancada
+OK PARTIDA: interação disponível / bancada
+OK PARTIDA: interação abre alvo correto / bancada
+OK PARTIDA: fora da ordem nao consome nem conclui
+OK PARTIDA: conservacao apos acao / fora_ordem
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / saida
+OK PARTIDA: proximidade / saida
+OK PARTIDA: interação disponível / saida
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_comercial
+OK PARTIDA: proximidade / porta_comercial
+OK PARTIDA: interação disponível / porta_comercial
+OK PARTIDA: setor real / comercial
+OK PARTIDA: caminho / vendas
+OK PARTIDA: proximidade / vendas
+OK PARTIDA: interação disponível / vendas
+OK PARTIDA: leitura confirmada / pedido_1
+OK PARTIDA: leitura confirmada / pedido_2
+OK PARTIDA: interação abre alvo correto / vendas
+OK PARTIDA: leitura confirmada / info_geral
+OK PARTIDA: leitura confirmada / info_farinha
+OK PARTIDA: leitura confirmada / info_frango
+OK PARTIDA: leitura confirmada / info_oleo
+OK PARTIDA: leitura confirmada / info_embalagens
+OK PARTIDA: conservacao apos acao / informacoes
+OK PARTIDA: setor real / comercial
+OK PARTIDA: caminho / vendas
+OK PARTIDA: proximidade / vendas
+OK PARTIDA: interação disponível / vendas
+OK PARTIDA: interação abre alvo correto / vendas
+OK PARTIDA: O que preciso fazer abre orientacao
+OK PARTIDA: explicacao importante pode ser repetida
+OK PARTIDA: leitura confirmada / info_geral
+OK PARTIDA: leitura confirmada / info_farinha
+OK PARTIDA: leitura confirmada / info_frango
+OK PARTIDA: leitura confirmada / info_oleo
+OK PARTIDA: leitura confirmada / info_embalagens
+OK PARTIDA: conservacao apos acao / ajuda
+OK PARTIDA: setor real / comercial
+OK PARTIDA: caminho / vendas
+OK PARTIDA: proximidade / vendas
+OK PARTIDA: interação disponível / vendas
+OK PARTIDA: interação abre alvo correto / vendas
+OK PARTIDA: leitura confirmada / aceite_1
+OK PARTIDA: conservacao apos acao / aceitar
+OK PARTIDA: setor real / comercial
+OK PARTIDA: caminho / saida
+OK PARTIDA: proximidade / saida
+OK PARTIDA: interação disponível / saida
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_producao
+OK PARTIDA: proximidade / porta_producao
+OK PARTIDA: interação disponível / porta_producao
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / bancada
+OK PARTIDA: proximidade / bancada
+OK PARTIDA: interação disponível / bancada
+OK PARTIDA: leitura confirmada / frango_1
+OK PARTIDA: leitura confirmada / frango_2
+OK PARTIDA: alternativa contextual / q_estoque
+OK PARTIDA: leitura confirmada / q_estoque
+OK PARTIDA: interação abre alvo correto / bancada
+OK PARTIDA: conferencia real identifica falta de frango
+OK PARTIDA: conservacao apos acao / consultar
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / saida
+OK PARTIDA: proximidade / saida
+OK PARTIDA: interação disponível / saida
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_estoque
+OK PARTIDA: proximidade / porta_estoque
+OK PARTIDA: interação disponível / porta_estoque
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / prateleira_frango
+OK PARTIDA: proximidade / prateleira_frango
+OK PARTIDA: interação disponível / prateleira_frango
+OK PARTIDA: interação abre alvo correto / prateleira_frango
+OK PARTIDA: conservacao apos acao / retirar
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / saida
+OK PARTIDA: proximidade / saida
+OK PARTIDA: interação disponível / saida
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_producao
+OK PARTIDA: proximidade / porta_producao
+OK PARTIDA: interação disponível / porta_producao
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / deposito
+OK PARTIDA: proximidade / deposito
+OK PARTIDA: interação disponível / deposito
+OK PARTIDA: interação abre alvo correto / deposito
+OK PARTIDA: leitura confirmada / pronto_1
+OK PARTIDA: conservacao apos acao / depositar
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / bancada
+OK PARTIDA: proximidade / bancada
+OK PARTIDA: interação disponível / bancada
+OK PARTIDA: interação abre alvo correto / bancada
+OK PARTIDA: leitura confirmada / lote_1
+OK PARTIDA: barra termina e registra lote
+OK PARTIDA: conservacao apos acao / produzir
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / saida
+OK PARTIDA: proximidade / saida
+OK PARTIDA: interação disponível / saida
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_comercial
+OK PARTIDA: proximidade / porta_comercial
+OK PARTIDA: interação disponível / porta_comercial
+OK PARTIDA: setor real / comercial
+OK PARTIDA: caminho / entrega
+OK PARTIDA: proximidade / entrega
+OK PARTIDA: interação disponível / entrega
+OK PARTIDA: interação abre alvo correto / entrega
+OK PARTIDA: leitura confirmada / entrega_1
+OK PARTIDA: leitura confirmada / entrega_2
+OK PARTIDA: conservacao apos acao / entregar
+OK PARTIDA: setor real / comercial
+OK PARTIDA: caminho / vendas
+OK PARTIDA: proximidade / vendas
+OK PARTIDA: interação disponível / vendas
+OK PARTIDA: leitura confirmada / segundo_1
+OK PARTIDA: leitura confirmada / segundo_2
+OK PARTIDA: interação abre alvo correto / vendas
+OK PARTIDA: leitura confirmada / aceite_2
+OK PARTIDA: alternativa contextual / q_risco
+OK PARTIDA: leitura confirmada / q_risco
+OK PARTIDA: leitura confirmada / negociado_1
+OK PARTIDA: conservacao apos acao / negociar
+OK PARTIDA: setor real / comercial
+OK PARTIDA: caminho / saida
+OK PARTIDA: proximidade / saida
+OK PARTIDA: interação disponível / saida
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_estoque
+OK PARTIDA: proximidade / porta_estoque
+OK PARTIDA: interação disponível / porta_estoque
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / compras
+OK PARTIDA: proximidade / compras
+OK PARTIDA: interação disponível / compras
+OK PARTIDA: leitura confirmada / lead_1
+OK PARTIDA: interação abre alvo correto / compras
+OK PARTIDA: alternativa contextual / q_excesso
+OK PARTIDA: leitura confirmada / q_excesso
+OK PARTIDA: conservacao apos acao / comprar
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / compras
+OK PARTIDA: proximidade / compras
+OK PARTIDA: interação disponível / compras
+OK PARTIDA: interação abre alvo correto / compras
+OK PARTIDA: primeira espera nao recebe cedo
+OK PARTIDA: segunda espera recebe compra real
+OK PARTIDA: conservacao apos acao / esperar
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / prateleira_farinha
+OK PARTIDA: proximidade / prateleira_farinha
+OK PARTIDA: interação disponível / prateleira_farinha
+OK PARTIDA: interação abre alvo correto / prateleira_farinha
+OK PARTIDA: conservacao apos acao / retirar
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / prateleira_queijo
+OK PARTIDA: proximidade / prateleira_queijo
+OK PARTIDA: interação disponível / prateleira_queijo
+OK PARTIDA: interação abre alvo correto / prateleira_queijo
+OK PARTIDA: conservacao apos acao / retirar
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / prateleira_oleo
+OK PARTIDA: proximidade / prateleira_oleo
+OK PARTIDA: interação disponível / prateleira_oleo
+OK PARTIDA: interação abre alvo correto / prateleira_oleo
+OK PARTIDA: conservacao apos acao / retirar
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / prateleira_embalagens
+OK PARTIDA: proximidade / prateleira_embalagens
+OK PARTIDA: interação disponível / prateleira_embalagens
+OK PARTIDA: interação abre alvo correto / prateleira_embalagens
+OK PARTIDA: conservacao apos acao / retirar
+OK PARTIDA: setor real / estoque
+OK PARTIDA: caminho / saida
+OK PARTIDA: proximidade / saida
+OK PARTIDA: interação disponível / saida
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_producao
+OK PARTIDA: proximidade / porta_producao
+OK PARTIDA: interação disponível / porta_producao
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / deposito
+OK PARTIDA: proximidade / deposito
+OK PARTIDA: interação disponível / deposito
+OK PARTIDA: interação abre alvo correto / deposito
+OK PARTIDA: conservacao apos acao / depositar
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / bancada
+OK PARTIDA: proximidade / bancada
+OK PARTIDA: interação disponível / bancada
+OK PARTIDA: interação abre alvo correto / bancada
+OK PARTIDA: barra termina e registra lote
+OK PARTIDA: conservacao apos acao / produzir
+OK PARTIDA: setor real / producao
+OK PARTIDA: caminho / saida
+OK PARTIDA: proximidade / saida
+OK PARTIDA: interação disponível / saida
+OK PARTIDA: setor real / corredor
+OK PARTIDA: caminho / porta_comercial
+OK PARTIDA: proximidade / porta_comercial
+OK PARTIDA: interação disponível / porta_comercial
+OK PARTIDA: setor real / comercial
+OK PARTIDA: caminho / entrega
+OK PARTIDA: proximidade / entrega
+OK PARTIDA: interação disponível / entrega
+OK PARTIDA: interação abre alvo correto / entrega
+OK PARTIDA: leitura confirmada / entrega_3
+OK PARTIDA: conservacao apos acao / entregar
+OK PARTIDA: acoes corretas deixam consulta como ultimo objetivo
+OK PARTIDA: consulta conclui historia e abre dashboard
+OK PARTIDA: pedidos recebidos entregues e recusados reais
+OK PARTIDA: receitas custos e resultado reais da historia
+OK PARTIDA: prazo original e negociado tem consequencias distintas
+OK PARTIDA: dashboard inclui aprendizagem e problemas reais
+OK PARTIDA: conservacao e controlador unico no final
+OK PARTIDA: aba real da historia / 0
+OK PARTIDA: aba real da historia / 1
+OK PARTIDA: aba real da historia / 2
+OK PARTIDA: aba real da historia / 3
+OK PARTIDA: aba real da historia / 4
+OK PARTIDA: aba real da historia / 5
+OK PARTIDA: aba real da historia / 6
+OK PARTIDA: reinicio mantem historia selecionada
+OK PARTIDA: reiniciar abre introducao com estado novo
+OK PARTIDA: menu continuar preserva historia reiniciada
+FDS_CAPTURAS_DIR: C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\20261027-225527\build\
+FDS_PARTIDA_APROVADA: 242 / HISTORIA negociar
+###game_end###0
+Attempting to set gamepadcount to 0
+Script_Free called with 625 and global 31
+Unsetting previous scheduler resolution of 1

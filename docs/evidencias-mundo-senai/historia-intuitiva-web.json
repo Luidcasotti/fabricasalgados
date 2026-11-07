@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "errors": [],
+  "estado": {
+    "setor": "comercial",
+    "bonus": 2000,
+    "saldo": 105750,
+    "vendas": 4000,
+    "aviso": false,
+    "modal": false,
+    "painel": "entrega",
+    "quantidade": 5,
+    "selecao": 0,
+    "concluida": true,
+    "produzidos": 10,
+    "queijoCozinha": 0
+  },
+  "avisoExpira": true,
+  "avisoFechaX": true,
+  "quizFechaEsc": true,
+  "quizFechaE": true,
+  "erroSemDesconto": true,
+  "bonusPorAcerto": 1000,
+  "percurso": "aceitar > conferir > buscar queijo > depositar > cozinhar > entregar"
+}

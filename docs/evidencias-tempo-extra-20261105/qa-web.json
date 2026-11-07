@@ -1,0 +1,299 @@
+{
+  "ok": true,
+  "limite_inicial": 300,
+  "quizzes_por_acerto": 120,
+  "max_resgates": 10,
+  "dez_perguntas_diferentes": [
+    "Falta ingrediente na cozinha, mas existe no Estoque. O que fazer?",
+    "Antes de produzir, o que é importante conferir?",
+    "Uma máquina apresentou defeito. Qual atitude é segura?",
+    "Quando a venda do pedido entra no caixa?",
+    "Os ingredientes já estão na mochila. Qual é o próximo passo?",
+    "O cliente pediu 20 unidades. Como evitar desperdício?",
+    "Uma compra está a caminho. Ela já pode ser usada na cozinha?",
+    "A mochila encheu e ainda faltam ingredientes. O que fazer?",
+    "Os salgados estão prontos e o prazo está acabando. O que priorizar?",
+    "Conferir o canhoto e o estoque ajuda a quê?"
+  ],
+  "teclado_e_mouse": true,
+  "introducao_congela_relogio": true,
+  "confirmacoes_congelam": true,
+  "preparo_preservado_no_resgate": true,
+  "quiz_sem_bonus_financeiro": true,
+  "sem_decimo_primeiro_resgate": true,
+  "errors": [],
+  "win": {
+    "ativa": true,
+    "tempo": 436.6699999999971,
+    "limite": 540,
+    "avisou": true,
+    "lembrete": 0,
+    "venceu": true,
+    "concluida": true,
+    "pausado": false,
+    "setor": "comercial",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "painel": "entrega",
+    "conferido": true,
+    "decisoes": 2,
+    "maquina": false,
+    "produzidos": 20,
+    "vendas": 8000,
+    "saldo": 107500,
+    "bonusCaixa": 0,
+    "bonusTempo": 240,
+    "resgates": 1,
+    "acertos": 1,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "exhausted": {
+    "ativa": true,
+    "tempo": 1500,
+    "limite": 1500,
+    "avisou": true,
+    "lembrete": 0,
+    "venceu": false,
+    "concluida": true,
+    "pausado": false,
+    "setor": "corredor",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "conferido": false,
+    "decisoes": 0,
+    "maquina": false,
+    "produzidos": 0,
+    "vendas": 0,
+    "saldo": 100000,
+    "bonusCaixa": 0,
+    "bonusTempo": 1200,
+    "resgates": 10,
+    "acertos": 10,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "loss": {
+    "ativa": true,
+    "tempo": 300,
+    "limite": 300,
+    "avisou": true,
+    "lembrete": 0,
+    "venceu": false,
+    "concluida": true,
+    "pausado": false,
+    "setor": "corredor",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "conferido": false,
+    "decisoes": 0,
+    "maquina": false,
+    "produzidos": 0,
+    "vendas": 0,
+    "saldo": 100000,
+    "bonusCaixa": 0,
+    "bonusTempo": 0,
+    "resgates": 1,
+    "acertos": 0,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "voluntary": {
+    "ativa": true,
+    "tempo": 300,
+    "limite": 300,
+    "avisou": true,
+    "lembrete": 0,
+    "venceu": false,
+    "concluida": true,
+    "pausado": false,
+    "setor": "corredor",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "conferido": false,
+    "decisoes": 0,
+    "maquina": false,
+    "produzidos": 0,
+    "vendas": 0,
+    "saldo": 100000,
+    "bonusCaixa": 0,
+    "bonusTempo": 0,
+    "resgates": 1,
+    "acertos": 0,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "qa": "Edge real, cliques e teclas; só posicionamento do ator e saltos do relógio são instrumentados."
+}

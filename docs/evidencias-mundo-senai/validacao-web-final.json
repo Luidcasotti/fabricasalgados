@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "errors": [],
+  "fullscreen": true,
+  "help": true,
+  "sizes": [
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "canvas": {
+        "x": 135.109375,
+        "y": 91.09375,
+        "width": 1009.78125,
+        "height": 568
+      }
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "canvas": {
+        "x": 135.109375,
+        "y": 91.09375,
+        "width": 1649.78125,
+        "height": 928
+      }
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "canvas": {
+        "x": 25,
+        "y": 313.25,
+        "width": 718,
+        "height": 403.875
+      }
+    }
+  ]
+}

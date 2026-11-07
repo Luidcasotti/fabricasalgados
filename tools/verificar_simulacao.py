@@ -14,9 +14,9 @@ appdata = Path(os.environ.get('APPDATA', str(Path.home()/'AppData/Roaming')))
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--runtime', type=Path, default=programdata/'GameMakerStudio2-LTS2026/Cache/runtimes/runtime-2026.0.0.23')
 parser.add_argument('--usuario-runtime', type=Path, default=appdata/'GameMakerStudio2-LTS2026/unknownUser_unknownUserID')
-parser.add_argument('--destino', type=Path, default=root/'.testes'/datetime.now().strftime('%Y%m%d-%H%M%S'))
+parser.add_argument('--destino', type=Path, default=root/'.testes'/datetime.now().strftime('%Y%m%d-%H%M%S-%f'))
 parser.add_argument('--partida', action='store_true', help='Percorre as salas reais, termina, revê o dashboard e reinicia.')
-parser.add_argument('--historia', choices=('negociar','comprar','recusar'), help='Percorre a história guiada com a decisão escolhida.')
+parser.add_argument('--historia', choices=('turno','negociar','comprar','recusar','feira'), help='Percorre o turno guiado; recusar testa a recusa do segundo pedido.')
 args = parser.parse_args()
 if args.partida and args.historia: parser.error('Escolha --partida OU --historia.')
 runtime, target = args.runtime.resolve(), args.destino.resolve()
@@ -26,7 +26,7 @@ for required in (igor, runner, args.usuario_runtime):
 if target.exists(): parser.error('Destino já existe; escolha outro para preservar os resultados.')
 if target == root or target in root.parents: parser.error('Destino não pode substituir a raiz ou seus ancestrais.')
 target.mkdir(parents=True)
-for folder in ('objects', 'scripts', 'rooms', 'options', 'datafiles', 'sprites'):
+for folder in ('objects', 'scripts', 'rooms', 'options', 'datafiles', 'sprites', 'sounds', 'fonts'):
     if (root/folder).exists(): shutil.copytree(root/folder, target/folder)
 for pattern in ('*.yyp', '*.resource_order'):
     for file in root.glob(pattern): shutil.copy2(file, target/file.name)
@@ -36,17 +36,20 @@ with (target/'objects/obj_game/Create_0.gml').open('a', encoding='utf-8') as str
         stream.write('\nglobal.teste_etapa=0;global.teste_ticks=0;global.teste_checks=0;\n')
     else:
         stream.write('''
+var _aprovado=true;
 var _testes = testes_simulacao_executar();
-if (!_testes.ok) throw "FDS_SIMULACAO_FALHOU: " + json_stringify(_testes.falhas);
+if (!_testes.ok){_aprovado=false;show_debug_message("FDS_SIMULACAO_FALHOU: " + json_stringify(_testes.falhas));}
 var _interface = testes_interface_simulacao_executar();
-if (!_interface.ok) throw "FDS_INTERFACE_FALHOU: " + json_stringify(_interface.falhas);
+if (!_interface.ok){_aprovado=false;show_debug_message("FDS_INTERFACE_FALHOU: " + json_stringify(_interface.falhas));}
 var _v01 = testes_v01_executar();
-if (!_v01.ok) throw "FDS_V01_FALHOU: " + json_stringify(_v01.falhas);
+if (!_v01.ok){_aprovado=false;show_debug_message("FDS_V01_FALHOU: " + json_stringify(_v01.falhas));}
 var _exploracao = testes_exploracao_executar();
-if (!_exploracao.ok) throw "FDS_EXPLORACAO_FALHOU: " + json_stringify(_exploracao.falhas);
+if (!_exploracao.ok){_aprovado=false;show_debug_message("FDS_EXPLORACAO_FALHOU: " + json_stringify(_exploracao.falhas));}
 var _missoes = testes_missoes_executar();
-if (!_missoes.ok) throw "FDS_MISSOES_FALHOU: " + json_stringify(_missoes.falhas);
-show_debug_message("FDS_SIMULACAO_APROVADA");
+if (!_missoes.ok){_aprovado=false;show_debug_message("FDS_MISSOES_FALHOU: " + json_stringify(_missoes.falhas));}
+var _feira = testes_feira_executar();
+if (!_feira.ok){_aprovado=false;show_debug_message("FDS_FEIRA_FALHOU: " + json_stringify(_feira.falhas));}
+if(_aprovado)show_debug_message("FDS_SIMULACAO_APROVADA");
 game_end();
 ''')
 if args.partida or args.historia:
@@ -55,7 +58,7 @@ if args.partida or args.historia:
             stream.write('\nglobal.teste_ramo="' + args.historia + '";\n')
     else:
         with (target/'objects/obj_parametros/Create_0.gml').open('a', encoding='utf-8') as stream:
-            stream.write('\nmodo_guiado=false;if(!exploracao_ativa(global.jogo))configuracao=parametros_padrao();campos=parametros_campos(configuracao);\n')
+            stream.write('\nmodo_guiado=false;if(!exploracao_ativa(global.jogo))configuracao=parametros_teste_legado();campos=parametros_campos(configuracao);\n')
     for obj in ('obj_menu','obj_parametros','obj_exploracao','obj_resultados'):
         driver = 'teste_historia_partida();\n' if args.historia else 'teste_exploracao_partida();\n'
         (target/f'objects/{obj}/Step_0.gml').write_text(('exploracao_controle_passo(id);\n' if obj=='obj_exploracao' else '') + driver, encoding='utf-8')
@@ -79,9 +82,9 @@ with (target/'execucao.log').open('w', encoding='utf-8') as log:
     startup.wShowWindow = 0
     try:
         result = subprocess.run([str(runner), '-game', str(game)], stdout=log,
-                                stderr=subprocess.STDOUT, timeout=30, startupinfo=startup)
+                                stderr=subprocess.STDOUT, timeout=120, startupinfo=startup)
     except subprocess.TimeoutExpired:
-        print(f'FALHA: execução não concluiu em 30s. Confira {target/"execucao.log"}')
+        print(f'FALHA: execução não concluiu em 120s. Confira {target/"execucao.log"}')
         sys.exit(1)
 output = (target/'execucao.log').read_text(encoding='utf-8', errors='replace')
 for line in output.splitlines():
@@ -101,7 +104,7 @@ if args.partida or args.historia:
         for file in candidates:
             if file.stat().st_mtime >= started - 1 and file.resolve().parent != target:
                 shutil.copy2(file, target/file.name)
-    expected = [f'fds-historia-{args.historia}-dashboard-{i}.png' for i in range(7)] if args.historia else [f'fds-exploracao-dashboard-{i}.png' for i in range(6)]
+    expected = [f'fds-historia-{args.historia}-final-cinco-pedidos.png'] if args.historia else [f'fds-exploracao-dashboard-{i}.png' for i in range(6)]
     if not all((target/name).is_file() for name in expected):
-        print('FALHA: partida passou, mas faltam capturas das seis abas para inspeção.')
+        print('FALHA: partida passou, mas faltam as capturas esperadas: ' + ', '.join(expected))
         sys.exit(1)

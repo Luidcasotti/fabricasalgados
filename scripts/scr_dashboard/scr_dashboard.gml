@@ -36,7 +36,17 @@ function dashboard_calcular(_jogo) {
     _r.capacidade_disponivel_total=_r.dias_observados*_jogo.parametros.capacidade_diaria;
     _r.utilizacao_capacidade=indicador_percentual(_r.capacidade_usada_total,_r.capacidade_disponivel_total);
     _r.taxa_pontualidade=indicador_percentual(_r.entregas_pontuais,_r.pedidos_atendidos);
-    _r.custos_pagos_centavos=_r.compras_centavos+_r.variaveis_centavos;
+    _r.custos_pagos_centavos=_jogo.financas.saidas_centavos;
+    _r.falhas_maquinas=variable_struct_exists(_jogo,"maquinas")?_jogo.maquinas.falhas:0;
+    _r.tempo_manutencao=variable_struct_exists(_jogo,"maquinas")?_jogo.maquinas.tempo_manutencao:0;
+    _r.ingredientes_consumidos=[];_r.consumo_total=0;
+    for(var _i=0;_i<array_length(_jogo.catalogo.ingredientes);_i++){
+        var _in=_jogo.catalogo.ingredientes[_i],_q=0;
+        for(var _k=0;_k<array_length(_jogo.producao.lotes);_k++){
+            var _l=_jogo.producao.lotes[_k];for(var _n=0;_n<array_length(_l.insumos);_n++)if(_l.insumos[_n].ingrediente_id==_in.id)_q+=_l.insumos[_n].quantidade;
+        }
+        array_push(_r.ingredientes_consumidos,{id:_in.id,nome:_in.nome,quantidade:_q});_r.consumo_total+=_q;
+    }
     _r.compras_em_transito=pedidos_contar_status(_jogo.compras,"em_transito");
     return _r;
 }
@@ -70,7 +80,7 @@ function dashboard_eventos(_jogo) {
 }
 function dashboard_layout() {
     var _tabs=[],_n=missoes_ativa(global.jogo)?7:6,_passo=1248/_n;for(var _i=0;_i<_n;_i++)array_push(_tabs,ui_area(24+_i*_passo,110,_passo-16,44));
-    return {tabs:_tabs,anterior:ui_area(24,584,180,44),proxima:ui_area(220,584,180,44),
+    return {retomar_topo:ui_area(950,22,306,52),tabs:_tabs,anterior:ui_area(24,584,180,44),proxima:ui_area(220,584,180,44),
         voltar:ui_area(24,644,280,56),reiniciar:ui_area(322,644,518,56),menu:ui_area(858,644,398,56)};
 }
 function dashboard_paginas() {
@@ -84,20 +94,25 @@ function dashboard_paginas() {
     }
     return 1;
 }
+function dashboard_voltar(){
+    var _j=global.jogo;
+    if(_j.encerrado && !feira_ativa(_j) && !missoes_zerou(_j)){jogo_ir_para(FaseJogo.MENU);return;}
+    _j.pausado=false;
+    diario_registrar(_j,"VOLTAR DOS RESULTADOS","Retomou o mesmo pedido, cronômetro, recursos e posição, sem reiniciar a partida.");
+    jogo_ir_para(FaseJogo.FABRICA);
+}
+function dashboard_texto_voltar(_j){
+    if(!_j.encerrado)return "VOLTAR AO JOGO / ESC";
+    return (feira_ativa(_j) || missoes_zerou(_j))?"VOLTAR AO FINAL / ESC":"VOLTAR AO MENU / ESC";
+}
 function dashboard_clicar(_mx,_my) {
+    if(ui_contem(layout.retomar_topo,_mx,_my) || ui_contem(layout.voltar,_mx,_my)){dashboard_voltar();return;}
     for(var _i=0;_i<array_length(layout.tabs);_i++) if(ui_contem(layout.tabs[_i],_mx,_my)) {aba_dashboard=_i;pagina_dashboard=0;return;}
     if(ui_contem(layout.anterior,_mx,_my)) pagina_dashboard=max(0,pagina_dashboard-1);
     if(ui_contem(layout.proxima,_mx,_my)) pagina_dashboard=min(dashboard_paginas()-1,pagina_dashboard+1);
     if(ui_contem(layout.menu,_mx,_my)) jogo_ir_para(FaseJogo.MENU);
     if(ui_contem(layout.reiniciar,_mx,_my)) jogo_ir_para(FaseJogo.PARAMETROS);
-    if(ui_contem(layout.voltar,_mx,_my)) {
-        if(global.jogo.encerrado) {aba_dashboard=5;pagina_dashboard=0;}
-        else {
-            global.jogo.pausado=false;
-            diario_registrar(global.jogo,"RETOMAR APÓS ANÁLISE","Retorno à fábrica sem avançar dias nem reiniciar recursos.");
-            jogo_ir_para(FaseJogo.FABRICA);
-        }
-    }
+
 }
 function dashboard_linha(_x,_y,_nome,_valor) {
     ui_texto(_x,_y,_nome,2,global.visual.suave);
@@ -114,7 +129,7 @@ function dashboard_panorama() {
     dashboard_linha(654,460,"DIAS DE OPERAÇÃO",string(_r.dias_processados));
     ui_texto(44,492,"PONTUALIDADE: "+indicador_percentual_texto(_r.taxa_pontualidade),2,_v.azul);
     ui_texto(44,518,"PONTUALIDADE = ENTREGAS NO PRAZO / ENTREGAS REALIZADAS X 100. SEM ENTREGAS: NÃO APLICÁVEL.",1,_v.suave);
-    ui_texto(44,542,"RESULTADO DE CAIXA = RECEITAS - COMPRAS - VARIÁVEIS. NÃO É FATURAMENTO NEM LUCRO CONTÁBIL.",1,_v.suave);
+    ui_texto(44,542,"CAIXA = VENDAS + BÔNUS - COMPRAS - VARIÁVEIS - MANUTENÇÃO. BÔNUS DAS PERGUNTAS: "+financas_formatar(_r.bonus_centavos),1,_v.suave);
     ui_texto(44,560,"RECEBIDOS = OFERTAS ÚNICAS. ACEITOS INCLUEM OS JÁ ENTREGUES; RECUSADOS E EXPIRADOS NÃO SÃO ACEITOS.",1,_v.suave);
 }
 function dashboard_producao() {
@@ -128,18 +143,18 @@ function dashboard_producao() {
         ui_texto(710,_y,string(_p.prontos),2,_v.tinta);ui_texto(1000,_y,string(_p.pendente),2,_v.tinta);
     }
     ui_texto(44,496,"CAPACIDADE: "+string(_r.capacidade_usada_total)+" / "+string(_r.capacidade_disponivel_total)+" = "+indicador_percentual_texto(_r.utilizacao_capacidade),2,_v.azul);
-    ui_texto(44,534,"USO = PONTOS DOS LOTES EXECUTADOS / (DIAS OBSERVADOS X CAPACIDADE DIÁRIA) X 100.",1,_v.suave);
+    ui_texto(44,534,"FALHAS: "+string(_r.falhas_maquinas)+" / MANUTENÇÃO: "+string_format(_r.tempo_manutencao,0,1)+" S / CUSTO: "+financas_formatar(_r.manutencao_centavos),1,_v.suave);
     ui_texto(44,552,"NA EXPLORAÇÃO, O DIA ATUAL CONTA COMO OBSERVADO. NÃO É SOMADO DE NOVO AO ENCERRÁ-LO.",1,_v.suave);
 }
 function dashboard_estoque() {
     var _v=global.visual,_r=resumo;
-    var _titulos=["INSUMO","TOTAL","DEPÓSITO","COZINHA","MOCHILA","TRÂNSITO"],_xs=[44,390,550,740,920,1080];
-    for(var _i=0;_i<6;_i++)ui_texto(_xs[_i],194,_titulos[_i],2,_v.suave);
+    var _titulos=["INSUMO","TOTAL","DEPÓSITO","COZINHA","MOCHILA","TRÂNSITO","CONSUMIDO"],_xs=[44,310,450,600,750,900,1060];
+    for(var _i=0;_i<7;_i++)ui_texto(_xs[_i],194,_titulos[_i],1,_v.suave);
     for(var _i=0;_i<5;_i++) {
         var _idx=pagina_dashboard*5+_i;if(_idx>=array_length(_r.estoque_final))break;
         var _p=_r.estoque_final[_idx],_y=240+_i*48;
-        var _val=[_p.nome,string(_p.fisico),string(_p.deposito),string(_p.cozinha),string(_p.mochila),string(_p.transito)];
-        for(var _k=0;_k<6;_k++)ui_texto(_xs[_k],_y,_val[_k],2,_v.tinta);
+        var _val=[_p.nome,string(_p.fisico),string(_p.deposito),string(_p.cozinha),string(_p.mochila),string(_p.transito),string(_r.ingredientes_consumidos[_idx].quantidade)];
+        for(var _k=0;_k<7;_k++)ui_texto(_xs[_k],_y,_val[_k],2,_v.tinta);
     }
     ui_texto(44,514,"TOTAL FÍSICO = DEPÓSITO + COZINHA + MOCHILA = INICIAL + RECEBIDO - CONSUMIDO.",1,_v.suave);
     ui_texto(44,540,"TRANSFERIR NÃO CRIA ESTOQUE. COMPRAS EM TRÂNSITO AINDA NÃO SÃO ESTOQUE FÍSICO.",1,_v.suave);
@@ -154,7 +169,9 @@ function dashboard_diario(_jogo,_pagina,_x,_y,_largura) {
 }
 function dashboard_desenhar() {
     var _v=global.visual,_j=global.jogo;ui_fundo();
-    ui_titulo(_j.encerrado?"EXPLORAÇÃO / PERÍODO ENCERRADO / REFLITA E EXPERIMENTE DE NOVO":"EXPLORAÇÃO / ACOMPANHAMENTO DA SIMULAÇÃO");
+    ui_titulo(_j.encerrado?"RESULTADOS / PARTIDA CONCLUÍDA":"RESULTADOS / JOGO PAUSADO");
+    if(feira_ativa(_j))feira_relogio_desenhar(_j,undefined,610,true);
+    ui_botao(layout.retomar_topo,dashboard_texto_voltar(_j),_v.verde);
     var _nomes=["PANORAMA","PRODUÇÃO","ESTOQUE","REFLEXÃO","DIÁRIO","EVENTOS"];
     if(missoes_ativa(_j))array_push(_nomes,"APRENDIZAGEM");
     for(var _i=0;_i<array_length(layout.tabs);_i++) ui_botao(layout.tabs[_i],_nomes[_i],_v.azul,true,aba_dashboard==_i);
@@ -184,6 +201,6 @@ function dashboard_desenhar() {
     ui_botao(layout.anterior,"ANTERIOR",_v.tinta,pagina_dashboard>0);
     ui_botao(layout.proxima,"PRÓXIMA",_v.tinta,pagina_dashboard<dashboard_paginas()-1);
     ui_texto(432,598,"PÁGINA "+string(pagina_dashboard+1)+" / "+string(dashboard_paginas())+" / OPERAÇÃO: "+string(_j.dias_processados)+" DE "+string(_j.parametros.duracao_dias)+" DIAS",2,_v.suave);
-    ui_botao(layout.voltar,_j.encerrado?"REVER EVENTOS":"RETOMAR SIMULAÇÃO",_v.verde);
+    ui_botao(layout.voltar,dashboard_texto_voltar(_j),_v.verde);
     ui_botao(layout.reiniciar,"REINICIAR / PARÂMETROS",_v.laranja);ui_botao(layout.menu,"VOLTAR AO MENU",_v.tinta);
 }

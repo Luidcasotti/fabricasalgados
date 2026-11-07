@@ -1,0 +1,113 @@
+{
+  "ok": true,
+  "exportacao": "html5-20261105-102414",
+  "botoes_iniciar_sair_cancelar_continuar": true,
+  "encerrar_dia": true,
+  "paineis_fecham_apos_entrega": true,
+  "segunda_missao_aceita": true,
+  "terceira_oferta_liberada": true,
+  "entregas": [
+    {
+      "numero": 1,
+      "oferta": {
+        "id": 1,
+        "status": "ofertado",
+        "quantidade": 20
+      },
+      "vendas": 8000,
+      "produzidos": 20
+    },
+    {
+      "numero": 2,
+      "oferta": {
+        "id": 2,
+        "status": "ofertado",
+        "quantidade": 30
+      },
+      "vendas": 26000,
+      "produzidos": 50
+    }
+  ],
+  "estado": {
+    "naPartida": true,
+    "encerrado": false,
+    "dia": 1,
+    "historia": true,
+    "entregues": 2,
+    "meta": 5,
+    "zerou": false,
+    "oferta": {
+      "id": 3,
+      "status": "ofertado",
+      "quantidade": 20
+    },
+    "decisaoEstoque": false,
+    "ativa": true,
+    "tempo": 57.88600000000034,
+    "limite": 300,
+    "avisou": false,
+    "lembrete": 0,
+    "venceu": false,
+    "concluida": false,
+    "pausado": false,
+    "setor": "comercial",
+    "cozinha": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "mochila": [
+      {
+        "id": "farinha",
+        "q": 0
+      },
+      {
+        "id": "frango",
+        "q": 0
+      },
+      {
+        "id": "queijo",
+        "q": 0
+      },
+      {
+        "id": "oleo",
+        "q": 0
+      },
+      {
+        "id": "embalagens",
+        "q": 0
+      }
+    ],
+    "conferido": true,
+    "decisoes": 2,
+    "maquina": false,
+    "produzidos": 50,
+    "vendas": 26000,
+    "saldo": 124750,
+    "bonusCaixa": 0,
+    "bonusTempo": 0,
+    "resgates": 0,
+    "acertos": 0,
+    "resgate": null,
+    "progresso": 0,
+    "quiz": null
+  },
+  "errors": []
+}

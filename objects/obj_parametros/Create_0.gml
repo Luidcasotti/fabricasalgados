@@ -7,4 +7,4 @@ mensagem="O dia 1 já é jogável. Encerrar dia atualiza compras e prazos, sem p
 
 modo_guiado=!exploracao_ativa(global.jogo) || missoes_ativa(global.jogo);
 if(!exploracao_ativa(global.jogo))configuracao=missoes_parametros();campos=parametros_campos(configuracao);
-mensagem="História guiada: 10 coxinhas, falta local de frango e desafio de reposição. Alterne para LIVRE para outros cenários.";
+mensagem="História: 5 pedidos, 5 minutos e bônus das perguntas. Resultados pausa o jogo; VOLTAR AO JOGO retoma o mesmo cronômetro.";

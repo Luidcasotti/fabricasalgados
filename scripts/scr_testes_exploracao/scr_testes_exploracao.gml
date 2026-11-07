@@ -8,7 +8,7 @@ function teste_exploracao_posicionar(_j,_setor,_alvo) {
 }
 function testes_exploracao_executar() {
     var _t={total:0,falhas:[]},_exigir=method(_t,function(_c,_n){total++;if(!_c)array_push(falhas,_n);show_debug_message((_c?"OK EXPLORAÇÃO: ":"FALHA: ")+_n);});
-    var _j=jogo_criar();exploracao_iniciar(_j);
+    var _j=jogo_teste_legado();exploracao_iniciar(_j);
     _exigir(exploracao_ativa(_j) && _j.dia==1 && exploracao_carregado_total(_j)==0,"inicio com mochila e cozinha vazias");
     _exigir(_j.estoque.materias_primas[0].quantidade==120 && _j.cozinha[0].quantidade==0,"ingredientes inicialmente no deposito");
     var _antes=json_stringify(_j);exploracao_iniciar(_j);_exigir(json_stringify(_j)==_antes,"inicializacao idempotente preserva progresso");
@@ -49,7 +49,7 @@ function testes_exploracao_executar() {
     _exigir(!pedido_entregar(_j,_j.pedidos[0]).ok && _j.financas.receitas_centavos==3000,"nao duplica receita");
     teste_exploracao_posicionar(_j,"estoque","compras");
     _exigir(compra_realizar(_j,"farinha",10).ok && _j.estoque.materias_primas[0].quantidade==115,"compra paga e nao chega instantaneamente");
-    simulacao_avancar_dia(_j);
+    compras_passo(_j,12);simulacao_avancar_dia(_j);
     _exigir(_j.estoque.materias_primas[0].quantidade==125 && _j.compras[0].status=="recebida","compra chega ao deposito apos prazo");
     compras_receber(_j,[]);_exigir(_j.estoque.materias_primas[0].quantidade==125,"recebimento idempotente");
     _exigir(pedidos_gerar_dia(_j)==0 && array_length(_j.pedidos)==9,"ofertas unicas por dia");
@@ -64,8 +64,8 @@ function testes_exploracao_executar() {
     while(!_j.encerrado)simulacao_avancar_dia(_j);
     _d=dashboard_calcular(_j);_exigir(_j.dia==5 && _j.dias_processados==5 && _d.utilizacao_capacidade==1,"fim no ultimo dia configurado e uso real");
     _antes=json_stringify(_j);_exigir(!simulacao_avancar_dia(_j).ok && !exploracao_retirar(_j,"queijo",1).ok && json_stringify(_j)==_antes,"fim preserva dados");
-    var _cfg=parametros_padrao();_cfg.duracao_dias=3;_cfg.prazo_pedido_dias=1;_cfg.capacidade_diaria=4;
-    _j=jogo_criar(_cfg);exploracao_iniciar(_j);teste_exploracao_posicionar(_j,"comercial","vendas");pedido_decidir(_j,1,true);
+    var _cfg=parametros_teste_legado();_cfg.duracao_dias=3;_cfg.prazo_pedido_dias=1;_cfg.capacidade_diaria=4;
+    _j=jogo_teste_legado(_cfg);exploracao_iniciar(_j);teste_exploracao_posicionar(_j,"comercial","vendas");pedido_decidir(_j,1,true);
     teste_exploracao_posicionar(_j,"producao","bancada");
     _exigir(!exploracao_produzir(_j,"coxinha",5).ok,"capacidade diaria insuficiente bloqueia");
     simulacao_avancar_dia(_j);simulacao_avancar_dia(_j);
@@ -76,8 +76,8 @@ function testes_exploracao_executar() {
 
     // Os três produtos usam receitas configuráveis e o mesmo fluxo físico.
     for(var _pi=0;_pi<3;_pi++) {
-        _cfg=parametros_padrao();if(_pi==0)_cfg.catalogo.produtos[0].receita[2].quantidade=1;
-        _j=jogo_criar(_cfg);exploracao_iniciar(_j);var _prod=_j.catalogo.produtos[_pi];
+        _cfg=parametros_teste_legado();if(_pi==0)_cfg.catalogo.produtos[0].receita[2].quantidade=1;
+        _j=jogo_teste_legado(_cfg);exploracao_iniciar(_j);var _prod=_j.catalogo.produtos[_pi];
         for(var _ri=0;_ri<array_length(_prod.receita);_ri++) {
             var _rec=_prod.receita[_ri];if(_rec.quantidade==0)continue;
             teste_exploracao_posicionar(_j,"estoque","prateleira_"+_rec.ingrediente_id);
@@ -90,7 +90,7 @@ function testes_exploracao_executar() {
         _j.financas.saldo_centavos=0;var _pre=json_stringify(_j);
         _exigir(!exploracao_produzir(_j,_prod.id,1).ok && json_stringify(_j)==_pre,"falha nao altera saldos / "+_prod.id);
     }
-    _cfg=parametros_padrao();_cfg.prazo_pedido_dias=1;_j=jogo_criar(_cfg);exploracao_iniciar(_j);
+    _cfg=parametros_teste_legado();_cfg.prazo_pedido_dias=1;_j=jogo_teste_legado(_cfg);exploracao_iniciar(_j);
     teste_exploracao_posicionar(_j,"comercial","vendas");pedido_decidir(_j,1,true);
     var _recs=_j.catalogo.produtos[0].receita;
     for(var _ri=0;_ri<array_length(_recs);_ri++)if(_recs[_ri].quantidade>0){
@@ -161,9 +161,14 @@ function teste_exploracao_comandos() {
 }
 /// Navega no Runner. Não usa teletransporte: percorre caminhos com mundo_mover.
 function teste_exploracao_partida() {
+    if(confirmacao_aberta(global.jogo) && instance_exists(obj_exploracao)){
+        var _c=instance_find(obj_exploracao,0),_b=confirmacao_botoes(global.jogo)[0];
+        exploracao_clicar(_c,_b.area.x+20,_b.area.y+20);return;
+    }
     global.teste_ticks++;
     if(global.teste_ticks>1600)throw "FDS_PARTIDA_FALHOU: percurso excedeu limite";
     var _j=global.jogo,_et=global.teste_etapa;
+    if(instance_exists(obj_exploracao) && obj_exploracao.porta_destino!="")return;
     if(room==rm_menu) {
         if(_et==0) {teste_partida_exigir(instance_number(obj_game)==1,"singleton no menu");jogo_novo();global.teste_etapa=1;jogo_ir_para(FaseJogo.PARAMETROS);}
         else if(_et==12) {global.teste_etapa=13;jogo_ir_para(FaseJogo.FABRICA);}
@@ -284,7 +289,7 @@ function teste_exploracao_partida() {
                 var _ar=_bs[_bi].area;exploracao_clicar(_c,_ar.x+_ar.w/2,_ar.y+_ar.h/2);_clicou=true;break;
             }
             teste_partida_exigir(_clicou,"hit test do botao / "+_cmd.acao);
-            if(_cmd.acao=="aceitar")teste_partida_exigir(_j.pedidos[0].status=="aceito" && _j.fala_visivel,"aceite presencial e balao");
+            if(_cmd.acao=="aceitar")teste_partida_exigir(_j.pedidos[0].status=="aceito" && string_pos("Pedido aceito",_c.mensagem)>0,"aceite presencial com orientação no rodapé");
             if(_cmd.acao=="retirar")teste_partida_exigir(estoque_quantidade(_j.carregados,_c.painel.ingrediente_id)==5,"retirada presencial / "+_c.painel.ingrediente_id);
             if(_cmd.acao=="depositar")teste_partida_exigir(exploracao_carregado_total(_j)==0 && _j.cozinha[0].quantidade==5,"deposito presencial conserva mochila");
             if(_cmd.acao=="produzir")teste_partida_exigir(estoque_quantidade(_j.estoque.produtos,"coxinha")==5 && _j.cozinha[0].quantidade==0,"producao presencial consome cozinha");
@@ -300,6 +305,7 @@ function teste_exploracao_partida() {
     }
     if(_et==6) {
         teste_partida_exigir(!_j.pausado && _j.exploracao.setor=="comercial","retomar restaura sala e estado");
+        compras_passo(_j,12); // Acelera apenas a espera logística do teste.
         exploracao_acao(_c,"avancar");
         teste_partida_exigir(_j.dia==2 && _j.compras[0].status=="recebida","dia recebe compra paga no deposito");
         global.teste_etapa=7;exploracao_acao(_c,"avancar");return;

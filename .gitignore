@@ -5,3 +5,10 @@
 /debug.log
 /.backups/
 /.testes/
+__pycache__/
+/build/
+
+# Dependências e saída da página Web
+node_modules/
+.venv/
+/web/dist/

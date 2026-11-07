@@ -1,0 +1,73 @@
+{
+  "data": "2026-11-06",
+  "ambiente": {
+    "gamemaker_ide": "2026.0.0.16",
+    "runtime": "2026.0.0.23",
+    "target": "Windows/VM",
+    "python": "3.12.10",
+    "node": "24.19.0"
+  },
+  "recursos": {
+    "total": 105,
+    "salas": 10,
+    "objetos": 30,
+    "scripts": 31,
+    "sprites": 24,
+    "fontes": 4,
+    "sons": 6
+  },
+  "suite_runner": [
+    {
+      "nome": "simulacao",
+      "verificacoes": 72,
+      "falhas": 0
+    },
+    {
+      "nome": "interface",
+      "verificacoes": 22,
+      "falhas": 0
+    },
+    {
+      "nome": "v01",
+      "verificacoes": 54,
+      "falhas": 0
+    },
+    {
+      "nome": "exploracao",
+      "verificacoes": 83,
+      "falhas": 0
+    },
+    {
+      "nome": "missoes",
+      "verificacoes": 64,
+      "falhas": 0
+    },
+    {
+      "nome": "feira",
+      "verificacoes": 270,
+      "falhas": 0
+    }
+  ],
+  "total_suite": 565,
+  "recursos_e_visuais": "aprovados",
+  "geometria_javascript": {
+    "verificacoes": 56,
+    "resultado": "OK",
+    "executa_motor": false
+  },
+  "parser_gml": {
+    "arquivos": 79,
+    "erros": 0,
+    "executa_motor": false
+  },
+  "arvore_codigo_sha256": "2a11e8f7b6289c51645a9035df2b0bf8578475da8c7439c944448f042726cffb",
+  "logs_locais": ".testes/qa-github-20261106",
+  "observacao": "Logs, caches e executáveis ficam fora do Git. Capturas e relatórios selecionados de etapas anteriores estão em docs/evidencias-*.",
+  "normalizacao_fingerprint": "Caminhos relativos POSIX e finais de linha LF dos arquivos GML, YY de objetos/salas/scripts e YYP.",
+  "percurso_campanha_runner": {
+    "cenario": "feira",
+    "verificacoes": 171,
+    "resultado": "FDS_PARTIDA_APROVADA",
+    "logs_locais": ".testes/qa-github-campanha-20261106"
+  }
+}

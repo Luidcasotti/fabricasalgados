@@ -1,0 +1,384 @@
+
+***************************************
+ *     GameMaker v2026.0.0.23    *
+***************************************
+Setting scheduler resolution to 1
+Attempting to use high process priority settings
+Set process priority to HIGH_PRIORITY_CLASS
+Set main thread priority to HIGHEST
+Registered with MMCSS 'Games' task
+Set MMCSS thread priority to CRITICAL
+Reading File C:\Users\Luid Casotti\GameMakerProjects\fabrica\BLANK GAMEFabricaDeSalgados\.testes\20261027-233341\build\BLANK GAMEFabricaDeSalgados.win took 0 ms
+DirectX11: Using hardware device
+Collision Event time(microsecs)=3
+Variable_Global_Init()
+PrepareGame()
+Audio_Init()
+Audio group 0 -> Loaded
+Attempting to set gamepadcount to 12
+Game_Prepare()
+Script_Prepare() 
+TimeLine_Prepare() 
+Object_Prepare() 
+Room_Prepare() 
+Finished PrepareGame() 
+Run_Start
+Done g_EffectsManager.Init()
+Done RenderStateManager
+CreateColPairs took 0.000000s 1 usecs for 31 object types obj_col_numb=0 physobjcount=0 resizes 0 final size 0
+Done ObjectLists
+Done Extension_Initialize
+About to startroom
+OK: estado inicial
+OK: catalogo solicitado
+OK: farinha substitui massa
+OK: ofertas iniciais unicas
+OK: geracao idempotente
+OK: chave protege regeneracao
+OK: auditoria inicial
+OK: quantidades invalidas
+OK: bloquear saldo fisico negativo
+OK: saida recusada conserva saldo
+OK: compra invalida atomica
+OK: compra aceita
+OK: compra paga no ato
+OK: compra nao chega instantaneamente
+OK: prazo e transito
+OK: recebimento antecipado bloqueado
+OK: compra chega no dia correto
+OK: chegada nao duplica estoque
+OK: conservacao apos compra
+OK: prazo de dois dias respeitado
+OK: compra longa conservada
+OK: compra sem caixa atomica
+OK: limite inclui estoque em transito
+OK: limite fisico conservado
+OK: custos separados por lote
+OK: consulta de plano pura
+OK: agendar quantidade escolhida
+OK: agendar nao produz
+OK: reservas de capacidade ingredientes e caixa
+OK: capacidade reservada impede excesso
+OK: producao no proximo dia
+OK: consumo da receita e embalagem
+OK: custo variavel pago uma vez
+OK: reservas liberadas na execucao
+OK: lote nao executa duas vezes
+OK: capacidade diaria reseta e total persiste
+OK: conservacao apos producao
+OK: sem embalagem nao produz
+OK: frango nao reservado duas vezes
+OK: cancelamento libera reservas
+OK: cancelamento preserva historico
+OK: compras respeitam caixa reservado
+OK: receita e capacidade configuraveis
+OK: custo variavel zero valido
+OK: aceite entra na fila
+OK: aceite nao duplica pedido
+OK: recusa preservada
+OK: entrega sem produtos atomica
+OK: entrega pontual no mesmo processamento
+OK: ordem chegada producao entrega conserva estoque
+OK: resultado numerico compra producao entrega
+OK: receita diferente de resultado
+OK: entrega nao paga duas vezes
+OK: auditoria ciclo completo
+OK: resumo preservado
+OK: pedido no vencimento preservado
+OK: pedido atrasado nao apagado
+OK: oferta expirada nao aceita
+OK: entrega tardia registrada
+OK: indicadores e conservacao atrasos
+OK: fila ordenada pelo aceite
+OK: entregas respeitam fila e conservacao
+OK: mesmos produtos nao atendem dois pedidos
+OK: reentrada do tempo bloqueada
+OK: varios dias sem apagar ou duplicar pedidos
+OK: parametros min maior que max rejeitados
+OK: receita fracionaria rejeitada
+OK: ingrediente inexistente rejeitado
+OK: receita duplicada rejeitada
+OK: receita vazia rejeitada
+OK: parametros da sessao independentes
+OK: nova sessao restaura padroes
+FDS_SIMULACAO_TESTES: 72 / FALHAS: 0
+OK UI: abrir comercial
+OK UI: aceitar oferta
+OK UI: abrir producao
+OK UI: quantidade de producao selecionavel
+OK UI: botao planeja lote
+OK UI: plano nao produz instantaneamente
+OK UI: cancelar plano pela interface
+OK UI: abrir estoque
+OK UI: quantidade da compra selecionavel
+OK UI: botao faz compra com prazo
+OK UI: compra nao chega no clique
+OK UI: avancar mostra resumo
+OK UI: ciclo financeiro pela interface
+OK UI: conservacao do ciclo de cliques
+OK UI: resumo bloqueia segundo avanco acidental
+OK UI: paginacao do resumo
+OK UI: fechar sem acionar cenario
+OK UI: fila atualizada apos entrega
+OK UI: editar capacidade pelos botoes
+OK UI: editar dinheiro em centavos
+OK UI: paginacao dos parametros incluindo duracao
+OK UI: editar configuracao nao altera sessao existente
+FDS_INTERFACE_TESTES: 22 / FALHAS: 0
+OK V01: duracao padrao valida
+OK V01: duracao zero rejeitada
+OK V01: duracao acima do limite rejeitada
+OK V01: sem denominadores metricas nao aplicaveis
+OK V01: rotulo nao aplicavel
+OK V01: dashboard inicial sem inventar dados
+OK V01: consultas do dashboard puras
+OK V01: diario inicia com data simulada
+OK V01: pausa bloqueia tempo
+OK V01: pausa bloqueia decisoes economicas
+OK V01: retomar preserva recursos e periodo
+OK V01: reflexao ao aceitar sem prontos
+OK V01: reflexao compra acima da demanda
+OK V01: reflexao producao acima de pedidos aceitos
+OK V01: feedback e consequencias registrados
+OK V01: nao encerra durante preparacao
+OK V01: um ciclo encerra periodo configurado de um dia
+OK V01: fim nao gera novas ofertas e aceitos acumulam entregues
+OK V01: pontualidade calculada por entregas
+OK V01: producao separada por salgado
+OK V01: financeiro final baseado nos movimentos reais
+OK V01: saldos finais reais de insumos
+OK V01: capacidade por dias realmente processados
+OK V01: feedback positivo com conservacao no fim
+OK V01: fim bloqueia novos dias sem alterar historico
+OK V01: fim bloqueia novas decisoes
+OK V01: fim nao duplica pedidos
+OK V01: reflexoes e eventos acessiveis no fim
+OK V01: reinicio com mesmos parametros e dados novos
+OK V01: distingue pedido aberto atrasado de entrega atrasada
+OK V01: sem entrega taxa nao aplicavel e pedido preservado
+OK V01: reflexao de atraso com dias reais
+OK V01: feedback falta de planejamento de reposicao
+OK V01: compra que chega apos periodo vira reflexao
+OK V01: transito final nao inventa estoque fisico
+OK V01: resultado negativo valido no periodo final
+OK V01: resultado negativo nao causa game over
+OK V01: utilizacao acumulada sem percentual inventado
+OK V01: soma lotes por produto mesmo sem entregas
+OK V01: conservacao partida finita completa
+OK V01: diario tem ordem data acao e consequencia
+OK V01: restaurar padroes inclui duracao e receitas
+OK V01: restaurar configuracao nao inicia partida
+OK V01: botao pausar funcional
+OK V01: botao de dia nao processa enquanto pausado
+OK V01: botao retomar funcional
+OK V01: diario acessivel durante partida
+OK V01: balao aparece na decisao
+OK V01: fechar balao nao atravessa para painel
+OK V01: navegar aba producao do dashboard
+OK V01: aba eventos final
+OK V01: diario completo no dashboard
+OK V01: fim nao retoma partida encerrada
+OK V01: reiniciar abre parametros para nova partida
+FDS_V01_TESTES: 54 / FALHAS: 0
+OK EXPLORAÇÃO: inicio com mochila e cozinha vazias
+OK EXPLORAÇÃO: ingredientes inicialmente no deposito
+OK EXPLORAÇÃO: inicializacao idempotente preserva progresso
+OK EXPLORAÇÃO: nao retira a distancia
+OK EXPLORAÇÃO: compra e aceite exigem presenca
+OK EXPLORAÇÃO: aceita com Marta
+OK EXPLORAÇÃO: nao aceita duas vezes
+OK EXPLORAÇÃO: retirada valida quantidade
+OK EXPLORAÇÃO: nao retira mais que estoque
+OK EXPLORAÇÃO: limite de transporte
+OK EXPLORAÇÃO: cada prateleira tem ingrediente proprio
+OK EXPLORAÇÃO: retirada conserva quantidade
+OK EXPLORAÇÃO: auditoria soma tres locais
+OK EXPLORAÇÃO: deposito exige mesa na cozinha
+OK EXPLORAÇÃO: mochila e deposito nao abastecem bancada automaticamente
+OK EXPLORAÇÃO: deposito atomico da mochila para cozinha
+OK EXPLORAÇÃO: repetir deposito nao duplica
+OK EXPLORAÇÃO: retira frango
+OK EXPLORAÇÃO: retira oleo
+OK EXPLORAÇÃO: retira embalagens
+OK EXPLORAÇÃO: mesa de deposito nao e bancada
+OK EXPLORAÇÃO: receita insuficiente nao consome recursos
+OK EXPLORAÇÃO: cozinha lote disponivel
+OK EXPLORAÇÃO: baixa cozinha e aumenta prontos
+OK EXPLORAÇÃO: custo e capacidade registrados
+OK EXPLORAÇÃO: conservacao apos cozinhar
+OK EXPLORAÇÃO: nao entrega a distancia
+OK EXPLORAÇÃO: fila remota antiga bloqueada na exploracao
+OK EXPLORAÇÃO: encerrar dia nao entrega automaticamente
+OK EXPLORAÇÃO: capacidade renovada sem produzir
+OK EXPLORAÇÃO: entrega presencial pontual
+OK EXPLORAÇÃO: nao duplica receita
+OK EXPLORAÇÃO: compra paga e nao chega instantaneamente
+OK EXPLORAÇÃO: compra chega ao deposito apos prazo
+OK EXPLORAÇÃO: recebimento idempotente
+OK EXPLORAÇÃO: ofertas unicas por dia
+OK EXPLORAÇÃO: dashboard inclui dia atual sem duplicar uso
+OK EXPLORAÇÃO: dashboard e financeiro reais
+OK EXPLORAÇÃO: pausa bloqueia operacoes e tempo
+OK EXPLORAÇÃO: capacidade exata da mochila
+OK EXPLORAÇÃO: mochila cheia nao transborda
+OK EXPLORAÇÃO: dashboard distingue transferencia de consumo
+OK EXPLORAÇÃO: conservacao com mochila cheia
+OK EXPLORAÇÃO: fim no ultimo dia configurado e uso real
+OK EXPLORAÇÃO: fim preserva dados
+OK EXPLORAÇÃO: capacidade diaria insuficiente bloqueia
+OK EXPLORAÇÃO: pedido atrasado nao apagado
+OK EXPLORAÇÃO: fim preserva compra paga em transito
+OK EXPLORAÇÃO: sem entrega taxa nao aplicavel
+OK EXPLORAÇÃO: receita fisica configuravel / coxinha
+OK EXPLORAÇÃO: conservacao por receita / coxinha
+OK EXPLORAÇÃO: falha nao altera saldos / coxinha
+OK EXPLORAÇÃO: receita fisica configuravel / pastel
+OK EXPLORAÇÃO: conservacao por receita / pastel
+OK EXPLORAÇÃO: falha nao altera saldos / pastel
+OK EXPLORAÇÃO: receita fisica configuravel / bolinha_queijo
+OK EXPLORAÇÃO: conservacao por receita / bolinha_queijo
+OK EXPLORAÇÃO: falha nao altera saldos / bolinha_queijo
+OK EXPLORAÇÃO: entrega presencial atrasada continua possivel
+OK EXPLORAÇÃO: atraso alimenta indicador e reflexao
+OK EXPLORAÇÃO: conservacao apos entrega atrasada
+OK EXPLORAÇÃO: paredes / corredor
+OK EXPLORAÇÃO: rota livre / corredor / porta_comercial
+OK EXPLORAÇÃO: rota livre / corredor / porta_producao
+OK EXPLORAÇÃO: rota livre / corredor / porta_estoque
+OK EXPLORAÇÃO: paredes / comercial
+OK EXPLORAÇÃO: rota livre / comercial / saida
+OK EXPLORAÇÃO: rota livre / comercial / vendas
+OK EXPLORAÇÃO: rota livre / comercial / entrega
+OK EXPLORAÇÃO: paredes / producao
+OK EXPLORAÇÃO: rota livre / producao / saida
+OK EXPLORAÇÃO: rota livre / producao / deposito
+OK EXPLORAÇÃO: rota livre / producao / bancada
+OK EXPLORAÇÃO: paredes / estoque
+OK EXPLORAÇÃO: rota livre / estoque / saida
+OK EXPLORAÇÃO: rota livre / estoque / prateleira_farinha
+OK EXPLORAÇÃO: rota livre / estoque / prateleira_frango
+OK EXPLORAÇÃO: rota livre / estoque / prateleira_queijo
+OK EXPLORAÇÃO: rota livre / estoque / prateleira_oleo
+OK EXPLORAÇÃO: rota livre / estoque / prateleira_embalagens
+OK EXPLORAÇÃO: rota livre / estoque / compras
+OK EXPLORAÇÃO: colisao bloqueia bancada mesmo em passo grande
+OK EXPLORAÇÃO: parede nao atravessada
+FDS_EXPLORACAO_TESTES: 83 / FALHAS: 0
+OK MISSÃO: história viável sem falta artificial de queijo
+OK MISSÃO: capacidade mínima validada
+OK MISSÃO: caixa de preparo validado
+OK MISSÃO: início livre com objetivo claro, sem diálogo obrigatório
+OK MISSÃO: primeiro pedido de dez bolinhas
+OK MISSÃO: queijo disponível no Estoque, ausente na cozinha
+OK MISSÃO: equipe separa outros ingredientes sem criar recursos
+OK MISSÃO: conservação inicial
+OK MISSÃO: início idempotente
+OK MISSÃO: precisa de pedido aceito para produzir
+OK MISSÃO: aceite sem conversa obrigatória
+OK MISSÃO: aceitar não cobre a fábrica
+OK MISSÃO: aceite aponta mesa de preparo
+OK MISSÃO: conferência aponta prateleira sem quiz obrigatório
+OK MISSÃO: orientação informa quantidade da receita
+OK MISSÃO: pergunta apenas disponível, não aberta
+OK MISSÃO: falta física preserva receita
+OK MISSÃO: erro orienta buscar, sem mensagem de etapa
+OK MISSÃO: retirada parcial aponta depósito
+OK MISSÃO: depósito parcial permitido
+OK MISSÃO: depósito parcial aponta quantidade restante
+OK MISSÃO: mochila não substitui cozinha
+OK MISSÃO: cozinha completa libera preparo
+OK MISSÃO: erro na pergunta sem perda de dinheiro
+OK MISSÃO: uma resposta por pergunta
+OK MISSÃO: não repete pergunta para trocar resposta
+OK MISSÃO: resposta correta registrada
+OK MISSÃO: bônus R$10 separado de vendas
+OK MISSÃO: cliques repetidos não duplicam prêmio
+OK MISSÃO: reabrir não repete prêmio
+OK MISSÃO: pergunta sem resposta pode ser fechada
+OK MISSÃO: mesa seleciona produto e quantidade certos
+OK MISSÃO: lote parcial válido sem travar história
+OK MISSÃO: mesa considera salgados já prontos
+OK MISSÃO: preparo animado do restante
+OK MISSÃO: pausa preserva progresso
+OK MISSÃO: lote completo aponta entrega
+OK MISSÃO: não repete pedido já pronto
+OK MISSÃO: bônus e caixa auditados
+OK MISSÃO: aviso simples sem pergunta abstrata
+OK MISSÃO: aviso some sozinho em cinco segundos
+OK MISSÃO: entrega real do primeiro pedido
+OK MISSÃO: venda separada dos prêmios
+OK MISSÃO: segundo pedido usa o mesmo percurso simples
+OK MISSÃO: entrega não abre aviso preso
+OK MISSÃO: pode buscar antes de conferir a mesa
+OK MISSÃO: turno completo com dois pedidos
+OK MISSÃO: final idempotente e conservado
+OK MISSÃO: dashboard inclui bônus sem inflar vendas
+OK MISSÃO: retirada útil antes do aceite não é bloqueada por etapa
+OK MISSÃO: depósito útil antes do aceite
+OK MISSÃO: recusa oferece outra chance e preserva histórico
+OK MISSÃO: falta geral aponta reposição, sem se contradizer
+OK MISSÃO: compra real liberada já no primeiro pedido
+OK MISSÃO: compra pendente aponta espera
+OK MISSÃO: fornecedor entrega no prazo real
+OK MISSÃO: compra, espera e caixa conservados
+FDS_MISSOES_TESTES: 57 / FALHAS: 0
+OK FEIRA: demo abre sem parede de diálogo
+OK FEIRA: pedido curto de queijo
+OK FEIRA: queijo já existe na empresa
+OK FEIRA: estoque inicial conservado
+OK FEIRA: cozinha e mochila inteiramente vazias ao apertar JOGAR
+OK FEIRA: um pedido corresponde a um dia de dois minutos
+OK FEIRA: orienta buscar sem comprar
+OK FEIRA: níveis reais do HUD
+OK FEIRA: tempo legível
+OK FEIRA: percurso termina sem responder perguntas
+OK FEIRA: entrega no prazo inicia tela de vitória
+OK FEIRA: demo mantém apenas um pedido
+OK FEIRA: resultado mostra a venda real
+OK FEIRA: pular perguntas não altera a venda
+OK FEIRA: vinte porções de queijo consumidas
+OK FEIRA: receita inteira registrada
+OK FEIRA: fim idempotente e auditado
+OK FEIRA: reiniciar limpa prêmios e respostas
+OK FEIRA: UI seleciona pedido certo
+OK FEIRA: mesa guiada não oferece produto ou lote errados
+OK FEIRA: X fecha aviso do rodapé
+OK FEIRA: botão abre pergunta opcional
+OK FEIRA: fechar sem responder preserva chance
+OK FEIRA: acerto pelo botão paga R$10
+OK FEIRA: não avisa antes de um minuto
+OK FEIRA: um minuto dispara lembrete breve
+OK FEIRA: lembrete some sem interromper a rodada
+OK FEIRA: não repete o lembrete na mesma rodada
+OK FEIRA: pausa explícita congela o relógio
+OK FEIRA: não permite pular o dia da rodada pelo relógio antigo
+OK FEIRA: tempo excedido encerra em exatos 120 segundos
+OK FEIRA: derrota não inventa entrega nem receita
+OK FEIRA: derrota preserva estoque, caixa e fecha conversas
+OK FEIRA: não entrega depois do prazo encerrado
+OK FEIRA: tela final aguarda 12 segundos e pede retorno ao início
+OK FEIRA: contador de reinício é limitado e estável
+OK FEIRA: vitória tardia não substitui derrota
+OK FEIRA: entrega antes do limite ainda vence
+OK FEIRA: vitória também volta ao início após leitura
+OK FEIRA: cozinha vazia orienta primeira coleta
+OK FEIRA: coleta orienta buscar próximo ingrediente na mesma viagem
+OK FEIRA: receita inteira coletada e depositada libera preparo
+OK FEIRA: novo colega começa tempo, aviso e prêmios do zero
+OK FEIRA: entrega no limite exato é recusada antes de creditar dinheiro
+OK FEIRA: produtos não entregues são preservados na derrota
+OK FEIRA: tempo esgotado cancela preparo pendente sem consumir ou cobrar
+OK FEIRA: preparo interrompido conserva todos os ingredientes
+OK FEIRA: fim do tempo fecha pergunta e impede prêmio tardio
+FDS_FEIRA_TESTES: 48 / FALHAS: 0
+FDS_SIMULACAO_APROVADA
+###game_end###0
+Total memory used = 25466407 (0x01849627) bytes 24.29MB
+Free memory = 4414640 (0x00435cb0) bytes 4.21MB
+Peak memory used = 28445124 (0x01b209c4) bytes 27.13MB
+**********************************.
+Entering main loop.
+**********************************.
+Attempting to set gamepadcount to 0
+Script_Free called with 606 and global 31
+Unsetting previous scheduler resolution of 1

@@ -1,22 +1,21 @@
-# Melhorias futuras
+# Melhorias futuras e limites
 
-A base física permite deslocamento, colisões, três setores, transporte, produção
-e entrega. Arte e animação são provisórias. Próximos trabalhos:
+## Prioridades de produto
 
-- Avaliar leitura, ritmo de caminhada e objetivos com estudantes/professores.
-- Acessibilidade: remapeamento, texto, contraste e alternativas ao deslocamento.
-- Salvar/carregar sessões e exportar diário/resultados para discussão em aula.
-- Devolver ingredientes ao depósito e transportar explicitamente acabados,
-  hoje abstraídos no estoque global de prontos.
-- Editor de layout/prateleiras para ampliar insumos sem editar mundo_criar.
-- Mini mapa, orientação entre portas e arte definitiva após avaliar a base.
-- Sons próprios/licenciados, animações e mais casos pedagógicos.
-- Validade/perdas, mão de obra e custos fixos com testes/escopo próprios.
-- Outras resoluções/plataformas/YYC; só Windows/VM foi verificado.
+- Avaliar legibilidade, ritmo, deslocamento e compreensão das decisões com alunos e professores.
+- Melhorar acessibilidade: teclado, remapeamento, contraste, leitura e alternativas ao deslocamento.
+- Desenvolver controles de toque e verificar telas pequenas.
+- Salvar/carregar sessão e exportar diário/resultados.
+- Ampliar missões com conteúdo pedagógico revisado e condições de conclusão claras.
 
-Preservar dados reais nos indicadores, compras com prazo, ações presenciais e
-possibilidade de refletir sobre resultados negativos sem Game Over definitivo.
+## Evolução técnica
 
+- Validar outras versões do GameMaker, plataformas e YYC.
+- Tornar mais portáteis as automações que dependem da instalação Windows.
+- Investigar a falha intermitente de JavaScript gerado pelo exportador; manter o bloqueio por `node --check` e a revisão no navegador.
+- Avaliar edição numérica com digitação rápida e navegação totalmente por teclado.
+- Criar automação Web reproduzível fora dos scripts arquivados de evidência.
+- Avaliar devolução de ingredientes e transporte explícito dos produtos prontos.
+- Separar mais claramente os parâmetros exclusivos do núcleo histórico por dias dos usados na exploração.
 
-A história guiada já tem cinco missões, três perguntas e recuperação por checkpoint.
-Novos capítulos devem usar eventos confirmados e ser avaliados com estudantes.
+O modo atual não possui salvamento em disco, backend ou multiplayer. A aprendizagem não foi medida por ensaio com turmas. Cada expansão deve preservar a conservação de materiais, a unicidade das operações e a coerência entre guia, estado e resultado.

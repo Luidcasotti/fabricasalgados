@@ -1,280 +1,204 @@
-/// Cenários opcionais: só executam no harness em cópia.
-function teste_historia_ler(_j,_errar=false) {
-    var _n=0;
-    while(historia_aberta(_j)) {
-        if(_n++>80)throw "Fila de história não concluiu";
-        var _m=_j.missoes,_f=_m.fila[_m.indice_fala];
-        if(_f.tipo=="pergunta" && _m.resposta_atual<0)historia_responder(_j,_errar?((_f.correta+1) mod 3):_f.correta);
-        historia_continuar(_j);
+/// Testes de integração em cópia: ações presenciais, materiais e decisões reais.
+function teste_historia_ler(_j,_errar=false){
+    var _n=0;while(historia_aberta(_j)){if(_n++>80)throw "Conversa não fechou";
+        var _m=_j.missoes,_f=_m.fila[_m.indice_fala];if(_f.tipo=="pergunta" && _m.resposta_atual<0)historia_responder(_j,_errar?((_f.correta+1) mod 3):_f.correta);historia_continuar(_j);}
+}
+function teste_missao_interagir(_j,_setor,_id){teste_exploracao_posicionar(_j,_setor,_id);missoes_evento(_j,"interacao",{id:_id});}
+function teste_missao_consultar(_j){historia_fechar(_j);teste_exploracao_posicionar(_j,"estoque","compras");missoes_consultar_estoque(_j);}
+function teste_missao_abastecer(_j,_p){
+    var _r=produto_obter(_j.catalogo,_p.produto_id).receita;
+    teste_missao_interagir(_j,"producao","bancada");
+    for(var _i=0;_i<array_length(_r);_i++){
+        var _a=_r[_i],_q=max(0,_a.quantidade*missoes_restante(_j,_p)-estoque_quantidade(_j.cozinha,_a.ingrediente_id)-estoque_quantidade(_j.carregados,_a.ingrediente_id));
+        while(_q>0){
+            var _ret=min(_q,_j.exploracao.limite_transporte-exploracao_carregado_total(_j));
+            if(_ret<=0){teste_exploracao_posicionar(_j,"producao","deposito");exploracao_depositar(_j);continue;}
+            teste_exploracao_posicionar(_j,"estoque","prateleira_"+_a.ingrediente_id);
+            var _v=exploracao_retirar(_j,_a.ingrediente_id,_ret);if(!_v.ok)throw "Abastecimento de teste: "+_v.mensagem;
+            _q-=_ret;
+        }
     }
-}
-function teste_missao_interagir(_j,_setor,_id) {
-    teste_exploracao_posicionar(_j,_setor,_id);missoes_evento(_j,"interacao",{id:_id});
-}
-function teste_missao_primeira_entrega(_j) {
-    teste_historia_ler(_j);teste_missao_interagir(_j,"comercial","vendas");teste_historia_ler(_j);
-    pedido_decidir(_j,_j.missoes.primeiro_id,true);teste_historia_ler(_j);
-    teste_missao_interagir(_j,"producao","bancada");teste_historia_ler(_j);
-    teste_exploracao_posicionar(_j,"estoque","prateleira_frango");exploracao_retirar(_j,"frango",10);
-    teste_exploracao_posicionar(_j,"producao","deposito");exploracao_depositar(_j);teste_historia_ler(_j);
-    teste_exploracao_posicionar(_j,"producao","bancada");exploracao_produzir(_j,"coxinha",10);teste_historia_ler(_j);
-    teste_exploracao_posicionar(_j,"comercial","entrega");pedido_entregar(_j,catalogo_buscar(_j.pedidos,_j.missoes.primeiro_id));teste_historia_ler(_j);
-}
-function testes_missoes_executar() {
-    var _t={total:0,falhas:[]},_exigir=method(_t,function(_c,_n){total++;if(!_c)array_push(falhas,_n);show_debug_message((_c?"OK MISSÃO: ":"FALHA: ")+_n);});
-    var _cfg=missoes_parametros(),_j=jogo_criar(_cfg),_v,_antes;
-    _exigir(missoes_validar_config(_cfg).ok,"preset guiado viavel");
-    var _invalido=json_parse(json_stringify(_cfg));_invalido.capacidade_diaria=9;
-    _exigir(!missoes_validar_config(_invalido).ok,"capacidade insuficiente na introducao e validada");
-    _invalido=json_parse(json_stringify(_cfg));_invalido.caixa_inicial_centavos=0;
-    _exigir(!missoes_validar_config(_invalido).ok,"caixa inicial insuficiente e validado");
-    _invalido=json_parse(json_stringify(_cfg));_invalido.catalogo.ingredientes[1].estoque_inicial=9;
-    _exigir(!missoes_validar_config(_invalido).ok,"frango inicial precisa cobrir primeiro lote");
-    _invalido=json_parse(json_stringify(_cfg));_invalido.duracao_dias=2;
-    _exigir(!missoes_validar_config(_invalido).ok,"horizonte insuficiente e validado");
-    missoes_iniciar(_j);
-    _exigir(_j.missoes.etapa==EtapaMissao.INTRO && historia_aberta(_j),"nova historia abre introducao");
-    _exigir(array_length(_j.pedidos)==1 && _j.pedidos[0].quantidade==10 && _j.pedidos[0].produto_id=="coxinha","oferta inicial unica de dez coxinhas");
-    _exigir(_j.cozinha[0].quantidade==10 && _j.cozinha[1].quantidade==0 && _j.estoque.materias_primas[1].quantidade>=10,"so frango falta no primeiro lote local");
-    _exigir(simulacao_auditar(_j).ok,"preparacao inicial conserva materias primas");
-    _antes=json_stringify(_j);missoes_iniciar(_j);_exigir(json_stringify(_j)==_antes,"inicializacao nao duplica missao");
-    _exigir(!pedido_decidir(_j,1,true).ok,"nao decide durante introducao");
-    _exigir(_j.missoes.fila[0].texto=="Bem-vindo à Sabor & Gestão! Nossa empresa produz salgados para atender encomendas de clientes.","fala inicial solicitada");
-    historia_continuar(_j);_exigir(_j.missoes.etapa==EtapaMissao.INTRO,"uma fala nao pula introducao inteira");
-    teste_historia_ler(_j);_exigir(_j.missoes.etapa==EtapaMissao.COMERCIAL,"fim da introducao pede comercial");
-    teste_exploracao_posicionar(_j,"comercial","vendas");
-    _exigir(_j.missoes.etapa==EtapaMissao.COMERCIAL && !pedido_decidir(_j,1,true).ok,"entrar e aproximar nao conclui conversa");
-    teste_missao_interagir(_j,"producao","bancada");
-    _exigir(_j.missoes.etapa==EtapaMissao.COMERCIAL && !exploracao_produzir(_j,"coxinha",10).ok,"interacao fora da ordem nao avanca");
-    teste_missao_interagir(_j,"comercial","vendas");_exigir(_j.missoes.etapa==EtapaMissao.ANALISAR && historia_aberta(_j),"conversa real apresenta capacidade antes de decidir");
-    teste_historia_ler(_j);_exigir(pedido_decidir(_j,1,false).ok && _j.missoes.etapa==EtapaMissao.RECUPERAR,"recusa inicial e possivel");
-    teste_historia_ler(_j);_exigir(missoes_reofertar(_j).ok && array_length(_j.pedidos)==2 && _j.pedidos[0].status=="recusado","recupera recusa sem apagar registro");
-    _exigir(!missoes_reofertar(_j).ok,"reoferta nao duplica por repeticao");
-    teste_historia_ler(_j);_exigir(pedido_decidir(_j,_j.missoes.primeiro_id,true).ok,"aceita nova oportunidade");
-    teste_historia_ler(_j);_exigir(_j.missoes.etapa==EtapaMissao.CONSULTAR_BANCADA,"aceite aponta producao");
-    _antes=json_stringify(_j);_exigir(!exploracao_avancar_dia(_j).ok && json_stringify(_j)==_antes,"relógio nao invalida missao introdutoria");
-    teste_missao_interagir(_j,"producao","bancada");
-    _exigir(_j.missoes.etapa==EtapaMissao.BUSCAR_FRANGO && !exploracao_receita_validar(_j,"coxinha",10).ok,"conferir bancada identifica falta real");
-    teste_historia_ler(_j,true);_exigir(array_length(_j.missoes.respostas)==1 && !_j.missoes.respostas[0].correta,"resposta incorreta explica sem penalidade");
-    var _n=array_length(_j.missoes.fila);historia_enfileirar(_j,"pergunta_estoque");_exigir(array_length(_j.missoes.fila)==_n,"pergunta so dispara uma vez");
-    teste_exploracao_posicionar(_j,"estoque","prateleira_frango");
-    _exigir(!exploracao_retirar(_j,"frango",61).ok,"retirada alem do estoque falha");
-    _exigir(exploracao_retirar(_j,"frango",10).ok && _j.missoes.etapa==EtapaMissao.DEPOSITAR_FRANGO,"retirada correta pede transporte");
-    _exigir(!exploracao_produzir(_j,"coxinha",10).ok,"frango na mochila nao basta para produzir");
-    teste_exploracao_posicionar(_j,"producao","deposito");_exigir(exploracao_depositar(_j).ok,"transfere frango real");
-    teste_historia_ler(_j);_exigir(_j.missoes.etapa==EtapaMissao.COZINHAR && exploracao_receita_validar(_j,"coxinha",10).ok,"deposito completo libera receita");
-    teste_exploracao_posicionar(_j,"producao","bancada");_antes=json_stringify(_j);
-    _exigir(!exploracao_produzir(_j,"coxinha",9).ok && json_stringify(_j)==_antes,"lote fora do pedido nao conclui missao");
-    var _original=global.jogo;global.jogo=_j;var _c={lote_em_curso:undefined,lote_frames:0,mensagem:""};
-    _exigir(historia_producao_iniciar(_c,"coxinha",10).ok && estoque_quantidade(_j.estoque.produtos,"coxinha")==0,"barra comeca sem criar produtos");
-    _j.pausado=true;historia_passo(_c);_exigir(_c.lote_frames==0,"pausa interrompe progresso do lote");_j.pausado=false;
-    for(var _i=0;_i<89;_i++)historia_passo(_c);
-    _exigir(estoque_quantidade(_j.estoque.produtos,"coxinha")==0,"preparo nao termina antes da barra");historia_passo(_c);
-    _exigir(estoque_quantidade(_j.estoque.produtos,"coxinha")==10 && _j.missoes.etapa==EtapaMissao.ENTREGAR,"preparo conclui lote uma vez");
-    historia_passo(_c);_exigir(_j.producao.unidades_produzidas==10,"passos extras nao duplicam produto");global.jogo=_original;
-    teste_historia_ler(_j);teste_exploracao_posicionar(_j,"comercial","entrega");
-    _exigir(pedido_entregar(_j,catalogo_buscar(_j.pedidos,_j.missoes.primeiro_id)).ok,"primeira entrega manual");
-    _exigir(_j.financas.receitas_centavos==6000 && _j.financas.saldo_centavos==105750,"pagamento real das dez coxinhas");
-    _exigir(_j.missoes.etapa==EtapaMissao.DESAFIO && array_length(_j.pedidos)==3,"entrega cria segundo desafio uma vez");
-    teste_historia_ler(_j);_exigir(simulacao_auditar(_j).ok && _j.estoque.materias_primas[2].quantidade==0,"falta geral de queijo sem violar conservacao");
-    teste_missao_interagir(_j,"comercial","vendas");teste_historia_ler(_j);
-    var _ramo_recusa=json_parse(json_stringify(_j));
-    _exigir(pedido_decidir(_ramo_recusa,_ramo_recusa.missoes.segundo_id,false).ok,"segunda recusa tem ramo valido");
-    teste_historia_ler(_ramo_recusa);_exigir(missoes_finalizar(_ramo_recusa) && _ramo_recusa.missoes.concluida,"recusa segundo conclui historia com primeira entrega");
-    var _r=dashboard_calcular(_ramo_recusa);_exigir(_r.recebidos==3 && _r.recusados==2 && _r.receitas_centavos==6000,"recusas e receitas reais no dashboard");
-    _exigir(missoes_negociar(_j).ok && catalogo_buscar(_j.pedidos,_j.missoes.segundo_id).prazo_dia==4,"negociacao considera lead time e folga");
-    teste_historia_ler(_j);_exigir(!missoes_negociar(_j).ok,"negociacao nao altera prazo repetidamente");
-    teste_exploracao_posicionar(_j,"estoque","compras");var _saldo=_j.financas.saldo_centavos;_j.financas.saldo_centavos=0;
-    _antes=json_stringify(_j);_exigir(!compra_realizar(_j,"queijo",20).ok && json_stringify(_j)==_antes,"falta de dinheiro nao paga nem cria compras");_j.financas.saldo_centavos=_saldo;
-    var _reinicio=missoes_reiniciar(_j);_exigir(_reinicio.missoes.etapa==EtapaMissao.DESAFIO && _reinicio.financas.saldo_centavos==105750 && array_length(_reinicio.compras)==0,"reinicio restaura checkpoint financeiro e fisico do capitulo");
-    _exigir(compra_realizar(_j,"queijo",20).ok && _j.estoque.materias_primas[2].quantidade==0,"compra paga nao e estoque instantaneo");
-    teste_historia_ler(_j);_exigir(array_length(_j.missoes.respostas)==3,"tres perguntas contextuais registradas");
-    _exigir(exploracao_avancar_dia(_j).ok && _j.dia==2 && _j.compras[0].status=="em_transito","lead time exige espera");
-    _exigir(exploracao_avancar_dia(_j).ok && _j.dia==3 && _j.compras[0].status=="recebida","chegada somente apos dois dias");
-    var _ids=["farinha","queijo","oleo","embalagens"],_qs=[10,20,10,10];
-    for(var _i=0;_i<4;_i++){teste_exploracao_posicionar(_j,"estoque","prateleira_"+_ids[_i]);_exigir(exploracao_retirar(_j,_ids[_i],_qs[_i]).ok,"retirada do segundo lote / "+_ids[_i]);}
     teste_exploracao_posicionar(_j,"producao","deposito");exploracao_depositar(_j);
-    teste_exploracao_posicionar(_j,"producao","bancada");_exigir(exploracao_produzir(_j,"bolinha_queijo",10).ok,"segundo lote consome receita");teste_historia_ler(_j);
-    teste_exploracao_posicionar(_j,"comercial","entrega");_exigir(pedido_entregar(_j,catalogo_buscar(_j.pedidos,_j.missoes.segundo_id)).ok,"segunda entrega com prazo negociado");
-    teste_historia_ler(_j);_exigir(_j.missoes.etapa==EtapaMissao.RESULTADOS && !_j.encerrado,"missao pede consulta antes de finalizar");
-    _exigir(missoes_finalizar(_j) && !missoes_finalizar(_j),"consulta finaliza sem dupla contagem");
-    _r=dashboard_calcular(_j);_exigir(_r.receitas_centavos==10000 && _r.compras_centavos==1400 && _r.variaveis_centavos==500 && _r.resultado_caixa_centavos==8100,"financeiro da historia vem dos movimentos");
-    _exigir(_r.entregas_pontuais==2 && _r.capacidade_usada_total==20 && _r.dias_processados==3,"pontualidade e capacidade reais");
-    _exigir(simulacao_auditar(_j).ok && array_length(missoes_relatorio(_j))>=6,"auditoria e evidencias pedagogicas finais");
-    var _antes_final=json_stringify(_j);_exigir(!exploracao_avancar_dia(_j).ok && json_stringify(_j)==_antes_final,"fim bloqueia novos dias");
-    // Aceitar prazo original gera atraso real, mas ainda permite cumprir e aprender.
-    _j=jogo_criar(missoes_parametros());missoes_iniciar(_j);teste_missao_primeira_entrega(_j);teste_missao_interagir(_j,"comercial","vendas");teste_historia_ler(_j);
-    pedido_decidir(_j,_j.missoes.segundo_id,true);teste_historia_ler(_j);
-    teste_exploracao_posicionar(_j,"estoque","compras");compra_realizar(_j,"queijo",20);teste_historia_ler(_j);
-    exploracao_avancar_dia(_j);exploracao_avancar_dia(_j);
-    for(var _i=0;_i<4;_i++){teste_exploracao_posicionar(_j,"estoque","prateleira_"+_ids[_i]);exploracao_retirar(_j,_ids[_i],_qs[_i]);}
-    teste_exploracao_posicionar(_j,"producao","deposito");exploracao_depositar(_j);teste_exploracao_posicionar(_j,"producao","bancada");exploracao_produzir(_j,"bolinha_queijo",10);teste_historia_ler(_j);
-    teste_exploracao_posicionar(_j,"comercial","entrega");pedido_entregar(_j,catalogo_buscar(_j.pedidos,_j.missoes.segundo_id));teste_historia_ler(_j);
-    _exigir(catalogo_buscar(_j.pedidos,_j.missoes.segundo_id).atraso_dias==1 && dashboard_calcular(_j).entregas_atrasadas==1,"prazo original resulta em atraso coerente");
-    _exigir(missoes_finalizar(_j) && simulacao_auditar(_j).ok,"escolha inadequada permite terminar e refletir");
+}
+function teste_missao_primeira_entrega(_j){
+    teste_missao_consultar(_j);teste_missao_interagir(_j,"comercial","vendas");pedido_decidir(_j,_j.missoes.primeiro_id,true);
+    var _p=catalogo_buscar(_j.pedidos,_j.missoes.primeiro_id);teste_missao_abastecer(_j,_p);
+    teste_exploracao_posicionar(_j,"producao","bancada");exploracao_produzir(_j,_p.produto_id,_p.quantidade);
+    teste_exploracao_posicionar(_j,"comercial","entrega");pedido_entregar(_j,_p);
+}
+function testes_missoes_executar(){
+    var _t={total:0,falhas:[]},_exigir=method(_t,function(_ok,_n){total++;if(!_ok)array_push(falhas,_n);show_debug_message((_ok?"OK MISSÃO: ":"FALHA: ")+_n);});
+    var _j=jogo_criar(missoes_parametros());missoes_iniciar(_j);
+    _exigir(historia_aberta(_j) && array_length(_j.missoes.fila)==5,"introdução curta com cinco falas");
+    historia_continuar(_j);_exigir(_j.missoes.indice_fala==1 && historia_aberta(_j),"avançar não pula todas as falas");
+    historia_fechar(_j);_exigir(!historia_aberta(_j) && missoes_fluxo(_j).passo==1,"pular introdução mantém objetivo aceitar pedido");
+    var _cfg=missoes_parametros();_cfg.capacidade_diaria=19;_exigir(!missoes_validar_config(_cfg).ok,"capacidade insuficiente impede início guiado");
+    _cfg=missoes_parametros();_cfg.catalogo.ingredientes[2].estoque_inicial=39;_exigir(!missoes_validar_config(_cfg).ok,"primeiro pedido viável validado");
+    _exigir(_j.pedidos[0].quantidade==20 && _j.pedidos[0].produto_id=="bolinha_queijo","primeiro pedido simples de 20");
+    _exigir(estoque_quantidade(_j.cozinha,"farinha")==0 && exploracao_total_insumo(_j,"farinha")==120,"cozinha vazia sem perder estoque");
+    teste_exploracao_posicionar(_j,"producao","bancada");var _antes=json_stringify(_j);
+    _exigir(!pedido_decidir(_j,1,true).ok && json_stringify(_j)==_antes,"aceite exige presença com Marta e não altera dados à distância");
+    _exigir(!missoes_consultar_estoque(_j).ok,"consulta exige proximidade no Estoque");
+    teste_exploracao_posicionar(_j,"estoque","compras");
+    _exigir(missoes_fluxo(_j).passo==1,"visitar Estoque antes do pedido mantém orientação Comercial");
+    _exigir(missoes_consultar_estoque(_j).ok && missoes_fluxo(_j).passo==1,"confirmação presencial conclui consulta");
+    var _eventos=array_length(_j.diario);missoes_consultar_estoque(_j);_exigir(array_length(_j.diario)==_eventos,"consulta repetida não repete mensagens");
+    teste_exploracao_posicionar(_j,"comercial","vendas");_exigir(pedido_diagnostico(_j,_j.pedidos[0]).ok,"primeira oferta possui recursos e capacidade");
+    _exigir(pedido_decidir(_j,1,true).ok && !pedido_decidir(_j,1,true).ok,"aceite único");
+    _exigir(missoes_fluxo(_j).passo==3 && missoes_fluxo(_j).alvo=="compras","aceite dá canhoto e orienta diretamente a Caio");
+    teste_exploracao_posicionar(_j,"estoque","prateleira_queijo");_antes=json_stringify(_j);
+    _exigir(exploracao_retirar(_j,"queijo",1).ok && estoque_quantidade(_j.carregados,"queijo")==1,"canhoto permite retirar sem visita extra à bancada");
+    teste_missao_interagir(_j,"producao","bancada");_exigir(missoes_fluxo(_j).passo==3,"conferência aponta busca de materiais");
+    var _v=exploracao_receita_validar(_j,"bolinha_queijo",20);
+    _exigir(!_v.ok && _v.diagnostico.acao=="retirar","falta local explica transporte em vez de compra");
+    teste_missao_abastecer(_j,_j.pedidos[0]);
+    _exigir(missoes_fluxo(_j).passo==5 && exploracao_carregado_total(_j)==0,"duas viagens respeitam mochila e abastecem cozinha");
+    _exigir(simulacao_auditar(_j).ok && exploracao_total_insumo(_j,"queijo")==100,"transferências não consomem nem duplicam");
+    var _saldo=_j.financas.saldo_centavos;historia_enfileirar(_j,"q_estoque",true);historia_responder(_j,0);
+    _exigir(_j.financas.bonus_centavos==1000 && _j.financas.saldo_centavos==_saldo+1000,"pergunta correta paga bônus separado de receita");
+    _exigir(!historia_responder(_j,0) && _j.financas.bonus_centavos==1000,"prêmio idempotente");historia_fechar(_j);
+    teste_exploracao_posicionar(_j,"producao","bancada");_exigir(exploracao_produzir(_j,"bolinha_queijo",4).ok,"lote parcial permitido após conferência");
+    _exigir(missoes_restante(_j,_j.pedidos[0])==16,"restante usa produtos prontos reais");
+    _exigir(exploracao_produzir(_j,"bolinha_queijo",16).ok && missoes_fluxo(_j).passo==6,"produção completa libera entrega");
+    _exigir(exploracao_total_insumo(_j,"queijo")==60 && _j.producao.unidades_produzidas==20,"receita consumida exatamente uma vez");
+    teste_exploracao_posicionar(_j,"comercial","entrega");_exigir(pedido_entregar(_j,_j.pedidos[0]).ok && !pedido_entregar(_j,_j.pedidos[0]).ok,"entrega e pagamento únicos");
+    _exigir(_j.missoes.segundo_id>0 && missoes_atual(_j).quantidade==30,"dificuldade cresce para 30 no segundo pedido");
+    teste_exploracao_posicionar(_j,"comercial","vendas");var _p=missoes_atual(_j);pedido_decidir(_j,_p.id,true);teste_missao_abastecer(_j,_p);
+    teste_exploracao_posicionar(_j,"producao","bancada");_exigir(exploracao_produzir(_j,_p.produto_id,_p.quantidade).ok,"segundo pedido usa mesmos transportes reais");
+    teste_exploracao_posicionar(_j,"comercial","entrega");pedido_entregar(_j,_p);
+    _exigir(!_j.encerrado && !_j.missoes.concluida && array_length(_j.missoes.entregues)==2 && missoes_atual(_j).produto_id=="pastel","segunda entrega libera terceira missão sem encerrar");
+    for(var _n=2;_n<5;_n++){
+        var _p=missoes_atual(_j);teste_exploracao_posicionar(_j,"comercial","vendas");pedido_decidir(_j,_p.id,true);teste_missao_abastecer(_j,_p);
+        teste_exploracao_posicionar(_j,"producao","bancada");_exigir(exploracao_produzir(_j,_p.produto_id,_p.quantidade).ok,"preparo das missões finais / "+string(_n+1));
+        teste_exploracao_posicionar(_j,"comercial","entrega");_exigir(pedido_entregar(_j,_p).ok,"entrega das missões finais / "+string(_n+1));
+    }
+    _exigir(missoes_zerou(_j) && _j.encerrado,"quinta entrega zera a história e encerra");
+    _exigir(!missoes_finalizar(_j) && simulacao_auditar(_j).ok,"finalização idempotente e auditada");
+    var _r=dashboard_calcular(_j);_exigir(_r.recebidos==5 && _r.aceitos==5 && _r.pedidos_atendidos==5 && _r.unidades_produzidas==120,"dashboard conta ações reais");
+    _exigir(_r.receitas_centavos==62000 && _r.custos_pagos_centavos==3000 && _r.resultado_caixa_centavos==60000,"receita, bônus e custos reais separados");
+    _exigir(_r.consumo_total==520 && _r.ingredientes_consumidos[2].quantidade==100,"consumo agregado dos lotes por ingrediente");
+    _j=jogo_criar(missoes_parametros());missoes_iniciar(_j);teste_missao_consultar(_j);teste_exploracao_posicionar(_j,"comercial","vendas");
+    _exigir(pedido_decidir(_j,1,false).ok && _j.pedidos[0].status=="recusado","recusa preservada no histórico");
+    _saldo=_j.financas.saldo_centavos;_exigir(missoes_reofertar(_j).ok && _j.pedidos[1].quantidade==20 && _j.financas.saldo_centavos==_saldo,"reoferta preserva a missão e não mexe no caixa");
+    var _anterior=0,_vistos={};
+    for(var _i=0;_i<16;_i++){var _q=pedidos_quantidade_variada(_j);_exigir(array_contains([20,30,40,50],_q) && _q!=_anterior,"quantidade válida sem repetição vizinha "+string(_i));_anterior=_q;variable_struct_set(_vistos,string(_q),true);}
+    _exigir(array_length(variable_struct_get_names(_vistos))==4,"todas as quatro quantidades aparecem");
+    _j=jogo_criar(missoes_parametros());missoes_iniciar(_j);teste_missao_consultar(_j);teste_exploracao_posicionar(_j,"comercial","vendas");pedido_decidir(_j,1,true);teste_missao_interagir(_j,"producao","bancada");
+    estoque_ajustar(_j.estoque.materias_primas,"queijo",-100);ingrediente_obter(_j.catalogo,"queijo").estoque_inicial=0;
+    // Completa os demais materiais para que o guia destaque a falta geral de queijo.
+    estoque_ajustar(_j.estoque.materias_primas,"farinha",-20);estoque_ajustar(_j.cozinha,"farinha",20);
+    _exigir(missoes_fluxo(_j).alvo=="compras","falta na empresa aponta reposição");
+    teste_exploracao_posicionar(_j,"estoque","compras");_exigir(compra_realizar(_j,"queijo",40).ok,"compra é paga e entra em trânsito");
+    _exigir(canhoto_dados(_j).em_transito==40 && canhoto_dados(_j).comprar==0,"canhoto reconhece compra em trânsito sem pedir novamente");
+    compras_passo(_j,12);_exigir(estoque_quantidade(_j.estoque.materias_primas,"queijo")==40 && simulacao_auditar(_j).ok,"recebimento único e conservação");
     _t.ok=array_length(_t.falhas)==0;show_debug_message("FDS_MISSOES_TESTES: "+string(_t.total)+" / FALHAS: "+string(array_length(_t.falhas)));return _t;
 }
+function teste_historia_click(_c,_acao){
+    var _bs=exploracao_botoes(_c);for(var _i=0;_i<array_length(_bs);_i++)if(_bs[_i].acao==_acao){var _a=_bs[_i].area;exploracao_clicar(_c,_a.x+_a.w/2,_a.y+_a.h/2);return true;}
+    throw "Botão ausente: "+_acao;
+}
 
-function teste_historia_click(_c,_acao) {
-    var _bs=exploracao_botoes(_c);
-    for(var _i=0;_i<array_length(_bs);_i++)if(_bs[_i].acao==_acao) {
-        var _a=_bs[_i].area;exploracao_clicar(_c,_a.x+_a.w/2,_a.y+_a.h/2);return true;
-    }
-    throw "FDS_HISTORIA_FALHOU: botao ausente / "+_acao;
-}
-function teste_historia_cmd(_s,_a,_acao="porta",_q=10) {return {setor:_s,alvo:_a,acao:_acao,quantidade:_q};}
-function teste_historia_percurso() {
-    var _a=[
-        teste_historia_cmd("corredor","porta_producao"),teste_historia_cmd("producao","bancada","fora_ordem"),
-        teste_historia_cmd("producao","saida"),teste_historia_cmd("corredor","porta_comercial"),
-        teste_historia_cmd("comercial","vendas","informacoes"),teste_historia_cmd("comercial","vendas","ajuda"),
-        teste_historia_cmd("comercial","vendas","aceitar"),teste_historia_cmd("comercial","saida"),
-        teste_historia_cmd("corredor","porta_producao"),teste_historia_cmd("producao","bancada","consultar"),
-        teste_historia_cmd("producao","saida"),teste_historia_cmd("corredor","porta_estoque"),
-        teste_historia_cmd("estoque","prateleira_frango","retirar"),teste_historia_cmd("estoque","saida"),
-        teste_historia_cmd("corredor","porta_producao"),teste_historia_cmd("producao","deposito","depositar"),
-        teste_historia_cmd("producao","bancada","produzir"),teste_historia_cmd("producao","saida"),
-        teste_historia_cmd("corredor","porta_comercial"),teste_historia_cmd("comercial","entrega","entregar"),
-        teste_historia_cmd("comercial","vendas",global.teste_ramo=="negociar"?"negociar":(global.teste_ramo=="recusar"?"recusar":"aceitar"))];
-    if(global.teste_ramo=="recusar")return _a;
-    var _resto=[
-        teste_historia_cmd("comercial","saida"),teste_historia_cmd("corredor","porta_estoque"),
-        teste_historia_cmd("estoque","compras","comprar",20),
-        teste_historia_cmd("estoque","compras","esperar"),
-        teste_historia_cmd("estoque","prateleira_farinha","retirar"),
-        teste_historia_cmd("estoque","prateleira_queijo","retirar",20),
-        teste_historia_cmd("estoque","prateleira_oleo","retirar"),
-        teste_historia_cmd("estoque","prateleira_embalagens","retirar"),
-        teste_historia_cmd("estoque","saida"),teste_historia_cmd("corredor","porta_producao"),
-        teste_historia_cmd("producao","deposito","depositar"),teste_historia_cmd("producao","bancada","produzir"),
-        teste_historia_cmd("producao","saida"),teste_historia_cmd("corredor","porta_comercial"),
-        teste_historia_cmd("comercial","entrega","entregar")];
-    for(var _i=0;_i<array_length(_resto);_i++)array_push(_a,_resto[_i]);return _a;
-}
-/// Driver em cópia: Step de entrada original roda antes deste controlador de teste.
-function teste_historia_partida() {
-    global.teste_ticks++;if(global.teste_ticks>4000)throw "FDS_HISTORIA_FALHOU: tempo excedido";
+/// Partida no Runner: percorre a malha real, abre os painéis e usa os botões do jogo.
+function teste_historia_partida(){
+    global.teste_ticks++;if(global.teste_ticks>9000)throw "FDS_HISTORIA_FALHOU: tempo";
     var _j=global.jogo;
-    if(room==rm_menu) {
-        if(global.teste_etapa==0){jogo_novo();global.teste_etapa=1;jogo_ir_para(FaseJogo.PARAMETROS);}
-        else if(global.teste_etapa==7) {global.teste_etapa=8;jogo_ir_para(FaseJogo.FABRICA);}
-        return;
+    if(room==rm_menu){
+        global.teste_etapa=1;global.teste_rota=[];global.teste_ri=0;global.teste_alvo="";global.teste_intro=false;global.teste_falha=false;global.teste_recusou=false;
+        jogo_novo();jogo_ir_para(FaseJogo.PARAMETROS);return;
     }
-    if(room==rm_parametros) {
-        if(global.teste_etapa==1) {
-            teste_partida_exigir(modo_guiado && configuracao.catalogo.ingredientes[2].estoque_inicial==0,"parametros oferecem preset guiado valido");
-            global.teste_cmds=teste_historia_percurso();global.teste_cmd=0;global.teste_rota=[];global.teste_ri=0;global.teste_fase_cmd=0;
-            global.teste_soltar_e=false;global.teste_leitura_id="";global.teste_leitura_ticks=0;
-            global.teste_etapa=2;parametros_clique(1090,644);
-        } else if(global.teste_etapa==5) {
-            teste_partida_exigir(modo_guiado,"reinicio mantem historia selecionada");global.teste_etapa=6;parametros_clique(1090,644);
-        }
-        return;
-    }
-    if(room==rm_dashboard) {
-        if(global.teste_etapa==3) {
-            teste_partida_exigir(_j.missoes.concluida && _j.encerrado,"consulta conclui historia e abre dashboard");
-            var _recusar=global.teste_ramo=="recusar";
-            teste_partida_exigir(resumo.recebidos==2 && resumo.pedidos_atendidos==(_recusar?1:2) && resumo.recusados==(_recusar?1:0),"pedidos recebidos entregues e recusados reais");
-            teste_partida_exigir(resumo.receitas_centavos==(_recusar?6000:10000) && resumo.resultado_caixa_centavos==(_recusar?5750:8100),"receitas custos e resultado reais da historia");
-            if(!_recusar)teste_partida_exigir(resumo.entregas_atrasadas==(global.teste_ramo=="comprar"?1:0),"prazo original e negociado tem consequencias distintas");
-            teste_partida_exigir(array_length(layout.tabs)==7 && array_length(missoes_relatorio(_j))>3,"dashboard inclui aprendizagem e problemas reais");
-            teste_partida_exigir(simulacao_auditar(_j).ok && instance_number(obj_game)==1,"conservacao e controlador unico no final");
-            global.teste_etapa=4;global.teste_tab=0;global.teste_tab_tick=0;aba_dashboard=0;pagina_dashboard=0;
-        } else if(global.teste_etapa==4) {
+    if(room==rm_parametros){teste_partida_exigir(modo_guiado,"história selecionada");global.teste_etapa=2;parametros_clique(1090,global.teste_ramo=="feira"?590:125);return;}
+    if(room==rm_dashboard){
+        if(global.teste_etapa==3){
+            teste_partida_exigir(_j.missoes.concluida && _j.encerrado && simulacao_auditar(_j).ok,"fim auditado");
+            teste_partida_exigir(resumo.pedidos_atendidos==(global.teste_ramo=="recusar"?1:2),"pedidos entregues");
+            teste_partida_exigir(resumo.receitas_centavos==(global.teste_ramo=="recusar"?8000:26000),"vendas reais");
+            global.teste_etapa=4;global.teste_tab=0;global.teste_tab_tick=0;aba_dashboard=0;
+        }else{
             global.teste_tab_tick++;if(global.teste_tab_tick mod 3!=0)return;
             screen_save("fds-historia-"+global.teste_ramo+"-dashboard-"+string(global.teste_tab)+".png");
-            teste_partida_exigir(aba_dashboard==global.teste_tab,"aba real da historia / "+string(global.teste_tab));
-            global.teste_tab++;
-            if(global.teste_tab<7){var _a=layout.tabs[global.teste_tab];dashboard_clicar(_a.x+20,_a.y+20);}
-            else {global.teste_etapa=5;dashboard_clicar(500,670);}
-        } else if(global.teste_etapa==7) {
-            teste_partida_exigir(!_j.missoes.concluida && !_j.encerrado,"continuar historia reiniciada abre parcial sem concluir indevidamente");
-            show_debug_message("FDS_CAPTURAS_DIR: "+working_directory);
-            show_debug_message("FDS_PARTIDA_APROVADA: "+string(global.teste_checks)+" / HISTORIA "+global.teste_ramo);game_end();
+            teste_partida_exigir(aba_dashboard==global.teste_tab,"aba de resultados");global.teste_tab++;
+            if(global.teste_tab<7){var _t=layout.tabs[global.teste_tab];dashboard_clicar(_t.x+20,_t.y+20);}else{
+                show_debug_message("FDS_CAPTURAS_DIR: "+working_directory);show_debug_message("FDS_PARTIDA_APROVADA: "+string(global.teste_checks)+" / HISTORIA "+global.teste_ramo);game_end();
+            }
+        }return;
+    }
+    if(!instance_exists(obj_exploracao) || !instance_exists(obj_cozinheiro))return;
+    var _c=instance_find(obj_exploracao,0),_a=instance_find(obj_cozinheiro,0);
+    if(confirmacao_aberta(_j)){
+        screen_save("fds-historia-"+global.teste_ramo+"-confirmacao-"+_j.confirmacao.acao+".png");
+        teste_partida_exigir(confirmacao_aberta(_j),"mensagem exige confirmação / "+_j.confirmacao.acao);
+        teste_historia_click(_c,"confirmar_ato");return;
+    }
+    if(missoes_zerou(_j)){
+        screen_save("fds-historia-"+global.teste_ramo+"-final-cinco-pedidos.png");
+        teste_partida_exigir(_j.encerrado && array_length(_j.missoes.entregues)==5 && _j.producao.unidades_produzidas==120 && simulacao_auditar(_j).ok,"história concluída com cinco pedidos e recursos auditados");
+        if(feira_ativa(_j))teste_partida_exigir(_j.feira.venceu,"vitória cronometrada após quinta entrega");
+        show_debug_message("FDS_CAPTURAS_DIR: "+working_directory);show_debug_message("FDS_PARTIDA_APROVADA: "+string(global.teste_checks)+" / HISTORIA "+global.teste_ramo);game_end();return;
+    }
+    if(feira_ativa(_j) && _j.feira.concluida){
+        if(global.teste_etapa==2){global.teste_etapa=3;return;}
+        screen_save("fds-historia-feira-dashboard-0.png");
+        teste_partida_exigir(_j.feira.venceu && _j.maquinas.falhas==1 && _j.maquinas.tempo_manutencao>0,"feira completa com entrega e manutenção");
+        teste_partida_exigir(simulacao_auditar(_j).ok && _j.producao.unidades_produzidas==20,"feira conserva materiais e caixa");
+        show_debug_message("FDS_CAPTURAS_DIR: "+working_directory);show_debug_message("FDS_PARTIDA_APROVADA: "+string(global.teste_checks)+" / HISTORIA feira");game_end();return;
+    }
+    if(historia_aberta(_j)){
+        var _f=_j.missoes.fila[_j.missoes.indice_fala];
+        if(_f.tipo=="decisao"){
+            if(_j.missoes.resposta_atual<0){screen_save("fds-historia-"+global.teste_ramo+"-decisao-ingredientes.png");teste_historia_click(_c,"decisao_0");}
+            else {screen_save("fds-historia-"+global.teste_ramo+"-consequencia-ingredientes.png");teste_historia_click(_c,"fechar_conversa");}return;
         }
+        if(_f.tipo=="consequencia"){
+            screen_save("fds-historia-"+global.teste_ramo+"-consequencia-defeito.png");teste_historia_click(_c,"fechar_conversa");return;
+        }
+        if(!global.teste_intro){global.teste_intro=1;return;}
+        if(global.teste_intro<30){global.teste_intro++;return;}
+        if(_j.missoes.indice_fala==0)screen_save("fds-historia-"+global.teste_ramo+"-introducao.png");
+        teste_historia_click(_c,"continuar_fala");return;
+    }
+    if(maquinas_decisao_aberta(_j)){
+        screen_save("fds-historia-"+global.teste_ramo+"-falha.png");
+        teste_partida_exigir(maquinas_capacidade(_j)==200,"painel e capacidade reduzidos");
+        teste_historia_click(_c,"maquina_manutencao");global.teste_falha=true;return;
+    }
+    if(!is_undefined(_c.lote_em_curso)){
+        // Acelera somente a espera do teste; usa os mesmos passos de equipamento e preparo.
+        for(var _k=0;_k<12;_k++){maquinas_passo(_j,.05);historia_passo(_c,.05);if(maquinas_decisao_aberta(_j) || is_undefined(_c.lote_em_curso))break;}
         return;
     }
-    if(!instance_exists(obj_exploracao))return;
-    var _c=instance_find(obj_exploracao,0),_a=instance_find(obj_cozinheiro,0);if(!instance_exists(_a))return;
-    if(global.teste_soltar_e){keyboard_key_release(ord("E"));global.teste_soltar_e=false;}
-    if(global.teste_etapa==6) {
-        teste_partida_exigir(_j.missoes.etapa==EtapaMissao.INTRO && _j.financas.receitas_centavos==0,"reiniciar abre introducao com estado novo");
-        global.teste_etapa=7;jogo_ir_para(FaseJogo.MENU);return;
+    if(_c.porta_destino!="")return;
+    if(_j.missoes.etapa==EtapaMissao.RESULTADOS){global.teste_etapa=3;teste_historia_click(_c,"resultados");return;}
+    var _g=missoes_fluxo(_j),_alvo=_g.alvo;
+    if(_g.setor!=_c.mundo.setor)_alvo=_c.mundo.setor=="corredor"?"porta_"+_g.setor:"saida";
+    if(global.teste_alvo!=_c.mundo.setor+":"+_alvo){
+        _c.painel=undefined;global.teste_alvo=_c.mundo.setor+":"+_alvo;
+        var _al=catalogo_buscar(_c.mundo.alvos,_alvo);global.teste_rota=teste_mundo_rota(_c.mundo,_a.u,_a.v,_al.u,_al.v);global.teste_ri=0;
+        teste_partida_exigir(array_length(global.teste_rota)>0,"rota / "+global.teste_alvo);
     }
-    if(global.teste_etapa==8) {
-        teste_partida_exigir(_j.missoes.etapa==EtapaMissao.INTRO && !_j.encerrado && _j.financas.receitas_centavos==0,"menu continuar preserva historia reiniciada");
-        show_debug_message("FDS_CAPTURAS_DIR: "+working_directory);
-        show_debug_message("FDS_PARTIDA_APROVADA: "+string(global.teste_checks)+" / HISTORIA "+global.teste_ramo);game_end();return;
+    for(var _i=0;_i<30;_i++){
+        if(global.teste_ri>=array_length(global.teste_rota))break;
+        var _p=global.teste_rota[global.teste_ri];mundo_mover(_a,_c.mundo,clamp(_p.u-_a.u,-.1,.1),clamp(_p.v-_a.v,-.1,.1));
+        if(point_distance(_a.u,_a.v,_p.u,_p.v)<.02)global.teste_ri++;
     }
-    if(historia_aberta(_j)) {
-        var _m=_j.missoes,_f=_m.fila[_m.indice_fala];
-        if(global.teste_leitura_id!=_f.id){global.teste_leitura_id=_f.id;global.teste_leitura_ticks=0;}
-        global.teste_leitura_ticks++;
-        var _espera=(_f.id=="intro_1")?12:3;if(global.teste_leitura_ticks<_espera)return;
-        screen_save("fds-historia-"+global.teste_ramo+"-fala-"+_f.id+".png");
-        if(_f.tipo=="pergunta" && _m.resposta_atual<0) {
-            screen_save("fds-historia-"+global.teste_ramo+"-pergunta-"+_f.id+".png");
-            var _resposta=(_f.id=="q_estoque")?1:_f.correta;
-            teste_partida_exigir(teste_historia_click(_c,"resposta_"+string(_resposta)),"alternativa contextual / "+_f.id);
-            global.teste_leitura_ticks=0;return;
-        }
-        teste_partida_exigir(teste_historia_click(_c,"continuar_fala"),"leitura confirmada / "+_f.id);return;
+    mundo_guardar(_a);mundo_camera(_c.camera_mundo,_a);if(global.teste_ri<array_length(global.teste_rota))return;
+    if(is_undefined(_c.painel)){
+        screen_save("fds-historia-"+global.teste_ramo+"-rota.png");
+        teste_partida_exigir(mundo_interagir(_c,mundo_alvo_proximo(_a,_c.mundo)),"interação / "+global.teste_alvo);return;
     }
-    if(global.teste_cmd>=array_length(global.teste_cmds)) {
-        teste_partida_exigir(_j.missoes.etapa==EtapaMissao.RESULTADOS,"acoes corretas deixam consulta como ultimo objetivo");
-        global.teste_etapa=3;teste_historia_click(_c,"resultados");return;
+    if(_alvo=="compras"){
+        screen_save("fds-historia-"+global.teste_ramo+"-estoque.png");teste_historia_click(_c,"separar_pedido");
+    }else if(_alvo=="vendas"){
+        if(_j.missoes.etapa==EtapaMissao.RECUPERAR)teste_historia_click(_c,"reofertar");
+        else if(global.teste_ramo=="recusar" && !global.teste_recusou && array_length(_j.missoes.entregues)==1){teste_historia_click(_c,"recusar");global.teste_recusou=true;}
+        else teste_historia_click(_c,"aceitar");
+    }else if(_alvo=="bancada"){
+        if(_g.passo==5)teste_historia_click(_c,"produzir");
+    }else if(_alvo=="deposito")teste_historia_click(_c,"depositar");
+    else if(string_pos("prateleira_",_alvo)==1){
+        screen_save("fds-historia-"+global.teste_ramo+"-"+_alvo+".png");
+        teste_historia_click(_c,"retirar_necessario");
     }
-    if(!is_undefined(_c.lote_em_curso)) {
-        if(_c.lote_frames==45)screen_save("fds-historia-"+global.teste_ramo+"-preparo.png");return;
-    }
-    var _cmd=global.teste_cmds[global.teste_cmd];
-    if(global.teste_fase_cmd==0) {
-        if(array_length(global.teste_rota)==0) {
-            teste_partida_exigir(_c.mundo.setor==_cmd.setor,"setor real / "+_cmd.setor);
-            var _al=catalogo_buscar(_c.mundo.alvos,_cmd.alvo);
-            global.teste_rota=teste_mundo_rota(_c.mundo,_a.u,_a.v,_al.u,_al.v);global.teste_ri=0;
-            teste_partida_exigir(array_length(global.teste_rota)>0,"caminho / "+_cmd.alvo);
-            _c.painel=undefined;_j.fala_visivel=false;
-        }
-        for(var _i=0;_i<30;_i++) {
-            if(global.teste_ri>=array_length(global.teste_rota))break;
-            var _p=global.teste_rota[global.teste_ri];mundo_mover(_a,_c.mundo,clamp(_p.u-_a.u,-.1,.1),clamp(_p.v-_a.v,-.1,.1));_a.animacao++;
-            if(point_distance(_a.u,_a.v,_p.u,_p.v)<.02)global.teste_ri++;
-        }
-        mundo_guardar(_a);mundo_camera(_c.camera_mundo,_a);
-        if(global.teste_ri<array_length(global.teste_rota))return;
-        teste_partida_exigir(mundo_perto(_j,_cmd.alvo),"proximidade / "+_cmd.alvo);
-        keyboard_key_press(ord("E"));global.teste_soltar_e=true;global.teste_fase_cmd=1;return;
-    }
-    if(global.teste_fase_cmd==1) {
-        if(_cmd.acao=="porta") {
-            global.teste_cmd++;global.teste_rota=[];global.teste_fase_cmd=0;return;
-        }
-        teste_partida_exigir(!is_undefined(_c.painel) && _c.painel.id==_cmd.alvo,"E abre alvo correto / "+_cmd.alvo);
-        _c.quantidade=_cmd.quantidade;
-        if(_cmd.alvo=="compras")_c.selecao=2;
-        if(_cmd.alvo=="bancada")_c.selecao=(_j.missoes.etapa>=EtapaMissao.DESAFIO)?2:0;
-        if(_cmd.acao=="consultar")teste_partida_exigir(_j.missoes.etapa==EtapaMissao.BUSCAR_FRANGO,"conferencia real identifica falta de frango");
-        else if(_cmd.acao=="fora_ordem") {
-            var _antes=json_stringify(_j.estoque);teste_historia_click(_c,"produzir");
-            teste_partida_exigir(_j.missoes.etapa==EtapaMissao.COMERCIAL && json_stringify(_j.estoque)==_antes,"fora da ordem nao consome nem conclui");
-        } else if(_cmd.acao=="esperar") {
-            teste_historia_click(_c,"fechar");teste_historia_click(_c,"relogio");teste_historia_click(_c,"avancar");
-            teste_partida_exigir(_j.dia==2 && _j.compras[0].status=="em_transito","primeira espera nao recebe cedo");
-            teste_historia_click(_c,"relogio");teste_historia_click(_c,"avancar");
-            teste_partida_exigir(_j.dia==3 && _j.compras[0].status=="recebida","segunda espera recebe compra real");
-        } else if(_cmd.acao=="ajuda") {
-            teste_historia_click(_c,"ajuda");teste_partida_exigir(_c.ajuda,"O que preciso fazer abre orientacao");
-            teste_historia_click(_c,"repetir_fala");teste_partida_exigir(historia_aberta(_j),"explicacao importante pode ser repetida");
-        } else teste_historia_click(_c,_cmd.acao);
-        global.teste_fase_cmd=2;global.teste_acao_tick=0;return;
-    }
-    if(global.teste_fase_cmd==2) {
-        global.teste_acao_tick++;if(global.teste_acao_tick<3)return;
-        if(_cmd.acao=="produzir")teste_partida_exigir(is_undefined(_c.lote_em_curso) && _j.producao.unidades_produzidas>=10,"barra termina e registra lote");
-        screen_save("fds-historia-"+global.teste_ramo+"-acao-"+string(global.teste_cmd)+".png");
-        teste_partida_exigir(simulacao_auditar(_j).ok,"conservacao apos acao / "+_cmd.acao);
-        global.teste_cmd++;global.teste_rota=[];global.teste_fase_cmd=0;_c.painel=undefined;
-    }
+    else if(_alvo=="entrega")teste_historia_click(_c,"entregar");
+    teste_partida_exigir(simulacao_auditar(_j).ok,"ação conserva recursos / "+_alvo);
+    _c.painel=undefined;global.teste_alvo="";
 }

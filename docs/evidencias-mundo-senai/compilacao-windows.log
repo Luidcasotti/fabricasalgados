@@ -1,0 +1,23 @@
+Options: C:\ProgramData\GameMakerStudio2-LTS2026\Cache\runtimes\runtime-2026.0.0.23\bin\platform_setting_defaults.json
+Options: C:\Users\Luid Casotti\AppData\Roaming\GameMakerStudio2-LTS2026\unknownUser_unknownUserID\local_settings.json
+Setting up the Asset compiler
+Unhandled exception. System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+ ---> System.IO.FileLoadException: 
+File name: 'FileIO, Version=0.0.0.0, Culture=neutral, PublicKeyToken=83c29ed24e39e35e'
+ ---> System.IO.FileLoadException: 
+File name: 'C:\ProgramData\GameMakerStudio2-LTS2026\Cache\runtimes\runtime-2026.0.0.23\bin\assetcompiler\windows\x64\FileIO.dll'
+   at System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyPath(String assemblyPath)
+   at System.Reflection.Assembly.LoadFrom(String assemblyFile)
+   at System.Reflection.Assembly.LoadFromResolveHandler(Object sender, ResolveEventArgs args)
+   at System.Runtime.Loader.AssemblyLoadContext.InvokeResolveEvent(ResolveEventHandler eventHandler, RuntimeAssembly assembly, String name)
+   at GMAssetCompiler.Program.Main(String[] _args)
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   --- End of inner exception stack trace ---
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+   at Igor.Program.ExecuteAssetCompiler(String _args)
+   at Igor.Program.SetupBuildEnv(String _options, String _project, String _runtimeLocation, String _cache, String _temp, String _user, String _outputFilename, String _targetFilename, String _debuggerPort, Boolean _launchPackage, String _packagetype)
+   at Igor.Program.Main(String[] args)
+Igor complete.

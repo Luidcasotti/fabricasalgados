@@ -1,3 +1,5 @@
+* text=auto eol=lf
+
 # Ignore .yy files for language statistics
 *.yy linguist-generated=true
 
@@ -6,3 +8,12 @@
 *.yy text eol=lf
 *.yyp text eol=lf
 *.json text eol=lf
+
+# Scripts de abertura usam finais Windows no checkout.
+*.cmd text eol=crlf
+*.png binary
+*.wav binary
+*.ico binary
+
+# Logs históricos são registros brutos gerados pelo compilador.
+*.log -whitespace linguist-generated=true

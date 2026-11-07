@@ -40,7 +40,7 @@ function pedagogia_casos_criar() {
             },
             mensagem:function(_j,_c){return "A compra deixa mais "+ingrediente_obter(_j.catalogo,_c.compra.ingrediente_id).nome+" que a demanda aceita e o mínimo. Essa reserva faz sentido para seu caixa e seus próximos pedidos?";}},
         {id:"compra_apos_periodo",evento:"compra",prioridade:90,personagem:"CAIO / ESTOQUE",positivo:false,
-            verificar:function(_j,_c){return _c.compra.dia_chegada>_j.parametros.duracao_dias+(exploracao_ativa(_j)?0:1);},
+            verificar:function(_j,_c){return !exploracao_ativa(_j) && _c.compra.dia_chegada>_j.parametros.duracao_dias+1;},
             mensagem:function(_j,_c){return "Essa compra só chega depois do período da atividade. O que acontece com o dinheiro pago e com o estoque mostrado no dashboard?";}},
         {id:"producao_sem_demanda",evento:"plano",prioridade:50,personagem:"BIA / PRODUÇÃO",positivo:false,
             verificar:function(_j,_c){
@@ -73,17 +73,28 @@ function pedagogia_disparar(_jogo,_evento,_contexto) {
         diario_registrar(_jogo,"REFLEXÃO / "+_caso.id,_fala.texto);
         if(_caso.prioridade>_prioridade) {_melhor=_fala;_prioridade=_caso.prioridade;}
     }
-    if(!is_undefined(_melhor)) {_jogo.fala_atual=_melhor;_jogo.fala_visivel=true;}
+    if(!is_undefined(_melhor) && !missoes_ativa(_jogo)) {_jogo.fala_atual=_melhor;_jogo.fala_visivel=true;_jogo.aviso_segundos=5;}
 }
 function pedagogia_tentativa(_jogo,_acao,_mensagem) {
     diario_registrar(_jogo,"TENTATIVA / "+_acao,_mensagem+" Nenhum recurso foi consumido por essa tentativa.");
     _jogo.fala_atual={dia:_jogo.dia,caso_id:"acao_bloqueada",personagem:"MARTA / GESTORA",positivo:false,
-        texto:_mensagem+" Que condição da simulação limita essa decisão?"};
-    _jogo.fala_visivel=true;
+        texto:_mensagem};
+    _jogo.fala_visivel=true;_jogo.aviso_segundos=5;
+}
+function pedagogia_aviso_passo(_j,_dt){
+    if(!variable_struct_exists(_j,"aviso_segundos"))_j.aviso_segundos=0;
+    if(!_j.fala_visivel)return;
+    _j.aviso_segundos=max(0,_j.aviso_segundos-_dt);
+    if(_j.aviso_segundos<=0)_j.fala_visivel=false;
 }
 function pedagogia_desenhar_fala(_jogo) {
     if(!_jogo.fala_visivel || is_undefined(_jogo.fala_atual)) return;
     var _v=global.visual,_f=_jogo.fala_atual;
+    if(exploracao_ativa(_jogo)){
+        ui_cartao(16,608,1248,26,_v.claro);
+        ui_texto(24,618,string_copy(_f.texto,1,186),1,_v.ouro);
+        ui_botao(ui_area(1232,610,24,22),"X",_v.azul);return;
+    }
     ui_cartao(300,110,282,494,_v.claro);
     ui_texto(316,136,_f.personagem,1,_v.tinta);
     ui_botao(ui_area(528,122,44,44),"X",_v.tinta);

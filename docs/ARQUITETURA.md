@@ -1,135 +1,90 @@
-# Arquitetura — exploração da fábrica
+# Arquitetura
 
-Projeto existente: `BLANK GAMEFabricaDeSalgados.yyp`, GameMaker/GML Code.
-91 recursos: **10 salas, 30 objetos, 27 scripts, 24 sprites**. Os recursos novos
-foram criados pelos escritores do GMSync e normalizados/abertos pelo ProjectTool
-oficial. Não houve recriação do projeto. Room1 e opções originais foram preservadas.
+## Visão geral
 
-## Salas e ciclo de vida
+A lógica está em GML e o GameMaker registra os recursos em `BLANK GAMEFabricaDeSalgados.yyp`. Python e Node são ferramentas de desenvolvimento, não dependências do jogo exportado.
 
-| Ordem | Sala | Controlador local | Papel |
-| --- | --- | --- | --- |
-| 1 | rm_menu | obj_menu | Nova configuração ou continuar em memória. |
-| 2 | rm_parametros | obj_parametros | 51 parâmetros, receitas, validação e padrões. |
-| 3 | rm_corredor | obj_exploracao | Caminho entre as três portas. |
-| 4 | rm_comercial | obj_exploracao | Ofertas com Marta; entrega manual no balcão. |
-| 5 | rm_producao | obj_exploracao | Depósito da mochila e bancada de receitas. |
-| 6 | rm_estoque | obj_exploracao | Cinco prateleiras, retirada e computador de compras. |
-| 7 | rm_dashboard | obj_resultados | Seis abas, parcial/final, diário e reinício. |
-| 8 | rm_fabrica | obj_fabrica | Protótipo V0.1 preservado, fora do fluxo normal. |
-| 9 | rm_resultados | obj_resultados | Sala anterior preservada. |
-| 10 | Room1 | Original | Recurso original preservado. |
+Há **105 recursos**: 10 salas, 30 objetos, 31 scripts, 24 sprites, 4 fontes e 6 sons. Metadados `.yy`, manifesto `.yyp`, `.resource_order` e código `.gml` devem permanecer versionados.
 
-Cada sala contém obj_game primeiro: persistente, destrói a própria duplicata e
-cria global.jogo apenas se necessário. Os quatro ambientes físicos também têm
-obj_exploracao e obj_cozinheiro, locais e não persistentes. Somente os dados da
-sessão atravessam salas; não se acumulam atores, câmeras ou controladores.
+```mermaid
+flowchart TD
+    I[Entrada e GUI] --> C[obj_exploracao]
+    C --> M[Missões e história]
+    C --> E[Compras, estoque, pedidos e produção]
+    M --> J[global.jogo]
+    E --> J
+    J --> V[Mundo, HUD e animações]
+    J --> D[Dashboard e aprendizagem]
+```
 
-obj_exploracao: Create prepara mapa/câmera; Step processa E, Esc e cliques;
-Draw normal desenha o mundo; Draw GUI desenha HUD/painéis; CleanUp libera câmera
-e desativa views. obj_cozinheiro: Create restaura posição válida; Step aplica
-entrada, colisão, animação e câmera; seu Draw é suprimido porque o controlador
-ordena pessoas e móveis por profundidade. Arquivos em objects/<nome>/ e rooms/<nome>/.
+## Salas e controladores
 
-Câmera nativa 640×360, ampliada para 1280×720 sem filtragem. Ambientes são maiores
-que a view. U/V são coordenadas do piso: X=600+(U−V)×18, Y=140+(U+V)×9.
-Colisão circular nos pés contra retângulos U/V dos móveis/NPCs e limites do piso;
-subpassos até .12 evitam atravessamentos. O mesmo mapa desenha e define colisão.
-Profundidade usa U+V/base do móvel. Portas são plataformas amarelas; E troca salas.
+| Sala | Controlador | Uso |
+| --- | --- | --- |
+| `rm_menu` | `obj_menu` | Jogar, configurar ou continuar |
+| `rm_parametros` | `obj_parametros` | Editar valores e escolher modo |
+| `rm_corredor` | `obj_exploracao` | Ligação entre os setores e nome no piso |
+| `rm_comercial` | `obj_exploracao` | Marta, ofertas e balcão de entrega |
+| `rm_producao` | `obj_exploracao` | Depósito, preparo e máquinas |
+| `rm_estoque` | `obj_exploracao` | Caio, prateleiras e motoboy |
+| `rm_dashboard` | `obj_resultados` | Resultados parciais e consulta |
+| `rm_fabrica`, `rm_resultados`, `Room1` | Recursos anteriores | Compatibilidade e histórico |
 
-## Scripts
+`obj_game` mantém os dados globais e evita duplicatas persistentes. Controladores locais, ator e câmeras são recriados ao trocar de sala; setor e posições são restaurados dos dados. `obj_exploracao` processa ações, desenha o mundo e a GUI e libera a câmera no CleanUp.
 
-Cada script tem .gml e .yy em scripts/<nome>/, registrados no .yyp.
+## Módulos principais
 
-| Script | Responsabilidade |
+| Módulo | Responsabilidade |
 | --- | --- |
-| scr_estado | Sessão, fases, padrões, pausa e roteamento. |
-| scr_produtos | Catálogo central, receitas, custos, preços e tempos fictícios. |
-| scr_estoque | Consulta e ajuste inteiro, sem saldo negativo. |
-| scr_compras | Compra paga, trânsito, recebimento único; presença no computador. |
-| scr_producao | Validação pura; rotinas V0.1 preservadas e bloqueadas no modo físico. |
-| scr_pedidos | Ofertas únicas, aceite, fila, entrega no balcão e atrasos. |
-| scr_tempo | Despacha relógio para o ciclo físico quando em exploração. |
-| scr_financas | Movimentos por referência única e resultado de caixa. |
-| scr_indicadores | Pedidos, produção, caixa e atrasos reais. |
-| scr_operacoes | Consultas e suporte aos controladores anteriores. |
-| scr_parametros | 51 campos, receitas, validação e interface paginada. |
-| scr_interface | Fonte própria com acentos, cores e componentes GUI. |
-| scr_isometria | Projeção, pessoas e mobiliário GML. |
-| scr_cenario | Cenário estático do menu e protótipo anterior. |
-| scr_fabrica_interface | Interface V0.1 mantida para regressão. |
-| scr_pedagogia | Casos por evento, diário e balões reflexivos. |
-| scr_dashboard | Agregações reais, estoques por local, seis abas e fórmulas. |
-| scr_mundo | Mapas, alvos E, colisão, movimento, câmera, posições e portas. |
-| scr_logistica | Estoques físicos, retirada, depósito, produção, objetivos e relógio. |
-| scr_exploracao_interface | HUD, ajuda, hit tests e painéis de proximidade. |
-| scr_testes_simulacao | Auditoria e regressão de regras/controladores. |
-| scr_testes_v01 | Regressão de aprendizado e driver histórico opcional. |
-| scr_testes_exploracao | 83 verificações novas e driver da partida física. |
+| `scr_estado`, `scr_parametros` | Criação da sessão, padrões, validação, modos e pausa |
+| `scr_produtos`, `scr_estoque` | Catálogo, receitas e saldos inteiros |
+| `scr_compras` | Pagamento, trânsito, relógio do motoboy e recebimento único |
+| `scr_logistica` | Mochila, cozinha, diagnóstico do faltante e produção presencial |
+| `scr_pedidos`, `scr_financas` | Aceite, entrega, preço contratado e movimentos por referência |
+| `scr_producao` | Planejamento, máquinas, falha e manutenção |
+| `scr_missoes` | Plano de cinco pedidos, oferta atual, guia e checkpoint |
+| `scr_historia` | Introdução, decisões, quizzes, confirmações e progresso de preparo |
+| `scr_feira` | Cronômetro, bônus, resgates e resultado da campanha |
+| `scr_mundo`, `scr_isometria` | Mapas, projeção, colisão, portas, câmera e desenho do motoboy |
+| `scr_exploracao_interface`, `scr_hud_estoque` | Painéis, botões, canhoto, HUD e entradas |
+| `scr_pedagogia`, `scr_dashboard`, `scr_indicadores` | Diário, aprendizagem e indicadores |
+| `scr_interface`, `scr_feedback`, `scr_visuais_alunos` | Componentes, fontes, som e apresentação dos sprites |
+| `scr_tempo`, `scr_fabrica_interface`, `scr_cenario`, `scr_operacoes` | Suporte compartilhado e compatibilidade com o protótipo |
+| `scr_testes_*` | Auditorias, regressões e percursos opcionais |
 
-## Estado compartilhado
+## Estado da sessão
 
-`global.jogo` é único. `exploracao_iniciar` adiciona campos somente uma vez,
-preserva estado nas transições e é chamado ao iniciar pelos parâmetros.
-
-| Campo | Uso |
+| Campo em `global.jogo` | Conteúdo |
 | --- | --- |
-| estoque.materias_primas | Ingredientes no depósito; compras chegam aqui. |
-| carregados | Mochila; limite agregado 80 unidades fictícias. |
-| cozinha | Ingredientes depositados; única origem da receita física. |
-| estoque.produtos | Salgados prontos; transporte destes é abstraído. |
-| exploracao | Setor, posições U/V/face por sala, limite e transferências. |
-| pedidos / compras | Históricos, IDs únicos, snapshots e pendências. |
-| producao | Lotes, insumos/custos e capacidade diária usada. |
-| financas | Capital, saldo, receitas, pagamentos e referências. |
-| historico_dias / diario | Dias fechados; decisões com data/ação/consequência. |
+| `parametros`, `catalogo` | Configuração copiada para a sessão |
+| `estoque.materias_primas`, `carregados`, `cozinha` | Três localizações físicas dos ingredientes |
+| `estoque.produtos`, `producao` | Produtos prontos, planos, lotes e consumo |
+| `compras`, `pedidos` | Históricos, IDs únicos, trânsito e entregas |
+| `financas` | Caixa, movimentos e referências para evitar duplicação |
+| `exploracao` | Setor, posições, transferências, transporte e avisos do motoboy |
+| `missoes` | Plano, oferta atual, entregas concluídas, falas, respostas e checkpoint |
+| `feira` | Tempo decorrido, limite, bônus e dez oportunidades de resgate |
+| `maquinas`, `confirmacao` | Estado dos equipamentos e aviso aguardando confirmação |
+| `diario`, `historico_dias` | Ações, consequências e resumo diário |
 
-Transferências conservam depósito+cozinha+mochila. Produção valida todos os efeitos,
-consome cozinha e gera acabados. APIs de compra, aceite, retirada, depósito,
-produção e entrega verificam posição/setor, não apenas painel aberto. Pausa e fim
-bloqueiam mutações. IDs/referências impedem dupla geração, pagamento ou entrega.
-A auditoria soma os três locais e confere insumos, produtos, caixa e unicidade.
-Parâmetros são clonados por sessão. Arrays de eventos são reatribuídos explicitamente.
-Testes não executam no carregamento; o harness injeta chamadas só em cópias.
+O campo `feira` identifica a campanha cronometrada. O modo livre não o cria. A consulta de resultados não remove esse campo nem finaliza a missão.
 
-## Compatibilidade e expansão
+## Ordem das operações e invariantes
 
-Sem campo exploracao, o núcleo mantém regras V0.1 para recursos/testes históricos.
-O fluxo normal nasce em rm_corredor e fecha em rm_dashboard, sem oferecer acesso
-ao painel remoto antigo. Agendamento legado é recusado no modo físico.
+1. A entrada escolhe uma ação; a API confere bloqueios, presença, quantidade e recursos.
+2. A operação valida o conjunto de efeitos antes de alterar os saldos.
+3. Referências únicas impedem segundo pagamento, recebimento ou entrega.
+4. Eventos de sucesso atualizam o guia e o progresso da missão.
+5. A confirmação informa o que já aconteceu; confirmar apenas libera a continuação.
 
-Novos produtos seguem o catálogo e seletores. Novos ingredientes exigem também
-prateleira/alvo em mundo_criar e ajuste dos validadores/testes do catálogo padrão.
-Novos móveis precisam de volume e alvo fora da colisão. Registre recursos pela
-IDE/GMSync e confirme .yy/.yyp antes de publicar.
+A animação do motoboy acompanha o estado real da compra. O recebimento ocorre ao terminar o prazo, uma única vez, no almoxarifado. O preparo usa capacidade e consome os insumos da cozinha quando o lote é confirmado. O dashboard agrega os mesmos registros usados pela simulação.
 
-## História guiada
+## Geometria e apresentação
 
-scr_missoes, scr_historia e scr_testes_missoes foram adicionados. Estado fica em
-global.jogo.missoes; não há novo singleton. Etapas, guardas e eventos confirmados
-controlam o avanço; fila de falas/respostas persiste entre salas. Produção guiada
-é confirmada após 90 frames; checkpoint serializa somente dados, sem referências
-a instâncias. Leia MISSOES_E_HISTORIA.md para contratos e extensão por alunos.
-O modo livre e as rotinas de regressão continuam sem estado de missões.
+Coordenadas U/V representam o piso. A projeção é `X = 600 + (U - V) × 18` e `Y = 140 + (U + V) × 9`. Colisão usa os pés e os retângulos U/V de móveis e limites; subpassos evitam atravessamentos. A ordenação visual considera profundidade U+V.
 
+A GUI usa 1280×720. O corredor tem câmera 1088×612 para mostrar a área; os setores usam 640×360. O nome SENAI HUB é texto normal sobre o chão. Fontes são atlas incorporados; o motoboy é desenho GML. A malha, os alvos E e as máscaras dos sprites são responsabilidades distintas.
 
-## Recursos visuais editáveis da aula
+## Compatibilidade
 
-23 sprites novos e 23 objetos de apresentação `obj_aula_*` foram registrados
-pelo GMSync e normalizados pelo ProjectTool oficial. O sprite do cozinheiro e
-seus oito quadros foram preservados. Há 28 instâncias visuais adicionais nas
-quatro salas físicas; a ordem dos três controladores originais foi mantida.
-
-`scr_visuais_alunos` consulta o sprite associado ao objeto e o desenha na
-projeção e profundidade do mapa original. Os objetos visuais só suprimem o Draw
-local para evitar desenho duplicado, sem Create, Step, colisões ou persistência.
-Decorações de parede são apenas apresentação. Etiquetas são desenhadas após
-os móveis para permanecer legíveis. Os retratos leem os sprites reais do
-cozinheiro e do gerente. Nenhum script de simulação foi reorganizado.
-
-As únicas adaptações de scripts existentes ficam na apresentação de
-`mundo_desenhar` e `historia_retrato`. Movimento, volumes, alvos, missões,
-estoques, produção e finanças permanecem idênticos à base. O manifesto
-`tools/recursos_visuais_alunos.json` registra posições, dimensões/origens,
-associações e hashes da lógica protegida. `tools/verificar_visuais.py` confere
-o contrato. Veja o [guia dos alunos](atividades_alunos/GUIA_DE_SPRITES.md).
+Sem `exploracao`, o núcleo mantém a simulação abstrata por dias para testes históricos. Não misture essa regra de compras com a entrega de 12 segundos da exploração. Salas e scripts anteriores permanecem registrados. Os testes são injetados apenas em cópias temporárias, nunca no carregamento normal do jogo.

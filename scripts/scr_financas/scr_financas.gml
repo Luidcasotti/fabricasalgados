@@ -1,7 +1,7 @@
 function financas_criar(_inicial) {
     return {saldo_inicial_centavos:_inicial,saldo_centavos:_inicial,
         entradas_centavos:0,saidas_centavos:0,receitas_centavos:0,
-        compras_centavos:0,variaveis_centavos:0,movimentos:[]};
+        compras_centavos:0,variaveis_centavos:0,manutencao_centavos:0,bonus_centavos:0,movimentos:[]};
 }
 function financas_registrar(_financas,_valor,_descricao,_tipo="outros",_dia=0,_referencia="") {
     if(!is_real(_valor) || floor(_valor)!=_valor || _valor==0 || abs(_valor)>1000000000) return false;
@@ -12,7 +12,9 @@ function financas_registrar(_financas,_valor,_descricao,_tipo="outros",_dia=0,_r
     _financas.saldo_centavos+=_valor;
     if(_valor>0) _financas.entradas_centavos+=_valor; else _financas.saidas_centavos-=_valor;
     if(_tipo=="entrega") _financas.receitas_centavos+=_valor;
+    if(_tipo=="bonus") _financas.bonus_centavos+=_valor;
     if(_tipo=="compra") _financas.compras_centavos-=_valor;
+    if(_tipo=="manutencao") _financas.manutencao_centavos-=_valor;
     if(_tipo=="variavel") _financas.variaveis_centavos-=_valor;
     array_push(_financas.movimentos,{dia:_dia,tipo:_tipo,referencia:_referencia,valor_centavos:_valor,descricao:_descricao});
     return true;

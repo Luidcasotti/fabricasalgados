@@ -1,15 +1,27 @@
 # Documentação — Fábrica de Salgados
 
-- [Roteiro da aula de 23/10/2026](atividades_alunos/ROTEIRO_DA_AULA.md).
-- [Guia dos 24 sprites](atividades_alunos/GUIA_DE_SPRITES.md).
-- Atividades: [Comercial](atividades_alunos/ATIVIDADE_COMERCIAL.md), [Produção](atividades_alunos/ATIVIDADE_PRODUCAO.md), [Estoque](atividades_alunos/ATIVIDADE_ESTOQUE.md), [Personagens](atividades_alunos/ATIVIDADE_PERSONAGENS.md).
-- [Relatório desta preparação](RELATORIO_AULA.md).
-- [Manual do aluno](MANUAL_DO_ALUNO.md) e [do professor](MANUAL_DO_PROFESSOR.md).
-- [Arquitetura](ARQUITETURA.md), [regras](REGRAS_SIMULACAO.md), [missões/história](MISSOES_E_HISTORIA.md).
-- [Validação](VALIDACAO.md), [visuais](VISUAIS.md) e [melhorias futuras](MELHORIAS_FUTURAS.md).
-- Relatórios históricos: [V0.1](RELATORIO_V01.md), [exploração](RELATORIO_EXPLORACAO.md), [história](RELATORIO_HISTORIA.md).
+Estes guias descrevem o código atual, consolidado em **06/11/2026**. A história tem cinco pedidos, cronômetro de cinco minutos com bônus e reposição por motoboy. Documentos de etapas antigas estão identificados no [histórico](HISTORICO.md).
 
-Abra o .yyp original na raiz e use F5 com Windows/VM. O projeto atual tem
-91 recursos. Os relatórios históricos mantêm as contagens das suas etapas.
-Valores fictícios; sem salvamento da sessão em disco. A tag Git v0.1 preserva
-o protótipo anterior; agora as ações exigem percurso físico pelos setores.
+## Jogar e ensinar
+
+- [Manual do aluno](MANUAL_DO_ALUNO.md): controles, ciclo, tempo, compras e dúvidas frequentes.
+- [Manual do professor](MANUAL_DO_PROFESSOR.md): objetivos, organização da aula e experimentos.
+- [Missões e história](MISSOES_E_HISTORIA.md): sequência, critérios de conclusão e recuperação.
+- [Regras da simulação](REGRAS_SIMULACAO.md): catálogo, inventários, produção e finanças.
+
+## Desenvolver e publicar
+
+- [Desenvolvimento](DESENVOLVIMENTO.md): instalação, estrutura, parâmetros e automação.
+- [Arquitetura](ARQUITETURA.md): salas, módulos, estado e integrações.
+- [Validação](VALIDACAO.md): comandos, resultados, cobertura e limites.
+- [Publicação Web](PUBLICACAO_WEB.md): exportação oficial e preparação da página.
+- [Visuais](VISUAIS.md) e [assets e créditos](ASSETS_E_CREDITOS.md).
+- [Guia de contribuição](../CONTRIBUTING.md).
+
+## Aula de personalização e memória do projeto
+
+- [Roteiro da aula](atividades_alunos/ROTEIRO_DA_AULA.md) e [guia dos sprites](atividades_alunos/GUIA_DE_SPRITES.md).
+- Atividades: [Comercial](atividades_alunos/ATIVIDADE_COMERCIAL.md), [Produção](atividades_alunos/ATIVIDADE_PRODUCAO.md), [Estoque](atividades_alunos/ATIVIDADE_ESTOQUE.md), [Personagens](atividades_alunos/ATIVIDADE_PERSONAGENS.md).
+- [Changelog](../CHANGELOG.md), [relatórios históricos](HISTORICO.md) e [melhorias futuras](MELHORIAS_FUTURAS.md).
+
+As capturas em `evidencias-*` documentam o estado de cada entrega. Os arquivos `.mjs` nessas pastas são registros das automações locais usadas na ocasião; os comandos suportados para uma instalação nova ficam em [Validação](VALIDACAO.md).
